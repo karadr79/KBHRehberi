@@ -1,0 +1,1319 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>KBH Rehberi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="KDIGO kılavuzlarına dayalı erişkin kronik böbrek hastalığı yönetimi: öneriler, kanıt düzeyleri ve hesaplayıcılar.">
+<meta name="theme-color" content="#16324f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} [hidden]{display:none!important} img{max-width:100%}
+/* Layout: sabit sol gezinme (masaüstü) + çekmece (mobil); içerik sütunu 760px okuma genişliği, hesaplayıcılar kart içinde */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --surface2:#eef2f7; --ink:#14202e; --muted:#5a6878; --line:#d8dfe8;
+  --accent:#1f5f99; --accent-ink:#ffffff; --accent-soft:#e3edf8; --nav:#16324f; --nav-ink:#dbe6f2; --nav-dim:#8fa6bf;
+  --draft:#a5600d; --draft-soft:#fbefdc; --pp:#5d6b7a; --pp-soft:#eceff3;
+  --ok:#2f7d4f; --warn:#b07a12; --bad:#b4372b;
+  --h-green:#5fae6e; --h-yellow:#e7c94c; --h-orange:#e58a3a; --h-red:#cf4a3c; --h-deep:#8e2620;
+  --font-body: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-head: "Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --font-mono: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1620; --surface:#17212d; --surface2:#1d2a38; --ink:#e4ebf3; --muted:#9aabbd; --line:#2b3a4b;
+  --accent:#6fa8dc; --accent-ink:#0d1722; --accent-soft:#1c3048; --nav:#0b121a; --nav-ink:#d3dfeb; --nav-dim:#7890a8;
+  --draft:#f0b45c; --draft-soft:#3a2a12; --pp:#a7b4c2; --pp-soft:#243140;
+  --ok:#69c08a; --warn:#e3b04f; --bad:#ef7d6f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1620; --surface:#17212d; --surface2:#1d2a38; --ink:#e4ebf3; --muted:#9aabbd; --line:#2b3a4b;
+  --accent:#6fa8dc; --accent-ink:#0d1722; --accent-soft:#1c3048; --nav:#0b121a; --nav-ink:#d3dfeb; --nav-dim:#7890a8;
+  --draft:#f0b45c; --draft-soft:#3a2a12; --pp:#a7b4c2; --pp-soft:#243140;
+  --ok:#69c08a; --warn:#e3b04f; --bad:#ef7d6f; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15.5px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--nav)}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:grid;grid-template-columns:288px minmax(0,1fr);min-height:100%}
+/* Sidebar */
+.side{background:var(--nav);color:var(--nav-ink);position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;padding:22px 14px 28px max(14px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:18px}
+.brand{display:flex;gap:12px;align-items:center;padding:0 6px}
+.brand svg{flex:none}
+.brand b{font-family:var(--font-head);font-size:1.32rem;font-weight:600;letter-spacing:.01em;display:block;line-height:1.1}
+.brand small{color:var(--nav-dim);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.search{position:relative}
+.search input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 12px;color:var(--nav-ink)}
+.search input::placeholder{color:var(--nav-dim)}
+.navgroup{display:flex;flex-direction:column;gap:2px}
+.navlabel{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--nav-dim);padding:8px 10px 4px}
+.navbtn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-radius:7px;padding:8px 10px;color:var(--nav-ink);cursor:pointer;font-size:.94rem}
+.navbtn:hover{background:rgba(255,255,255,.07)}
+.navbtn[aria-current="page"]{background:rgba(255,255,255,.14);font-weight:600}
+.navbtn .yr{margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--nav-dim)}
+.navbtn .dot{width:8px;height:8px;border-radius:2px;flex:none;background:var(--nav-dim)}
+.sidefoot{margin-top:auto;font-size:.75rem;color:var(--nav-dim);padding:0 8px;display:flex;flex-direction:column;gap:8px}
+.themebtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:var(--nav-ink);border-radius:7px;padding:6px 10px;cursor:pointer;font-size:.8rem;align-self:flex-start}
+/* Topbar mobile */
+.top{display:none}
+/* Main */
+main{min-width:0;padding-block:34px 80px;padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}
+.wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+.eyebrow{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow .src{font-family:var(--font-mono);letter-spacing:0;text-transform:none;background:var(--surface2);border:1px solid var(--line);padding:2px 8px;border-radius:5px;color:var(--ink)}
+h1{font-family:var(--font-head);font-weight:600;font-size:2.15rem;line-height:1.15;margin:6px 0 0;text-wrap:balance}
+.lede{color:var(--muted);max-width:66ch;margin:10px 0 0;font-size:1.02rem}
+h2{font-family:var(--font-head);font-weight:600;font-size:1.42rem;margin:0;text-wrap:balance;line-height:1.25}
+h3{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 0 0;font-weight:700}
+section.sec{display:flex;flex-direction:column;gap:12px;scroll-margin-top:80px}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px;flex-wrap:wrap}
+.sechead .src{font-family:var(--font-mono);font-size:.74rem;color:var(--muted)}
+p.txt{margin:0;max-width:70ch}
+ul.lst{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:4px;max-width:70ch}
+/* Recommendation rows */
+.rec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:start;padding:11px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.rec .tag{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:54px}
+.grade{font-family:var(--font-mono);font-weight:700;font-size:.82rem;border-radius:5px;padding:2px 7px;text-align:center;min-width:40px}
+.g1{background:var(--accent);color:var(--accent-ink)}
+.g2{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+.gpp{background:var(--pp-soft);color:var(--pp);border:1px solid var(--line)}
+.gng{background:var(--pp-soft);color:var(--pp);border:1px dashed var(--pp)}
+.num{font-family:var(--font-mono);font-size:.7rem;color:var(--muted)}
+.rec .body{min-width:0}
+.rec.draft{background:var(--draft-soft);border-color:var(--draft)}
+.rec.draft .grade.g1{background:var(--draft);color:var(--surface)}
+.rec.draft .grade.g2{background:transparent;color:var(--draft);border-color:var(--draft)}
+.rec .kind{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.rec.draft .kind{color:var(--draft);font-weight:700}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 8px 8px 0;max-width:72ch}
+.note.warn{border-color:var(--draft);background:var(--draft-soft)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface2);font-weight:600;font-size:.82rem}
+tr:last-child td{border-bottom:0}
+td.n,th.n{font-variant-numeric:tabular-nums}
+.cap{font-size:.8rem;color:var(--muted);margin:-4px 0 0}
+/* Calculator */
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.calc>header{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.calc>header b{font-size:1rem}
+.calc>header span{font-family:var(--font-mono);font-size:.72rem;color:var(--muted)}
+.calc .cbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 14px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:.78rem;color:var(--muted);font-weight:600}
+.f input,.f select{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px 10px;width:100%;font-variant-numeric:tabular-nums}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:.9rem}
+.chk input{margin-top:4px}
+.chks{display:flex;flex-direction:column;gap:6px}
+.out{border-radius:8px;background:var(--bg);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.big{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline}
+.big .v{font-family:var(--font-head);font-size:1.9rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.big .u{color:var(--muted);font-size:.85rem}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.kv div{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:8px 10px}
+.kv small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+.kv strong{font-variant-numeric:tabular-nums;font-size:1.05rem}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:600;border:1px solid currentColor}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)} .pill.bad{color:var(--bad)} .pill.info{color:var(--accent)}
+.msg{margin:0;font-size:.92rem}
+.msg.dim{color:var(--muted);font-size:.82rem}
+/* heat map */
+.heat{display:grid;grid-template-columns:88px repeat(3,minmax(0,1fr));gap:3px;font-size:.8rem;min-width:420px}
+.heat div{padding:7px 6px;border-radius:4px;text-align:center}
+.heat .hh{background:var(--surface2);font-weight:600}
+.heat .c{color:#1b1b1b;font-weight:700;font-variant-numeric:tabular-nums}
+.heat .c.deep{color:#fff}
+.heat .c.sel{outline:3px solid var(--ink);outline-offset:-3px}
+.hg{background:var(--h-green)} .hy{background:var(--h-yellow)} .ho{background:var(--h-orange)} .hr{background:var(--h-red)} .hd{background:var(--h-deep)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+/* home */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.mod{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:14px;cursor:pointer}
+.mod:hover{border-color:var(--accent)}
+.mod b{font-size:1rem}
+.mod span{color:var(--muted);font-size:.85rem}
+.mod .yr{font-family:var(--font-mono);font-size:.72rem;color:var(--accent)}
+.legendrow{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:.82rem;color:var(--muted);align-items:center}
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.toc button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:.82rem;cursor:pointer;color:var(--ink)}
+.toc button:hover{border-color:var(--accent);color:var(--accent)}
+mark{background:var(--draft-soft);color:inherit;padding:0 2px;border-radius:2px}
+.hit{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px}
+.hit small{color:var(--muted);font-size:.75rem}
+.disclaimer{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;max-width:72ch}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .top{display:flex;align-items:center;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--nav);color:var(--nav-ink);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .top b{font-family:var(--font-head);font-size:1.1rem}
+  .top button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:var(--nav-ink);border-radius:7px;padding:6px 11px;cursor:pointer}
+  .side{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:40;transform:translateX(-102%);transition:transform .2s ease;padding-top:calc(22px + env(safe-area-inset-top,0px));height:100%}
+  .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.4)}
+  main{padding-block:22px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  h1{font-size:1.7rem}
+}
+@media (prefers-reduced-motion:reduce){.side{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="top">
+  <button id="menuBtn" aria-label="Menüyü aç">Menü</button>
+  <b>KBH Rehberi</b>
+</div>
+<div class="app">
+  <nav class="side" id="side" aria-label="Bölümler">
+    <div class="brand">
+      <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#ffffff" fill-opacity=".1"/><path d="M27 12c-9 0-15 8-15 20s6 20 15 20c5 0 7-3 7-7 0-3-2-5-2-9s4-5 4-9c0-9-3-15-9-15z" fill="none" stroke="#dbe6f2" stroke-width="3"/><path d="M37 12c9 0 15 8 15 20s-6 20-15 20" fill="none" stroke="#7fb2e0" stroke-width="3"/><path d="M33 30h10" stroke="#7fb2e0" stroke-width="3" stroke-linecap="round"/></svg>
+      <div><b>KBH Rehberi</b><small>KDIGO · erişkin</small></div>
+    </div>
+    <div class="search"><input id="q" type="search" placeholder="Ara: TSAT, finerenon, tolvaptan…" aria-label="İçerikte ara"></div>
+    <div id="navlist" class="navgroup"></div>
+    <div class="sidefoot">
+      <button class="themebtn" id="themeBtn">Tema: Sistem</button>
+      <span>İçerik: NotebookLM “KDIGO KBH KILAVUZLARI” defteri (10 kaynak). Çevrimdışı çalışır.</span>
+    </div>
+  </nav>
+  <main id="main"><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+/* ============================================================
+   VERİ: her modül -> bölümler -> öğeler
+   Öğe türleri: ["R",no,derece,metin] öneri | ["P",no,metin] uygulama noktası
+   ["NG",no,metin] derecelendirilmemiş | ["DR",no,derece,metin] 2027 taslak öneri | ["DP",no,metin] 2027 taslak UN
+   ["X",metin] paragraf | ["L",[...]] liste | ["N",metin] not | ["W",metin] uyarı notu
+   ["T",[başlıklar],[[satır]], açıklama] tablo | ["C",hesapId] | ["H",alt başlık] | ["HEAT"]
+   ============================================================ */
+const SRC={
+ ckd24:"KDIGO 2024 KBH", d27:"KDIGO 2027 Odaklı Güncelleme (taslak, Ekim 2026)", an26:"KDIGO 2026 Anemi",
+ mbd17:"KDIGO 2017 KBH-MKB", bp21:"KDIGO 2021 Kan Basıncı", lip13:"KDIGO 2013 Lipid",
+ tx20:"KDIGO 2020 Nakil Adayı", pkd25:"KDIGO 2025 ADPKD", dm22:"KDIGO 2022 Diyabet ve KBH"
+};
+
+const MODS=[
+/* ---------------- 1. TANI & EVRELEME ---------------- */
+{id:"tani",nav:"Tanı ve Evreleme",yr:"2024",title:"Tanı, Evreleme ve GFR Değerlendirmesi",
+ lede:"KBH tanımı, CGA sınıflaması, eGFR denklemleri, sistatin C endikasyonları ve albüminüri ölçümü.",
+ secs:[
+ {h:"Tanım ve CGA sınıflaması",src:"ckd24",items:[
+  ["X","KBH; böbrek yapısı veya fonksiyonunda en az 3 ay süren ve sağlık açısından sonuçları olan anormalliklerdir. Sınıflama Neden (C), GFR kategorisi (G1–G5) ve Albüminüri kategorisi (A1–A3) üzerinden yapılır (CGA)."],
+  ["T",["GFR kategorisi","eGFR (ml/dk/1,73 m²)","Tanım"],[["G1","≥90","Normal veya yüksek"],["G2","60–89","Hafif azalmış"],["G3a","45–59","Hafif–orta azalmış"],["G3b","30–44","Orta–ağır azalmış"],["G4","15–29","Ağır azalmış"],["G5","<15","Böbrek yetmezliği"]]],
+  ["T",["Albüminüri","AER (mg/24 sa)","UACR (mg/g)","UACR (mg/mmol)","Yaklaşık UPCR"],[["A1 Normal–hafif artmış","<30","<30","<3","<150 mg/g"],["A2 Orta artmış","30–300","30–300","3–30","150–500 mg/g"],["A3 Ağır artmış",">300",">300",">30","≥500 mg/g"]]],
+  ["H","Prognoz ısı haritası ve yıllık izlem sıklığı"],["HEAT"],
+  ["N","Hücrelerdeki sayılar, GFR ve albüminürinin yılda kaç kez ölçülmesi gerektiğini gösterir (Şekil 13, ADA–KDIGO uzlaşısından). Yeşil: başka böbrek hasarı belirteci yoksa KBH değildir."]
+ ]},
+ {h:"Saptama ve kronisite",src:"ckd24",items:[
+  ["P","1.1.1.1","KBH riski taşıyan veya KBH olan kişileri hem idrar albümini hem de GFR ile test edin."],
+  ["P","1.1.1.2","Rastlantısal yüksek ACR, hematüri veya düşük eGFR saptandığında KBH varlığını doğrulamak için testleri tekrarlayın."],
+  ["R","1.1.2.1","1B","Risk altındaki erişkinlerde kreatinin temelli eGFR (eGFRcr) kullanın. Sistatin C mevcutsa GFR kategorisini kreatinin + sistatin C kombinasyonundan (eGFRcr-cys) belirleyin."],
+  ["P","1.1.3.1","Kronisite (≥3 ay) şu yollarla kanıtlanabilir: önceki eGFR değerleri; önceki albüminüri/proteinüri ve idrar mikroskopisi; küçük böbrek boyutu ve korteks incelmesi; fibrozis/atrofi gibi patolojik bulgular; KBH’ye yol açan hastalık öyküsü; 3. ay öncesi ve sonrası tekrar ölçümler."],
+  ["P","1.1.3.2","Tek bir anormal eGFR veya ACR değerine dayanarak kronisite varsaymayın; bulgu yakın zamanlı AKİ veya akut böbrek hastalığına (AKD) bağlı olabilir."],
+  ["P","1.1.3.3","Diğer klinik göstergeler KBH’yi olası kılıyorsa, azalmış GFR veya yüksek ACR ilk saptandığında tedaviye başlamayı düşünün."]
+ ]},
+ {h:"Etiyoloji ve böbrek biyopsisi",src:"ckd24",items:[
+  ["P","1.1.4.1","KBH nedenini klinik bağlam, kişisel ve aile öyküsü, sosyal ve çevresel etkenler, ilaçlar, fizik muayene, laboratuvar, görüntüleme ve genetik/patolojik tanı ile belirleyin."],
+  ["P","1.1.4.2","Neden araştırmasında mevcut kaynaklara göre test seçin."],
+  ["R","1.1.4.1","2D","Klinik olarak uygun olduğunda böbrek biyopsisini, nedeni değerlendirmek ve tedaviyi yönlendirmek için kabul edilebilir ve güvenli bir tanı testi olarak uygulayın."]
+ ]},
+ {h:"GFR değerlendirmesi",src:"ckd24",items:[
+  ["P","1.2.2.1","Başlangıç değerlendirmesinde serum kreatinini ve bir tahmin denklemi kullanın."],
+  ["R","1.2.2.1","1C","eGFRcr’nin daha az doğru olduğu ve GFR’nin klinik kararı etkilediği durumlarda eGFRcr-cys kullanın."],
+  ["L",["Sistatin C endikasyonları: yeme bozukluğu, vücut geliştirme/aşırı egzersiz, ampütasyon, parapleji, sınıf III obezite, ağır kas kaybı, malnütrisyon, siroz, kalp yetmezliği, kreatinin tübüler sekresyonunu etkileyen ilaçlar."]],
+  ["P","1.2.2.2","Daha doğru GFR tedavi kararını değiştirecekse ekzojen filtrasyon belirteciyle (plazma veya idrar klirensi) ölçülmüş GFR (mGFR) kullanın."],
+  ["P","1.2.2.4","Serum kreatinini yorumlanırken diyet alımını göz önüne alın."],
+  ["P","1.2.2.5","Zaman içindeki GFR değişimini değerlendirirken eGFR’deki hata payını hesaba katın."],
+  ["P","1.2.2.7","eGFRcr ile eGFRcys arasındaki farkın yönü ve büyüklüğü bilgi verici olabilir."],
+  ["P","1.2.2.8","mGFR yoksa ve eGFRcr-cys yanlış olduğu düşünülüyorsa zamanlı idrar toplama ile kreatinin klirensini değerlendirin."],
+  ["R","1.2.4.1","1D","Serum filtrasyon belirteçlerinden GFR’yi türetmek için tek başına belirteç yerine geçerliliği gösterilmiş bir denklem kullanın."],
+  ["P","1.2.4.1","Coğrafi bölge içinde (olabildiğince geniş) aynı denklemi kullanın."],
+  ["P","1.2.4.2","eGFR hesaplamasında ırk katsayısı kullanılmamalıdır (CKD-EPI 2021, ırksız yeniden düzenlenmiş denklem)."],
+  ["C","egfr"]
+ ]},
+ {h:"Albüminüri ölçümü ve noktasal bakım testi",src:"ckd24",items:[
+  ["P","1.3.1.1","İlk albüminüri testinde tercih sırası: (i) idrar ACR, (ii) otomatik okumalı albümin ve ACR çubuk testi. Protein ölçülüyorsa: UPCR, otomatik okumalı total protein çubuk testi, manuel okumalı çubuk testi. Erişkin ve çocukta sabah ilk idrarın orta akımı tercih edilir."],
+  ["P","1.3.1.2","Yarı kantitatif test pozitifse ACR veya PCR ile kantitatif olarak doğrulayın. Rastgele idrarda ACR ≥30 mg/g (≥3 mg/mmol) ise sabah ilk idrar örneğiyle doğrulayın."],
+  ["P","1.3.1.3","Hematüri, menstrüasyon, egzersiz, semptomatik idrar yolu enfeksiyonu ve kreatinin atılımındaki değişiklikler ACR/PCR’yi etkiler; gerektiğinde doğrulayıcı test isteyin."],
+  ["R","1.4.1","2C","Laboratuvara erişimin kısıtlı olduğu veya klinik akışı kolaylaştırdığı durumlarda kreatinin ve idrar albümini için noktasal bakım testi (POCT) kullanılabilir."],
+  ["C","acr"]
+ ]}
+ ]},
+/* ---------------- 2. RİSK & SEVK ---------------- */
+{id:"risk",nav:"Risk, İzlem ve Sevk",yr:"2024",title:"Risk Değerlendirmesi, İzlem ve Nefroloji Sevki",
+ lede:"Progresyon izlemi, böbrek yetmezliği risk denklemi (KFRE) eşikleri ve uzman sevk kriterleri.",
+ secs:[
+ {h:"Progresyon izlemi",src:"ckd24",items:[
+  ["P","2.1.1","KBH olan erişkinlerde albüminüriyi ve GFR’yi en az yılda bir kez değerlendirin."],
+  ["P","2.1.2","Ölçüm tedavi kararını etkileyecekse, yüksek progresyon riskindeki kişilerde daha sık değerlendirin."],
+  ["P","2.1.3","Takip testinde eGFR’de >%20 değişim beklenen değişkenliği aşar ve değerlendirme gerektirir."],
+  ["P","2.1.4","Hemodinamik etkili tedavi başlanan kişilerde >%30 GFR azalması değerlendirme gerektirir."],
+  ["P","2.1.5","Takipte ACR’nin iki katına çıkması laboratuvar değişkenliğini aşar ve değerlendirme gerektirir."]
+ ]},
+ {h:"Böbrek yetmezliği risk tahmini",src:"ckd24",items:[
+  ["R","2.2.1","1A","KBH G3–G5 olan kişilerde böbrek yetmezliği mutlak riskini tahmin etmek için dış geçerliliği gösterilmiş bir risk denklemi kullanın."],
+  ["P","2.2.1","5 yıllık böbrek yetmezliği riskinin %3–5 olması, eGFR/ACR kriterlerine ek olarak nefroloji sevki gereksinimini belirlemede kullanılabilir."],
+  ["P","2.2.2","2 yıllık riskin >%10 olması multidisipliner bakımın zamanlamasını belirlemede kullanılabilir."],
+  ["P","2.2.3","2 yıllık riskin >%40 olması modalite eğitimi, RRT hazırlığı (vasküler erişim planlaması dahil) ve nakil sevkinin zamanlamasında kullanılabilir."],
+  ["P","2.2.4","G3–G5 için geliştirilen denklemler G1–G2’de geçerli olmayabilir."],
+  ["P","2.2.5","IgA nefropatisi ve ADPKD’de hastalığa özgü, dış geçerliliği gösterilmiş denklemler kullanın."],
+  ["C","kfre"],
+  ["P","2.3.1","Koruyucu tedaviyi yönlendirecek KV risk tahmini için KBH popülasyonunda geliştirilmiş veya eGFR ve albüminüriyi içeren modeller kullanın."],
+  ["P","2.3.2","Bakım hedeflerini tartışmak için KBH popülasyonunda geliştirilmiş tüm neden mortalite modelleri kullanın."]
+ ]},
+ {h:"Uzman böbrek bakımına sevk",src:"ckd24",items:[
+  ["P","5.1.1","Aşağıdaki durumlarda erişkinleri nefrolojiye sevk edin:"],
+  ["T",["Alan","Sevk kriteri"],[
+   ["Neden","Belirsiz neden · Kalıtsal böbrek hastalığı · Tekrarlayan yaygın nefrolitiyazis"],
+   ["eGFR / RRT riski","5 yıllık RRT riski >%3–5 (geçerli denklem) · eGFR <30 · Sürekli >%20 GFR düşüşü (hemodinamik etkili tedavi başlananlarda >%30)"],
+   ["Albüminüri / hematüri","ACR ≥300 mg/g (PCR ≥500 mg/g) + hematüri · İzlemde albüminürinin ≥2 kat artışı · Sürekli ACR >700 mg/g (>70 mg/mmol) · Eritrosit silendiri veya açıklanamayan sürekli >20 eritrosit/BBA"],
+   ["Diğer","≥4 ilaca dirençli hipertansiyon · Sürekli potasyum bozukluğu · Asidoz, anemi, kemik hastalığı veya malnütrisyon"]]],
+  ["C","sevk"]
+ ]}
+ ]},
+/* ---------------- 3. MEDİKAL TEDAVİ ---------------- */
+{id:"tedavi",nav:"Progresyonu Yavaşlatan Tedavi",yr:"2024 · 2027T",title:"Böbrek ve Kardiyovasküler Koruyucu Medikal Tedavi",
+ lede:"RAS inhibitörleri, SGLT2 inhibitörleri, nonsteroid MRA ve GLP-1 temelli tedaviler. 2027 odaklı güncellemenin kamuya açık taslak önerileri ayrıca işaretlenmiştir.",
+ secs:[
+ {h:"Kapsamlı strateji ve yaşam tarzı",src:"ckd24",items:[
+  ["P","3.1.1","KBH olan kişileri progresyon ve komplikasyon riskini azaltmak için kapsamlı bir tedavi stratejisiyle yönetin."],
+  ["P","3.2.1","KV sağlığa, toleransa ve kırılganlık düzeyine uygun fiziksel aktivite, optimal BKİ ve tütün kullanmama önerin; gerektiğinde diyetisyen, psikolog, eczacı, fizyoterapi ve sigara bırakma programlarına yönlendirin."],
+  ["R","3.2.2.1","1D","Haftada toplam en az 150 dakika orta yoğunlukta fiziksel aktivite veya KV ve fiziksel toleransla uyumlu düzeyde aktivite önerin."],
+  ["P","3.2.2.2","Hareketsiz yaşamdan kaçınılmasını önerin."],
+  ["P","3.2.2.4","Obezitesi olan KBH hastalarında kilo vermeyi teşvik edin."],
+  ["DP","1.5.2","Böbrek ve KV korumayı olabildiğince hızlı en üst düzeye çıkarmak için yaşam tarzı ve farmakolojik müdahaleleri kişiselleştirilmiş kombinasyonlarla uygulayın."],
+  ["DP","1.5.5","Yan etki profilleri örtüşmüyorsa veya güvenlik gösterilmişse birden fazla tedaviye eşzamanlı başlamak optimal kombinasyona ulaşmayı hızlandırabilir."],
+  ["DP","1.5.6","ACEi, ARB, SGLT2i, GLP-1 temelli tedavi veya nsMRA alan tüm kadınlarla gebelik niyetini görüşün ve kontrasepsiyon önerin; gebelik doğrulandığında bu ilaçları derhal kesin (1.5.8)."]
+ ]},
+ {h:"RAS inhibitörleri (ACEi / ARB)",src:"ckd24",items:[
+  ["R","3.6.1","1B","Diyabeti olmayan, ağır artmış albüminürili (G1–G4, A3) KBH’de RASi başlayın."],
+  ["R","3.6.2","2C","Diyabeti olmayan, orta artmış albüminürili (G1–G4, A2) KBH’de RASi başlayın."],
+  ["R","3.6.3","1B","Diyabeti olan, orta–ağır artmış albüminürili (G1–G4, A2–A3) KBH’de RASi başlayın."],
+  ["R","3.6.4","1B","ACEi, ARB ve direkt renin inhibitörü kombinasyonlarından kaçının."],
+  ["P","3.6.1","Kanıtlanmış yarar bu dozlarla elde edildiği için tolere edilen en yüksek onaylı dozu kullanın."],
+  ["P","3.6.2","Başlangıç veya doz artışından 2–4 hafta sonra KB, serum kreatinini ve potasyumu kontrol edin."],
+  ["P","3.6.3","RASi ilişkili hiperkalemi çoğunlukla doz azaltma veya kesme yerine potasyum düşürücü önlemlerle yönetilebilir."],
+  ["P","3.6.4","Başlangıç veya doz artışından sonraki 4 hafta içinde serum kreatinini >%30 yükselmedikçe tedaviye devam edin."],
+  ["P","3.6.5","Semptomatik hipotansiyon, tıbbi tedaviye rağmen kontrolsüz hiperkalemi veya böbrek yetmezliğinde (eGFR <15) üremik semptomları azaltmak için doz azaltmayı veya kesmeyi düşünün."],
+  ["P","3.6.7","eGFR <30 olduğunda da ACEi/ARB’ye devam edin."],
+  ["C","rasi"]
+ ]},
+ {h:"SGLT2 inhibitörleri",src:"ckd24",items:[
+  ["R","3.7.1","1A","Tip 2 diyabet, KBH ve eGFR ≥20 olan hastalarda SGLT2i kullanın."],
+  ["R","3.7.2","1A","KBH olan erişkinlerde SGLT2i: eGFR ≥20 ve ACR ≥200 mg/g (≥20 mg/mmol) veya albüminüri düzeyinden bağımsız kalp yetmezliği."],
+  ["R","3.7.3","2B","eGFR 20–45 ve ACR <200 mg/g olan erişkinlerde SGLT2i kullanın."],
+  ["P","3.7.1","Başlandıktan sonra eGFR <20’ye düşse de, tolere edilemedikçe veya RRT başlanmadıkça devam etmek makuldür."],
+  ["P","3.7.2","Uzamış açlık, cerrahi veya kritik hastalıkta (ketoz riski) SGLT2i’ye ara verilebilir."],
+  ["P","3.7.3","Başlangıçtaki geri dönüşümlü eGFR düşüşü genellikle kesme endikasyonu değildir; izlem sıklığını değiştirmeyi gerektirmez."],
+  ["H","2027 odaklı güncelleme taslağı"],
+  ["DR","1.1.1","1A","T2D veya kalp yetmezliği olan KBH’li erişkinlerde albüminüriden bağımsız SGLT2i; ACR >200 mg/g ve eGFR ≥20 olanlarda SGLT2i (1A)."],
+  ["DR","1.1.1","1B","ACR 30–200 mg/g ve eGFR 20–45 olan erişkinlerde SGLT2i."],
+  ["DR","1.1.2","2B","ACR <30 mg/g ve eGFR 20–45 olan erişkinlerde SGLT2i."],
+  ["DP","1.1.4","İdrar yolu enfeksiyonu öyküsü SGLT2i başlamaya kontrendikasyon değildir."],
+  ["C","sglt2"]
+ ]},
+ {h:"Mineralokortikoid reseptör antagonistleri",src:"ckd24",items:[
+  ["R","3.8.1","2A","T2D, eGFR >25, normal potasyum ve maksimum tolere RASi’ye rağmen albüminüri (>30 mg/g) olan erişkinlerde böbrek/KV yararı kanıtlanmış nonsteroid MRA önerilir."],
+  ["P","3.8.2","nsMRA, T2D ve KBH’de RASi ve SGLT2i’ye eklenebilir."],
+  ["P","3.8.3","Hiperkalemi riskini azaltmak için potasyumu sürekli normal olan kişileri seçin ve başlangıç sonrası potasyumu düzenli izleyin."],
+  ["P","3.8.5","Steroid MRA kalp yetmezliği, hiperaldosteronizm veya dirençli hipertansiyonda kullanılabilir; düşük GFR’de hiperkalemi ve geri dönüşümlü GFR düşüşü yapabilir."],
+  ["H","2027 odaklı güncelleme taslağı"],
+  ["DR","1.2.1","1A","T2D, eGFR ≥25, normal potasyum ve maksimum tolere RASi altında albüminürisi olan erişkinlerde nsMRA eklenmesi (öneri gücü 2A’dan 1A’ya yükseltilmiş)."],
+  ["DR","1.2.2","2C","T1D, eGFR ≥25, normal potasyum ve albüminürisi olan erişkinlerde nsMRA eklenmesi."],
+  ["DR","1.2.3","2B","Diyabeti olmayan, GFR ≥25, normal potasyum ve ACR ≥200 mg/g olup RASi (tercihen SGLT2i ile birlikte) alan erişkinlerde finerenon eklenmesi (FIND-CKD; ağırlıklı olarak kronik glomerülonefrit)."],
+  ["DP","1.2.1","Persistan albüminürisi ve normal potasyumu olan, RASi alan T2D hastalarında SGLT2i ve nsMRA eşzamanlı başlanabilir (CONFIDENCE)."],
+  ["DP","1.2.2","Steroid ve nonsteroid MRA birlikte kullanılmamalıdır."],
+  ["DP","1.2.3","nsMRA başlangıcından 2–4 hafta sonra potasyumu kontrol edin."],
+  ["C","fin"]
+ ]},
+ {h:"GLP-1 temelli tedaviler",src:"ckd24",items:[
+  ["R","3.9.1","1B","Metformin ve SGLT2i’ye rağmen glisemik hedefe ulaşamayan veya bunları kullanamayan T2D ve KBH’li erişkinlerde uzun etkili GLP-1 RA önerilir."],
+  ["P","3.9.1","KV yararı kanıtlanmış GLP-1 RA’lara öncelik verin."],
+  ["H","2027 odaklı güncelleme taslağı"],
+  ["DR","1.3.1","1A","T2D ve KBH’si olup yüksek majör KV veya böbrek olay riski taşıyan ya da glisemik hedefe ulaşamayan erişkinlerde KV/böbrek yararı kanıtlanmış GLP-1 temelli tedavi."],
+  ["DR","1.3.2","2B","Diyabeti olmayan, aterosklerotik KV hastalığı ve fazla kilo/obezitesi olan KBH’li erişkinlerde GLP-1 temelli tedavi."],
+  ["DP","1.3.2","Kas kütlesini korumak için yapılandırılmış direnç egzersizini teşvik edin."],
+  ["DP","1.3.3","Beslenme yetersizliği, yeme bozukluğu ve GİS yan etki riskine karşı kişiselleştirilmiş destek ve tıbbi beslenme tedavisi sağlayın."],
+  ["DP","1.3.4","GLP-1 tedavisi sırasında vücut kompozisyonundaki değişim nedeniyle kreatinin ve sistatin C temelli eGFR’nin sınırlılıklarını göz önünde bulundurun."]
+ ]}
+ ]},
+/* ---------------- 4. KAN BASINCI ---------------- */
+{id:"kb",nav:"Kan Basıncı",yr:"2021",title:"KBH’de Kan Basıncı Yönetimi",
+ lede:"Standart ofis ölçümü, hedefler, yaşam tarzı ve nakil alıcısında ajan seçimi.",
+ secs:[
+ {h:"Ölçüm",src:"bp21",items:[
+  ["R","1.1","1B","Yüksek KB yönetiminde rutin ofis ölçümü yerine standart ofis KB ölçümü önerilir."],
+  ["P","1.1","Osilometrik cihaz tercih edilebilir; standardizasyonun özü cihaz değil hazırlıktır."],
+  ["P","1.2","Otomatik ofis KB (AOBP), gözetimli veya gözetimsiz, tercih edilen yöntem olabilir."],
+  ["P","1.3","Atriyal fibrilasyonda osilometrik cihaz kullanılabilir."],
+  ["R","1.2","2B","Standart ofis ölçümünü tamamlamak için ABPM veya ev KB ölçümü kullanın (beyaz önlük ve maskeli hipertansiyon)."],
+  ["T",["Adım","Standart ofis ölçümü kontrol listesi"],[
+   ["Hazırlık","Sırt destekli, ayaklar yerde >5 dk oturarak dinlenme · 30 dk öncesinde kafein, egzersiz, sigara yok · Mesane boş · Dinlenme ve ölçüm sırasında konuşma yok · Manşon bölgesinde giysi yok"],
+   ["Teknik","Valide ve kalibre cihaz · Kol desteklenmiş, manşon ortası sternum ortası hizasında · Kese kol çevresinin %80’ini sarmalı"],
+   ["Ölçüm","İlk vizitte iki kol; yüksek olan kol kullanılır · Ölçümler arası 1–2 dk"],
+   ["Kayıt","≥2 vizitte alınmış ≥2 ölçümün ortalaması · Son antihipertansif alım zamanı not edilir · Değerler hastaya sözlü ve yazılı verilir"]]]
+ ]},
+ {h:"Hedef ve tedavi",src:"bp21",items:[
+  ["R","3.1.1","2B","Yüksek KB’li KBH erişkinlerinde, tolere edilirse standart ofis ölçümüyle sistolik KB <120 mmHg hedeflenir."],
+  ["P","3.1.1","<120 mmHg hedefini standart olmayan ölçümlere uygulamak potansiyel olarak tehlikelidir."],
+  ["P","3.1.2","Çok sınırlı yaşam beklentisi veya semptomatik postüral hipotansiyonda daha az yoğun hedef makuldür. KBH 2024 (3.4.1): kırılganlık, düşme/kırık riski de eklenmiştir."],
+  ["R","2.1.1","2C","Sodyum alımı <2 g/gün (<90 mmol/gün, <5 g NaCl/gün)."],
+  ["P","2.1.2","DASH tipi diyet veya potasyumdan zengin tuz ikameleri ileri KBH, hiporeninemik hipoaldosteronizm veya bozulmuş potasyum atılımında uygun olmayabilir."],
+  ["R","2.2.1","2C","Haftada en az 150 dk orta yoğunlukta fiziksel aktivite."],
+  ["P","3.2.1","Albüminürisi olmayan yüksek KB’li KBH’de RASi makul olabilir."],
+  ["P","3.2.7","MRA dirençli hipertansiyonda etkilidir; düşük eGFR’de hiperkalemi ve geri dönüşümlü fonksiyon düşüşü yapabilir."],
+  ["H","Böbrek nakli alıcısı"],
+  ["P","4.1","Erişkin nakil alıcısında standart ofis ölçümüyle hedef <130/80 mmHg."],
+  ["R","4.1","1C","Erişkin nakil alıcısında ilk basamak antihipertansif olarak dihidropiridin KKB veya ARB."],
+  ["C","bp"]
+ ]}
+ ]},
+/* ---------------- 5. LİPİD & KV ---------------- */
+{id:"lipid",nav:"Lipid ve KV Risk",yr:"2013 · 2024",title:"Hiperlipidemi ve Kardiyovasküler Risk Yönetimi",
+ lede:"Statin endikasyonları, KBH’de önerilen dozlar, antiplatelet tedavi ve atriyal fibrilasyonda antikoagülasyon.",
+ secs:[
+ {h:"Lipid değerlendirmesi",src:"lip13",items:[
+  ["R","1.1","1C","Yeni saptanan KBH’de (diyaliz ve nakil dahil) lipid profili: total kolesterol, LDL, HDL, trigliserit."],
+  ["NG","1.2","Hastaların çoğunda lipid düzeylerinin takip ölçümü gerekli değildir (“ateşle ve unut” yaklaşımı)."],
+  ["R","5.1","2D","Hipertrigliseridemide terapötik yaşam tarzı değişiklikleri önerilir."]
+ ]},
+ {h:"Statin endikasyonları",src:"lip13",items:[
+  ["R","2.1.1","1A","≥50 yaş, eGFR <60, diyaliz veya nakil olmayan (G3a–G5): statin veya statin/ezetimib. KBH 2024 (3.15.1.1) ile aynı."],
+  ["R","2.1.2","1B","≥50 yaş, eGFR ≥60 (G1–G2) KBH: statin."],
+  ["R","2.2","2A","18–49 yaş, diyaliz/nakil dışı KBH: bilinen koroner hastalık, diyabet, iskemik inme öyküsü veya 10 yıllık koroner ölüm/MI riski >%10 varsa statin."],
+  ["P","3.15.1.3","KBH 2024: 18–49 yaşta daha düşük (<%10) 10 yıllık risk eşikleri de statin başlamak için uygun olabilir."],
+  ["R","2.3.1","2A","Diyalize bağımlı KBH’de statin veya statin/ezetimib başlanmamalıdır."],
+  ["R","2.3.2","2C","Diyaliz başlangıcında zaten statin alanlarda devam edilmelidir."],
+  ["R","2.4","2B","Erişkin böbrek nakli alıcılarında statin."],
+  ["P","3.15.1.2","LDL’deki mutlak azalmayı en üst düzeye çıkaran statin temelli rejimler seçin."],
+  ["P","3.15.1.4","Endikasyonu olan KBH hastalarında PCSK9 inhibitörlerini düşünün."],
+  ["P","3.15.1.5","Lipid tedavisine ek olarak bitki ağırlıklı Akdeniz tipi diyet önerin."],
+  ["T",["Statin","G1–G2","G3a–G5 (diyaliz/nakil dahil), mg/gün"],[["Fluvastatin","Genel popülasyon","80"],["Atorvastatin","Genel popülasyon","20"],["Rosuvastatin","Genel popülasyon","10"],["Simvastatin/ezetimib","Genel popülasyon","20/10"],["Pravastatin","Genel popülasyon","40"],["Simvastatin","Genel popülasyon","40"],["Pitavastatin","Genel popülasyon","2"],["Lovastatin","Genel popülasyon","Çalışılmamış"]],"Rosuvastatin 40 mg G1–G2 nakil dışı hastalarda böbrek yan etki riski nedeniyle önerilmez. Siklosporin bazı statinlerin düzeyini artırır."],
+  ["C","statin"]
+ ]},
+ {h:"Antiplatelet, koroner hastalık ve AF",src:"ckd24",items:[
+  ["R","3.15.2.1","1C","Yerleşik iskemik KV hastalığı olan KBH’de sekonder korunma için düşük doz oral aspirin."],
+  ["P","3.15.2.1","Aspirin intoleransında P2Y12 inhibitörü gibi diğer antiplateletleri düşünün."],
+  ["R","3.15.3.1","2D","Stres testiyle doğrulanmış stabil iskemik kalp hastalığında yoğun medikal tedaviyle başlangıçta konservatif yaklaşım, invaziv stratejiye uygun bir alternatiftir."],
+  ["P","3.15.3.1","Akut/instabil koroner hastalık, kabul edilemez angina, iskemiye bağlı sol ventrikül disfonksiyonu veya sol ana koroner hastalığında invaziv strateji tercih edilebilir."],
+  ["R","3.16.1","1C","G1–G4 KBH’de AF tromboprofilaksisinde vitamin K antagonistine tercihen NOAC."],
+  ["P","3.16.2","NOAC dozu GFR’ye göre ayarlanmalı; G4–G5’te dikkat."],
+  ["T",["CrCl","Apiksaban / edoksaban / rivaroksaban (düşük / yüksek kanama riski)","Dabigatran (düşük / yüksek)"],[["≥80","≥24 sa / ≥48 sa","≥24 sa / ≥48 sa"],["50–80","≥24 sa / ≥48 sa","≥36 sa / ≥72 sa"],["30–50","≥24 sa / ≥48 sa","≥48 sa / ≥96 sa"],["15–30","≥36 sa / ≥48 sa","Resmi endikasyon yok"]],"Elektif girişim öncesi son NOAC dozundan itibaren bekleme süresi (KBH 2024, Şekil 44 uyarlaması)."]
+ ]}
+ ]},
+/* ---------------- 6. ANEMİ ---------------- */
+{id:"anemi",nav:"Anemi",yr:"2026",title:"KBH’de Anemi Yönetimi",
+ lede:"Tanı ve izlem, demir tedavisi, ESA ve HIF-PHI kullanımı, ESA hiporesponsivitesi ve eritrosit transfüzyonu.",
+ secs:[
+ {h:"Tanı ve değerlendirme",src:"an26",items:[
+  ["X","Anemi (≥15 yaş): erkekte Hb <13,0 g/dl, kadında Hb <12,0 g/dl."],
+  ["P","1.2.1","Sevkte, izlemde düzenli ve semptomla anemi şüphesinde test edin: tam kan sayımı, retikülosit (retikülosit üretim indeksi), ferritin ve TSAT. En az sıklık: G3 yılda 1, G4 yılda 2, G5/G5D 3 ayda bir."],
+  ["P","1.2.2","Neden bulunamazsa genişletilmiş panel: periferik yayma, haptoglobin, LDH, CRP, B12, folat, karaciğer testleri, serum protein elektroforezi + immünfiksasyon, serbest hafif zincir, idrar Bence-Jones, TSH, PTH, gaitada gizli kan."],
+  ["P","1.2.3","Ferritin <45 ng/ml veya (ferritin yoksa) MCV <80 fl ve demir eksikliği nedeni belirsizse kan kaybını araştırın (GİS, jinekoloji, üroloji)."]
+ ]},
+ {h:"Demir tedavisi",src:"an26",items:[
+  ["R","2.1","2D","G5HD’de ferritin ≤500 ng/ml ve TSAT ≤%30 ise demir başlayın."],
+  ["R","2.2","2D","G5HD’de oral yerine IV demir."],
+  ["P","2.1","G5HD’de IV demiri demir durumunu sabit tutacak proaktif yaklaşımla verin (PIVOTAL)."],
+  ["R","2.3","2D","Diyaliz dışı KBH ve G5PD’de: ferritin <100 ve TSAT <%40, veya ferritin 100–299 ve TSAT <%25 ise demir başlayın."],
+  ["R","2.4","2D","HD dışı hastalarda oral veya IV demir; hasta tercihi, anemi/demir eksikliği derecesi, etkinlik, tolerans, erişim ve maliyete göre."],
+  ["P","2.2","Ferritin >700 ng/ml veya TSAT ≥%40 ise rutin demiri kesmek makuldür."],
+  ["P","2.5","Demir alanlarda Hb, ferritin, TSAT: diyaliz dışı ve PD’de 3 ayda bir, HD’de 1–3 ayda bir."],
+  ["P","2.7","Optimal oral rejimle 1–3 ayda yetersiz yanıt veya kötü toleransta IV demire geçin."],
+  ["P","2.8","Sistemik enfeksiyonda demire geçici ara vermeyi düşünün."],
+  ["P","2.9","IV demir yalnızca akut aşırı duyarlılığı yönetme olanağı olan yerde verilmeli; rutin test dozu veya steroid/antihistaminik premedikasyonu gerekmez."],
+  ["P","2.11","Anemisi olmayan derin demir eksikliğinde (ferritin <30, TSAT <%20) oral veya IV demir düşünülebilir."],
+  ["C","iron"]
+ ]},
+ {h:"ESA ve HIF-PHI",src:"an26",items:[
+  ["P","3.1.1","ESA veya HIF-PHI kararı; semptomlar, transfüzyon zararı ve inme, KV olay, kanser riski tartılarak ortak karar verme ile alınmalıdır."],
+  ["P","3.1.2","Başlamadan önce demir eksikliği dahil düzeltilebilir tüm nedenleri giderin."],
+  ["R","3.1.1","2D","Düzeltilebilir nedenler giderildikten sonra ilk basamakta HIF-PHI yerine ESA."],
+  ["P","3.1.3","HIF-PHI’den kaçının: aktif kanser veya 2–5 yıldır tam remisyonda olmayan kanser, ADPKD, proliferatif retinopati, pulmoner arteriyel hipertansiyon, gebelik, önceki KV/tromboembolik olay, vasküler erişim trombozu, karaciğer yetmezliği, nöbet."],
+  ["R","3.2.1","2D","G5D’de (HD veya PD) Hb ≤9,0–10,0 g/dl olduğunda ESA başlayın."],
+  ["R","3.2.2","2D","Diyaliz dışı KBH (nakil alıcısı dahil) ve çocuklarda başlama eşiği semptomlara, yüksek Hb’nin olası yararına ve transfüzyon/ESA zararına göre seçilir (çoğu hastada 8,5–10,0 g/dl)."],
+  ["R","3.3.1","1D","ESA alan erişkinlerde Hb’yi 11,5 g/dl’nin altında hedefleyin."],
+  ["P","3.4.1.2","ESA dozunu 4 haftada bir defadan sık değiştirmeyin; 2–4 haftada Hb >1,0 g/dl artarsa dozu %25–50 azaltın."],
+  ["P","3.4.2.2","Diyaliz dışı KBH, G5PD ve nakil alıcısında ESA’yı subkutan verin."],
+  ["P","3.4.3.2","Başlangıç/doz değişikliği sonrası Hb’yi 2–4 haftada bir izleyin; hızlı düşüşü önlemek için ESA’yı kesmek yerine dozu azaltın."],
+  ["P","3.4.3.3","İdame fazında Hb’yi en az 3 ayda bir izleyin."],
+  ["P","3.4.3.4","Akut inme, vasküler erişim trombozu veya tromboembolik olayla yatışta ESA’ya ara vermek makuldür."],
+  ["T",["ESA","Diyaliz dışı başlangıç","G5D başlangıç","G5D doz ayarı (4 hafta)"],[
+   ["Epoetin alfa/beta","~50 U/kg haftada 1–2 (veya 100 U/kg 2 haftada bir)","50–100 U/kg haftada 3","Hb artışı <1,0: +25 U/kg/doz · >2,0: −10–25 U/kg/doz"],
+   ["Darbepoetin alfa","0,45 µg/kg haftalık veya 40–100 µg 2–4 haftada bir","0,45 µg/kg haftalık veya 0,75 µg/kg 2 haftada bir","Hb artışı <1,0: +%25 · >2,0: −%25"],
+   ["Metoksi PEG-epoetin beta","0,6 µg/kg 2 haftada bir veya 1,5 µg/kg ayda bir","0,6 µg/kg 2 haftada bir","Hb artışı <1,0: +30–50 µg · >2,0: −30–50 µg"]],"KDIGO 2026 Tablo 7."],
+  ["P","3.5.1","ESA ve HIF-PHI birlikte kullanılmaz."],
+  ["P","3.5.2","HIF-PHI için ESA ile aynı Hb başlama ve idame eşikleri kullanılır; önerilen maksimum doz aşılmaz (3.5.5)."],
+  ["P","3.6.1","HIF-PHI başlangıç/doz ayarından 2–4 hafta sonra, ardından 4 haftada bir Hb izlenir; roksadustat ile ilk 3 ayda tiroid fonksiyonu izlenir (3.6.2)."],
+  ["P","3.6.3","3–4 ayda istenen eritropoetik yanıt yoksa HIF-PHI kesilir; KV/tromboembolik olay, erişim trombozu veya yeni kanserde ara verilir (3.6.4)."],
+  ["T",["HIF-PHI","Başlangıç","Maksimum","Sıklık"],[
+   ["Roksadustat","ESA-naif: 70 mg (<100 kg) / 100 mg (≥100 kg) [AB]","3,0 mg/kg","Haftada 3"],
+   ["Daprodustat","Diyaliz dışı: 2–4 mg (naif), 4 mg (ESA’dan geçiş)","24 mg","Günlük"],
+   ["Vadadustat","300 mg","600 mg","Günlük"],
+   ["Enarodustat","Diyaliz dışı/PD: 2 mg · HD: 4 mg","8 mg","Günlük"],
+   ["Molidustat","Diyaliz dışı: 25 mg · G5D: 75 mg","200 mg","Günlük"],
+   ["Desidustat","100 mg (naif)","150 mg","Haftada 3"]],"KDIGO 2026 Tablo 8; ülke onayları değişkendir."],
+  ["C","esa"]
+ ]},
+ {h:"ESA hiporesponsivitesi ve SKA",src:"an26",items:[
+  ["X","Başlangıç hiporesponsivitesi: uygun kiloya göre dozla ilk ay sonunda Hb’de artış olmaması. Edinsel: stabil Hb’yi korumak için stabil dozun %50’sine kadar iki doz artışı gerekmesi."],
+  ["P","3.7.1","Altta yatan nedenleri (enfeksiyon/inflamasyon, malignite, HD kan kaybı, yetersiz diyaliz, uyumsuzluk, hipotiroidi, hiperparatiroidi, GİS kanama, malnütrisyon, demir/B12/folat eksikliği, kemik iliği disfonksiyonu, hemoliz) araştırıp tedavi edin."],
+  ["P","3.7.2","Kalıcı hiporesponsivitede transfüzyondan kaçınmak veya semptomu düzeltmek için 3–4 aylık HIF-PHI denemesi düşünülebilir; aktif malignite, yakın KV olay veya tromboz varsa kullanılmaz (3.7.5)."],
+  ["P","3.7.6","ESA ilişkili saf kırmızı hücre aplazisi şüphesinde ESA’yı kesin, gerekirse transfüzyon yapın, hematolojiye danışın; immünsüpresyon ve sonraki tedavide HIF-PHI düşünülebilir."]
+ ]},
+ {h:"Eritrosit transfüzyonu",src:"an26",items:[
+  ["P","4.2","Organ nakline uygun hastalarda allosensitizasyonu önlemek için mümkünse transfüzyondan kaçının."],
+  ["P","4.3","ESA/HIF-PHI etkisizse (hemoglobinopati, kemik iliği yetmezliği, direnç) veya zararlı olabilecekse (malignite, önceki inme) transfüzyonun yararı ağır basabilir."],
+  ["P","4.4","Transfüzyon kararını keyfi Hb eşiğine değil anemiye bağlı semptom ve bulgulara dayandırın."],
+  ["P","4.5","Akut kanama, instabil koroner hastalık veya hızlı preoperatif düzeltme gerektiğinde transfüzyon düşünün."]
+ ]}
+ ]},
+/* ---------------- 7. MKB ---------------- */
+{id:"mkb",nav:"KBH-MKB",yr:"2017",title:"KBH–Mineral ve Kemik Bozukluğu",
+ lede:"Biyokimyasal izlem, kemik değerlendirmesi, fosfat ve kalsiyum yönetimi, PTH tedavisi ve nakil sonrası kemik hastalığı.",
+ secs:[
+ {h:"Biyokimyasal izlem",src:"mbd17",items:[
+  ["R","3.1.1","1C","Serum kalsiyum, fosfat, PTH ve ALP izlemine G3a’dan itibaren başlayın."],
+  ["NG","3.1.2","İzlem sıklığını anormalliklerin varlığına, büyüklüğüne ve KBH progresyon hızına göre belirleyin."],
+  ["T",["Evre","Ca ve P","PTH","ALP"],[["G3a–G3b","6–12 ayda bir","Başlangıç düzeyi ve progresyona göre","—"],["G4","3–6 ayda bir","6–12 ayda bir","12 ayda bir (PTH yüksekse daha sık)"],["G5 / G5D","1–3 ayda bir","3–6 ayda bir","12 ayda bir (PTH yüksekse daha sık)"]]],
+  ["R","3.1.3","2C","25(OH)D düzeyi ölçülebilir; eksiklik ve yetersizlik genel popülasyondaki stratejilerle düzeltilir."],
+  ["R","3.1.4","1C","Tedavi kararlarını tek bir değere değil eğilimlere dayandırın."],
+  ["R","3.1.5","2D","Ca×P çarpımı yerine kalsiyum ve fosfatın ayrı değerlerini birlikte değerlendirin."],
+  ["R","3.1.6","1B","Laboratuvarlar kullanılan yöntemi ve yöntem/örnek değişikliklerini klinisyene bildirmelidir."],
+  ["C","mkbmon"]
+ ]},
+ {h:"Kemik ve vasküler kalsifikasyon",src:"mbd17",items:[
+  ["R","3.2.1","2B","KBH-MKB bulgusu veya osteoporoz risk faktörü olan G3a–G5D hastalarda, sonuç tedaviyi etkileyecekse kırık riski için KMY ölçün."],
+  ["NG","3.2.2","Renal osteodistrofi tipinin bilinmesi tedaviyi etkileyecekse kemik biyopsisi makuldür (açıklanamayan kırık, kalıcı kemik ağrısı, açıklanamayan/dirençli hiperkalsemi, hipofosfatemi, osteomalazi veya alüminyum şüphesi, PTH tedavisine atipik yanıt)."],
+  ["R","3.2.3","2B","Belirgin yüksek veya düşük değerler kemik döngüsünü öngördüğü için PTH veya kemiğe özgü ALP kullanılabilir."],
+  ["R","3.2.4","2C","Kollajen sentez/yıkım belirteçlerini (P1NP, CTX vb.) rutin ölçmeyin."],
+  ["R","3.3.1","2C","Vasküler kalsifikasyon için lateral abdominal grafi, valvüler kalsifikasyon için ekokardiyografi BT’ye makul alternatiflerdir."],
+  ["R","3.3.2","2A","Bilinen vasküler/valvüler kalsifikasyonu olanlar en yüksek KV risk grubunda kabul edilir."]
+ ]},
+ {h:"Fosfat ve kalsiyum",src:"mbd17",items:[
+  ["NG","4.1.1","Tedaviyi fosfat, kalsiyum ve PTH’nin seri değerlendirmesine, birlikte ele alarak dayandırın."],
+  ["R","4.1.2","2C","Yüksek fosfatı normal aralığa doğru düşürün."],
+  ["R","4.1.3","2C","Erişkinlerde hiperkalsemiden kaçının."],
+  ["R","4.1.4","2C","G5D’de diyalizat kalsiyumu 1,25–1,50 mmol/l (2,5–3,0 mEq/l)."],
+  ["NG","4.1.5","Fosfat düşürücü tedavi kararını ilerleyici veya kalıcı yüksek fosfata dayandırın (önleyici erken tedavi verilerle desteklenmez)."],
+  ["R","4.1.6","2B","Fosfat düşürücü tedavi alan erişkinlerde kalsiyum içeren bağlayıcıların dozunu kısıtlayın."],
+  ["R","4.1.7","1C","Alüminyum içeren bağlayıcıların uzun süreli kullanımından ve diyalizat alüminyum kontaminasyonundan kaçının."],
+  ["R","4.1.8","2D","Hiperfosfatemide diyet fosfatını kısıtlayın; fosfat kaynağını (hayvansal, bitkisel, katkı maddesi) göz önüne alın."],
+  ["R","4.1.9","2C","G5D’de kalıcı hiperfosfatemide diyalizle fosfat uzaklaştırmayı artırın."]
+ ]},
+ {h:"PTH yönetimi",src:"mbd17",items:[
+  ["R","4.2.1","2C","Diyaliz dışı G3a–G5’te optimal PTH bilinmiyor; ilerleyici yükselen veya sürekli ULN üstü iPTH’de hiperfosfatemi, hipokalsemi, yüksek fosfat alımı ve D vitamini eksikliğini araştırın."],
+  ["R","4.2.2","2C","Diyaliz dışı erişkinlerde kalsitriol ve D vitamini analoglarını rutin kullanmayın; ağır ve ilerleyici hiperparatiroidisi olan G4–G5 için saklayın."],
+  ["R","4.2.3","2C","G5D’de iPTH’yi assay ULN’sinin yaklaşık 2–9 katında tutun; bu aralıkta her iki yönde belirgin değişim tedavi başlama/değişikliğine yol açmalıdır."],
+  ["R","4.2.4","2B","G5D’de PTH düşürücü tedavi gerektiğinde kalsimimetik, kalsitriol veya D vitamini analoğu ya da kalsimimetik + kalsitriol/analog kombinasyonu."],
+  ["R","4.2.5","2B","Medikal tedaviye yanıtsız ağır hiperparatiroidide paratiroidektomi."],
+  ["C","pth"]
+ ]},
+ {h:"Osteoporoz ve nakil",src:"mbd17",items:[
+  ["R","4.3.1","1A","G1–G2’de osteoporoz/yüksek kırık riski genel popülasyon gibi yönetilir."],
+  ["R","4.3.2","2B","PTH normal olan G3a–G3b’de genel popülasyon gibi tedavi edilir."],
+  ["R","4.3.3","2D","Biyokimyasal KBH-MKB bulgusu ve düşük KMY/frajilite kırığı olan G3a–G5D’de tedavi seçimi anormalliklerin büyüklüğü, geri dönüşümlülüğü ve progresyona göre; kemik biyopsisi düşünülerek."],
+  ["R","5.1","1B","Nakil sonrası erken dönemde kalsiyum ve fosfat stabil olana kadar en az haftalık ölçülür."],
+  ["R","5.6","2D","İlk 12 ayda eGFR >30 ve düşük KMY varsa D vitamini, kalsitriol/alfakalsidol ve/veya antirezorptif düşünülür."],
+  ["R","5.7","2C","Düşük KMY’li G4T–G5T diyaliz dışı G4–G5 gibi yönetilir."]
+ ]}
+ ]},
+/* ---------------- 8. BESLENME & METABOLİK ---------------- */
+{id:"diyet",nav:"Diyet Önerileri",yr:"2024 · 2025",title:"KBH’de Diyet Önerileri",
+ lede:"Genel diyet ilkeleri, protein, sodyum, potasyum ve fosfor; malnütrisyon taraması, ADPKD’de sıvı ve tuz, GLP-1 tedavisi sırasında beslenme.",
+ secs:[
+ {h:"Genel ilkeler",src:"ckd24",items:[
+  ["P","3.3.1","Bitkisel gıdaların hayvansal gıdalardan daha fazla, ultra işlenmiş gıdaların daha az tüketildiği sağlıklı ve çeşitli bir diyet önerin."],
+  ["P","3.3.2","Sodyum, fosfor, potasyum ve protein uyarlamalarını KBH şiddetine ve eşlik eden hastalıklara göre bireyselleştirmek için böbrek diyetisyenine yönlendirin."],
+  ["P","3.15.1.5","KV riski azaltmak için lipid tedavisine ek olarak bitki ağırlıklı Akdeniz tipi diyet düşünün."],
+  ["P","3.2.1","Optimal BKİ, tütün kullanmama ve fiziksel aktivite önerin; gerektiğinde diyetisyen ve programlara yönlendirin. Obezitesi olanlarda kilo vermeyi teşvik edin (3.2.2.4)."],
+  ["R","5.1","2D","KDIGO 2013 Lipid: hipertrigliseridemide (diyaliz ve nakil dahil) terapötik yaşam tarzı değişiklikleri."],
+  ["P","3.14.4","Gut önlemede alkol, et ve yüksek fruktozlu mısır şurubu alımını sınırlayın."]
+ ]},
+ {h:"Protein ve enerji",src:"ckd24",items:[
+  ["R","3.3.1.1","2C","G3–G5 erişkinlerde protein alımını 0,8 g/kg/gün düzeyinde tutun. KDIGO 2022 Diyabet (3.1.1, 2C): diyalize girmeyen diyabet ve KBH’de de 0,8 g/kg/gün."],
+  ["P","3.1.2","KDIGO 2022 Diyabet: hemodiyaliz ve periton diyalizindeki diyabetli hastalarda protein 1,0–1,2 g/kg/gün."],
+  ["P","3.3.1.1","Progresyon riski olan erişkinlerde yüksek protein alımından (>1,3 g/kg/gün) kaçının."],
+  ["P","3.3.1.2","İstekli ve uygun, böbrek yetmezliği riski olan erişkinlerde yakın gözetimle çok düşük proteinli diyet (0,3–0,4 g/kg/gün) + esansiyel amino asit veya ketoanalog (en fazla 0,6 g/kg/gün)."],
+  ["P","3.3.1.3","Metabolik olarak stabil olmayanlarda düşük veya çok düşük proteinli diyet uygulamayın."],
+  ["P","3.3.1.5","Kırılganlık ve sarkopenisi olan yaşlılarda daha yüksek protein ve enerji hedefleri düşünün."],
+  ["C","protein"]
+ ]},
+ {h:"Sodyum",src:"ckd24",items:[
+  ["R","3.3.2.1","2C","Sodyum alımı <2 g/gün (<90 mmol/gün; <5 g NaCl/gün). KDIGO 2021 KB (2.1.1, 2C) ile aynı."],
+  ["P","3.3.2.1","Tuz kaybettiren nefropatide sodyum kısıtlaması genellikle uygun değildir."],
+  ["P","2.1.2","KDIGO 2021: DASH tipi diyet veya potasyumdan zengin tuz ikameleri ileri KBH, hiporeninemik hipoaldosteronizm veya bozulmuş potasyum atılımında hiperkalemi riski nedeniyle uygun olmayabilir."]
+ ]},
+ {h:"Potasyum",src:"ckd24",items:[
+  ["P","3.11.5.1","G3–G5 ve hiperkalemide diyet ve farmakolojik müdahaleleri birlikte, eşlik eden hastalıkları ve yaşam kalitesini gözeterek bireysel planlayın; diyetisyen değerlendirmesi önerilir."],
+  ["P","3.11.5.2","Hiperkalemi öyküsü olan veya hiperkalemi riskinin arttığı dönemlerdeki G3–G5 hastalarda biyoyararlanımı yüksek potasyum içeren gıdaları (örn. işlenmiş gıdalar, potasyum katkılı ürünler) sınırlayın."],
+  ["N","Potasyum kısıtlaması bitkisel ağırlıklı sağlıklı diyetin tümden terk edilmesi anlamına gelmez; hedef, katkı maddeleri ve işlenmiş gıdalardan gelen, emilimi yüksek potasyumu azaltmaktır. Hiperkalemide ilk adım diyet ve RASi dışı ilaçların gözden geçirilmesidir."]
+ ]},
+ {h:"Fosfor",src:"mbd17",items:[
+  ["R","4.1.8","2D","Hiperfosfatemide diyet fosfatını tek başına veya diğer tedavilerle birlikte kısıtlayın."],
+  ["NG","4.1.8","Diyet önerisinde fosfat kaynağını (hayvansal, bitkisel, katkı maddesi) göz önünde bulundurun; bitkisel fosfatın emilimi daha düşük, katkı maddesi fosfatının emilimi yüksektir."],
+  ["NG","4.1.5","Fosfat düşürücü tedaviye (diyet dahil) ilerleyici veya kalıcı yüksek fosfat varlığında karar verin; önleyici erken kısıtlama verilerle desteklenmez."],
+  ["R","4.1.9","2C","G5D’de kalıcı hiperfosfatemide diyalizle fosfat uzaklaştırmayı artırın."]
+ ]},
+ {h:"Malnütrisyon taraması",src:"ckd24",items:[
+  ["P","5.2.3.2","G4–G5, >65 yaş veya istemsiz kilo kaybı, kırılganlık, iştahsızlık olanlarda yılda iki kez geçerli bir araçla malnütrisyon taraması yapın."],
+  ["P","5.2.3.3","Malnütrisyon bulgusu olanlarda tıbbi beslenme tedavisini böbrek diyetisyeni gözetiminde sağlayın."],
+  ["P","3.3.1.3","Metabolik olarak stabil olmayan veya malnütrisyonlu hastada protein kısıtlamasından kaçının."]
+ ]},
+ {h:"ADPKD’de sıvı ve tuz",src:"pkd25",items:[
+  ["X","Sodyum <2 g/gün (<5 g NaCl) htTKV artışını yavaşlatır ve tolvaptana bağlı poliüriyi azaltır (UN 4.1.6.3)."],
+  ["X","Yüksek su alımı (≥2–3 l/gün) vazopresini baskılar. Su alımını artırmayı önermeden önce sıvı retansiyonu ve dilüsyonel hiponatremi risk etkenlerini değerlendirin (UN 4.2.2.1)."],
+  ["W","G4–G5’te (eGFR <30) zorlanmış yüksek su alımından kaçının; hiponatremi ve hipervolemi riski artar, özellikle SSRI gibi hiponatremiye yatkınlaştıran ilaçlarla. G4–G5’te diyet diğer KBH nedenlerinden farklı değildir; hiperkalemi, asidoz ve MKB için bireysel danışmanlık gerekir."],
+  ["P","4.1.6.1","Tolvaptan alanlar susadığında tercihen su içmelidir."]
+ ]},
+ {h:"GLP-1 temelli tedavi sırasında beslenme",src:"d27",items:[
+  ["DP","1.3.2","Kas kütlesi ve fonksiyonunu korumak için yapılandırılmış direnç egzersizini teşvik edin."],
+  ["DP","1.3.3","Beslenme yetersizliği, yeme bozukluğu ve GİS yan etki riskine karşı kişiselleştirilmiş destek sağlayın; KBH için tıbbi beslenme tedavisini optimize edin (protein-enerji kaybını önleyin)."]
+ ]}
+ ]},
+{id:"beslenme",nav:"Metabolik Komplikasyonlar",yr:"2024",title:"Asidoz, Hiperkalemi ve Hiperürisemi",
+ lede:"Metabolik asidoz, hiperkalemi algoritması ve ürik asit yönetimi.",
+ secs:[
+ {h:"Metabolik asidoz",src:"ckd24",items:[
+  ["P","3.10.1","Klinik sonuçları olabilecek asidozu (erişkinde serum bikarbonat <18 mmol/l) önlemek için diyet müdahalesiyle veya olmadan farmakolojik tedavi düşünün."],
+  ["P","3.10.2","Tedavide bikarbonatın üst sınırı aşmadığını, KB, potasyum ve sıvı durumunu bozmadığını izleyin."]
+ ]},
+ {h:"Hiperkalemi",src:"ckd24",items:[
+  ["P","3.11.1.1","Potasyum ölçümünü etkileyen diürnal/mevsimsel değişim, plazma–serum farkı ve ilaç etkilerinin farkında olun."],
+  ["P","3.11.5.1","G3–G5 ve hiperkalemide diyet ve farmakolojik müdahaleleri içeren, eşlik eden hastalıkları ve yaşam kalitesini gözeten bireysel yaklaşım; diyetisyen değerlendirmesi önerilir."],
+  ["P","3.11.5.2","Hiperkalemi öyküsü olanlarda biyoyararlanımı yüksek potasyum içeren gıdaları (örn. işlenmiş gıdalar) sınırlayın."],
+  ["T",["Basamak","K⁺ >5,5 mmol/l iken eylem"],[["1. Düzeltilebilir etkenler","RASi dışı ilaçları gözden geçirin (NSAİİ, trimetoprim) · Diyet potasyumunu değerlendirin, diyetisyene yönlendirin"],["2. İlaçlar","Uygun diüretik kullanımı · Serum bikarbonatını optimize edin · Lisanslı potasyum bağlayıcılar (patiromer, SZC)"],["3. Son çare","RASi/MRA dozunu azaltın veya kesin; kesme KV olayları artırır, durum izin verince yeniden başlayın"]]],
+  ["T",["Şiddet","Klinik olarak kötü veya AKİ","Beklenmeyen sonuç"],[["Orta (K⁺ 6,0–6,4)","Hastanede değerlendirip tedavi edin","24 saat içinde tekrarlayın"],["Ağır (K⁺ ≥6,5)","Acil değerlendirme ve tedavi; kan testi ve EKG monitörü","Acil değerlendirme"]]],
+  ["C","kalgo"]
+ ]},
+ {h:"Hiperürisemi ve gut",src:"ckd24",items:[
+  ["R","3.14.1","1C","Semptomatik hiperürisemide ürik asit düşürücü müdahale önerilir."],
+  ["P","3.14.1","İlk gut atağından sonra (özellikle kaçınılabilir tetikleyici yoksa veya ürik asit >9 mg/dl ise) tedavi düşünün."],
+  ["P","3.14.2","Ürikozürik yerine ksantin oksidaz inhibitörü tercih edin."],
+  ["P","3.14.3","Akut gutta NSAİİ yerine düşük doz kolşisin veya intraartiküler/oral glukokortikoid."],
+  ["R","3.14.2","2D","Asemptomatik hiperürisemide KBH progresyonunu yavaşlatmak amacıyla ürik asit düşürücü kullanmayın."]
+ ]}
+ ]},
+/* ---------------- 9. İLAÇ GÜVENLİĞİ ---------------- */
+{id:"ilac",nav:"İlaç Güvenliği ve Kontrast",yr:"2024",title:"İlaç Yönetimi, Hasta Günü Kuralları ve Kontrast Madde",
+ lede:"GFR’ye göre doz ayarı, polifarmasi, hasta günü kuralları ve iyotlu/gadolinyumlu kontrast kullanımı.",
+ secs:[
+ {h:"İlaç seçimi ve doz",src:"ckd24",items:[
+  ["P","4.1.1","KBH’de nefrotoksik ilaçlara duyarlılık artmıştır; yarar ve zararı tartın."],
+  ["P","4.1.2","Dar terapötik aralıklı, yan etki veya nefrotoksisite potansiyeli olan ilaçlarda eGFR, elektrolit ve gerektiğinde ilaç düzeyini izleyin."],
+  ["P","4.1.3","Reçetesiz ilaçları ve bitkisel ürünleri gözden geçirip sınırlayın."],
+  ["P","4.1.4","Doğurganlık çağındaki kişilerde teratojenite potansiyelini gözden geçirin ve kontrasepsiyon danışmanlığı verin."],
+  ["P","4.2.2","Çoğu durumda kreatinin temelli eGFR ilaç dozlaması için uygundur."],
+  ["P","4.2.3","Dar terapötik aralık veya eGFRcr’nin güvenilmez olduğu durumlarda eGFRcr-cys veya mGFR kullanın."],
+  ["P","4.2.4","Vücut ağırlığı uçlarında BSA’ya indekslenmemiş eGFR gerekebilir."],
+  ["P","4.2.5","GFR kararlı durumda değilse dozu buna göre uyarlayın."]
+ ]},
+ {h:"Polifarmasi ve hasta günü kuralları",src:"ckd24",items:[
+  ["P","4.3.1","Periyodik olarak ve bakım geçişlerinde kapsamlı ilaç incelemesi yapın."],
+  ["P","4.3.2","Akut hastalıkta kesilen ilaçların ne zaman yeniden başlanacağını hastaya ve ekibe açıkça bildirip kayda geçirin."],
+  ["P","4.3.3","Elektif cerrahiden 48–72 saat önce veya akut yan etki yönetiminde metformin, ACEi, ARB ve SGLT2i’ye planlı ara vermeyi düşünün; yeniden başlamamak zarar doğurur."],
+  ["N","SADMANS: Sülfonilüre, ACEi, Diüretik/direkt renin inhibitörü, Metformin, ARB, NSAİİ, SGLT2i. Dehidratasyona yol açan hastalıkta geçici kesilir; iyileşmede yeniden başlanır."]
+ ]},
+ {h:"Görüntüleme ve kontrast",src:"ckd24",items:[
+  ["P","4.4.1","Görüntüleme endikasyonunu genel popülasyondaki gibi değerlendirin; risk ve yararı bireysel belirleyin."],
+  ["P","4.4.1.1","Kardiyak girişimde intraarteriyel kontrast alacaklarda AKİ riskini geçerli araçlarla değerlendirin."],
+  ["P","4.4.1.2","AKİ veya GFR <60 olan elektif tetkiklerde IV kontrast radyoloji derneklerinin uzlaşı raporlarına göre yönetilebilir."],
+  ["L",["Düşük veya izo-ozmolar kontrast, tanı için en düşük doz.","AKİ veya eGFR <30’da gerekli olmayan nefrotoksikleri (NSAİİ, diüretik, aminoglikozid, amfoterisin, platin, zoledronat, metotreksat) kontrasttan 24–48 saat önce ve 48 saat sonra kesin.","AKİ yoksa ve eGFR >30 ise metformin kesilmesi gerekmez."]],
+  ["P","4.4.2.1","GFR <30’da gadolinyum gerekiyorsa ACR grup II ve III ajanları (gadobutrol, gadoterat, gadoteridol, gadobenat, gadoksetat) tercih edin."]
+ ]}
+ ]},
+/* ---------------- İLAÇ DOZLARI ---------------- */
+{id:"doz",nav:"İlaç Dozları",yr:"2013–2026",title:"KBH’de İlaç Dozları",
+ lede:"Kılavuzlarda dozu verilen ilaçlar: SGLT2i, finerenon, statinler, ESA, HIF-PHI, demir, tolvaptan; GFR’ye göre doz ilkeleri ve girişim öncesi NOAC ara verme süreleri.",
+ secs:[
+ {h:"GFR’ye göre doz ilkeleri",src:"ckd24",items:[
+  ["P","4.2.1","Böbrekle atılan ilaçları dozlarken GFR’yi göz önüne alın."],
+  ["P","4.2.2","Çoğu durumda kreatinin temelli eGFR dozlama için uygundur."],
+  ["P","4.2.3","Dar terapötik aralık, toksisite veya eGFRcr’nin güvenilmez olduğu durumlarda eGFRcr-cys veya ölçülmüş GFR kullanın (karboplatin, sisplatin, metotreksat gibi bazı antikanser ilaçlarda mGFR tercih edilebilir)."],
+  ["P","4.2.4","Vücut ağırlığı uçlarında, özellikle dar terapötik aralıklı ilaçlarda BSA’ya indekslenmemiş eGFR (ml/dk) gerekebilir."],
+  ["P","4.2.5","GFR, filtrasyon belirteçlerinin non-GFR belirleyicileri veya dağılım hacmi kararlı durumda değilse dozu uyarlayın."],
+  ["P","4.1.2","Dar terapötik aralıklı veya nefrotoksik ilaçlarda eGFR, elektrolit ve ilaç düzeyi izlenmelidir."],
+  ["C","bsa"]
+ ]},
+ {h:"Böbrek ve kalp koruyucu ilaçlar",src:"ckd24",items:[
+  ["T",["İlaç","Doz","Başlama / kesme"],[
+   ["Dapagliflozin","10 mg/gün","eGFR ≥20’de başlanır; <20’ye düşünce tolere edilirse RRT’ye kadar sürdürülür"],
+   ["Empagliflozin","10 mg/gün","Aynı"],
+   ["Kanagliflozin","100 mg/gün","Aynı"],
+   ["Finerenon","eGFR 25–59: 10 mg/gün · eGFR ≥60: 20 mg/gün","Başlangıçta K⁺ ≤4,8; K⁺ ≤4,8 ise 10→20 mg; K⁺ >5,5’te tutulur, ≤5,0’da 10 mg ile yeniden"],
+   ["ACEi / ARB","Onaylı ve tolere edilen en yüksek doz","2–4 haftada kreatinin ve K⁺; 4 haftada >%30 kreatinin artışında değerlendirme"]],"SGLT2i dozları sabittir; GFR’ye göre titrasyon gerekmez. Kaynak: KDIGO 2024 Bölüm 3, Şekil 26; KDIGO 2022 Şekil 6."],
+  ["C","fin"]
+ ]},
+ {h:"Glukoz düşürücüler",src:"dm22",items:[
+  ["T",["İlaç","Doz ve eGFR’ye göre ayar"],[
+   ["Metformin","eGFR ≥45: tam doz · 30–44: maksimum dozun yarısı · <30 veya diyaliz: kesilir. Başlangıç IR 500/850 mg/gün veya XR 500 mg/gün, haftalık titrasyon"],
+   ["Dulaglutid","0,75–1,5 mg/hafta; ayar yok, eGFR >15"],
+   ["Liraglutid","1,2–1,8 mg/gün; ayar yok, ağır KBH’de veri sınırlı"],
+   ["Semaglutid","Enjeksiyon 0,5–1 mg/hafta; oral 3/7/14 mg/gün; ayar yok"],
+   ["Eksenatid","10 µg × 2/gün, CrCl >30 · uzun etkili 2 mg/hafta, eGFR >45"],
+   ["Liksisenatid","10–20 µg/gün; eGFR <15’te önerilmez"],
+   ["Sülfonilüre, insülin","Hipoglisemi riski yüksek; düşük eGFR’de uzun etkili/böbrekle atılan sülfonilürelerden kaçının; GLP-1 RA veya SGLT2i eklenince doz azaltmayı düşünün"],
+   ["DPP-4 inhibitörü","eGFR’ye göre dozlanır; GLP-1 RA ile birlikte kullanılmaz"]],"KDIGO 2022 Şekil 23, 27, 29. Ajan bazında DPP-4i ve sülfonilüre dozları kılavuzda verilmez; ürün bilgisine bakınız."],
+  ["C","dm"]
+ ]},
+ {h:"Statinler (G3a–G5, diyaliz ve nakil)",src:"lip13",items:[
+  ["T",["Statin","mg/gün"],[["Atorvastatin","20"],["Rosuvastatin","10"],["Simvastatin/ezetimib","20/10"],["Pravastatin","40"],["Simvastatin","40"],["Fluvastatin","80"],["Pitavastatin","2"],["Lovastatin","Çalışılmamış"]],"G1–G2’de genel popülasyon dozları. Rosuvastatin 40 mg G1–G2 nakil dışı hastada önerilmez. Siklosporin bazı statinlerin düzeyini artırır; Asya ülkelerinde daha düşük doz uygun olabilir."]
+ ]},
+ {h:"Anemi tedavisi",src:"an26",items:[
+  ["T",["ESA","Diyaliz dışı başlangıç","G5D başlangıç"],[["Epoetin alfa/beta","~50 U/kg haftada 1–2","50–100 U/kg haftada 3"],["Darbepoetin alfa","0,45 µg/kg haftalık veya 40–100 µg 2–4 haftada bir","0,45 µg/kg haftalık veya 0,75 µg/kg 2 haftada bir"],["Metoksi PEG-epoetin beta","0,6 µg/kg 2 haftada bir veya 1,5 µg/kg ayda bir","0,6 µg/kg 2 haftada bir"]],"Doz 4 haftada bir defadan sık değiştirilmez; 2–4 haftada Hb >1 g/dl artışında %25–50 azaltılır."],
+  ["T",["HIF-PHI","Başlangıç","Maksimum"],[["Roksadustat","70 mg (<100 kg) / 100 mg (≥100 kg), haftada 3","3,0 mg/kg"],["Daprodustat","2–4 mg/gün (naif), 4 mg (ESA’dan geçiş)","24 mg"],["Vadadustat","300 mg/gün","600 mg"],["Enarodustat","2 mg (HD: 4 mg)/gün","8 mg"],["Molidustat","25 mg (G5D: 75 mg)/gün","200 mg"],["Desidustat","100 mg, haftada 3","150 mg"]]],
+  ["X","Oral demir: günde yaklaşık 200 mg elementer demir; etkisi 1–3 ayda değerlendirilir. IV demirde formülasyon seçimi maliyet, güvenlik, tolerans ve dozlama şemasına göre yapılır; tek seferde önerilen maksimum doz aşılmaz (UN 2.4, 2.9)."],
+  ["T",["IV demir","Elementer Fe","Maks. tek doz","Maks. doz için en kısa infüzyon","En kısa enjeksiyon","Not"],[
+   ["Düşük molekül ağırlıklı demir dekstran","50 mg/ml","20 mg/kg","4–6 sa","—","Yüksek MA dekstrana göre aşırı duyarlılık daha az"],
+   ["Demir sükroz","20 mg/ml","KBH 200 mg · PD 400 mg","15 dk (KBH) · 2,5 sa (PD)","5 dk","HD dışı KBH: 5 hafta 5×200 mg; PD: 14 gün arayla 2×300 mg (1,5 sa), 14 gün sonra 400 mg (2,5 sa)"],
+   ["Ferrik glukonat","12,5 mg/ml","125 mg","60 dk","10 dk","Sükroz kompleksi: 250 mg, haftalık 4 doz"],
+   ["Ferrik karboksimaltoz","50 mg/ml","750 mg (FDA) · 1000 mg (EMA)","15 dk","7,5 dk (FDA) · 15 dk (EMA)","1–2 seansta tam doz; hipofosfatemi (özellikle erken KBH ve nakil alıcısı)"],
+   ["Ferrik derizomaltoz","100 mg/ml","1000 mg (FDA) · 20 mg/kg (EMA)","20 dk (FDA) · ≤1000 mg >15 dk, >1000 mg >30 dk (EMA)","250 mg/dk, maks. 500 mg (EMA)","Tek seansta tam doz"],
+   ["Ferumoksitol","30 mg/ml","510 mg","15 dk","15 dk","Tek seansta tam doz"]],"KDIGO 2026 Anemi Tablo 4. IV demir yalnız aşırı duyarlılık ve hipotansiyonu yönetme olanağı olan yerde verilir; rutin test dozu ve premedikasyon gerekmez."],
+  ["C","esa"]
+ ]},
+ {h:"ADPKD, MKB ve diğerleri",src:"pkd25",items:[
+  ["T",["İlaç","Doz"],[
+   ["Tolvaptan","45 mg sabah + 15 mg 8 saat sonra → ≥1 hafta sonra 60/30 → hedef 90/30 mg. Eşzamanlı CYP3A inhibitörü, karaciğer enzim artışı veya intoleransta doz azaltılır (alt basamaklar 30/15, 15/15 mg) ya da ara verilir; güçlü CYP3A inhibitörü mutlak kontrendikasyondur."],
+   ["Diyalizat kalsiyumu (G5D)","1,25–1,50 mmol/l (KDIGO 2017 4.1.4, 2C)"],
+   ["Kalsiyum içeren fosfat bağlayıcı","Erişkinde doz kısıtlanır (4.1.6, 2B); alüminyumlu bağlayıcıdan uzun süreli kaçınılır"],
+   ["Kalsitriol / D vitamini analoğu","Diyaliz dışı erişkinde rutin değil; ağır ilerleyici HPT’li G4–G5’e saklanır"],
+   ["Gut, akut atak","NSAİİ yerine düşük doz kolşisin veya intraartiküler/oral glukokortikoid (UN 3.14.3)"],
+   ["Ürat düşürücü","Ürikozürik yerine ksantin oksidaz inhibitörü (UN 3.14.2)"],
+   ["Aspirin (sekonder korunma)","Düşük doz (3.15.2.1, 1C)"]]]
+ ]},
+ {h:"NOAC: elektif girişim öncesi son doz",src:"ckd24",items:[
+  ["P","3.16.2","NOAC dozu yaş, kilo ve GFR’ye göre ayarlanmalıdır; G4–G5’te dikkat. Güncel dozlama için ürün bilgisine başvurun."],
+  ["T",["CrCl (ml/dk)","Apiksaban / edoksaban / rivaroksaban (düşük / yüksek kanama riski)","Dabigatran (düşük / yüksek)"],[["≥80","≥24 sa / ≥48 sa","≥24 sa / ≥48 sa"],["50–80","≥24 sa / ≥48 sa","≥36 sa / ≥72 sa"],["30–50","≥24 sa / ≥48 sa","≥48 sa / ≥96 sa"],["15–30","≥36 sa / ≥48 sa","Resmi endikasyon yok"]]],
+  ["C","preop"]
+ ]}
+ ]},
+/* ---------------- KAN ŞEKERİ ---------------- */
+{id:"glisemi",nav:"Kan Şekeri Yönetimi",yr:"2024 · 2027T",title:"Diyabet ve KBH’de Glisemik Yönetim",
+ lede:"Glukoz düşürücü ve organ koruyucu tedavinin basamakları, hasta günü kuralları, kontrast ve nakil adayında diyabet.",
+ secs:[
+ {h:"Genel yaklaşım",src:"ckd24",items:[
+  ["X","KDIGO 2024 (3.5) glisemik kontrolün ayrıntıları için KDIGO 2022 Diyabet ve KBH kılavuzuna yönlendirir; bu bölüm iki kılavuzu ve 2027 odaklı güncelleme taslağını birlikte sunar."],
+  ["N","Temel: yaşam tarzı (fiziksel aktivite, beslenme, kilo kaybı) + ilk basamak metformin (eGFR ≥30) ve SGLT2i (eGFR ≥20). Ek glisemik kontrol gerekirse GLP-1 RA tercih edilir; diğer seçenekler DPP-4 inhibitörü, insülin, sülfonilüre, TZD, alfa-glukozidaz inhibitörü (KDIGO 2022 Şekil 23). Albüminüride RASi, persistan albüminüride nsMRA ve statin eklenir."],
+  ["C","dm"]
+ ]},
+ {h:"Glisemik izlem ve hedefler",src:"dm22",items:[
+  ["R","2.1.1","1C","Diyabet ve KBH’de glisemik kontrolü HbA1c ile izleyin. Yılda iki kez makuldür; hedefe ulaşılamadıysa veya tedavi değiştiyse yılda 4 kez (UN 2.1.1)."],
+  ["P","2.1.2","HbA1c’nin doğruluğu G4–G5’te azalır, diyaliz hastalarında güvenilirliği düşüktür."],
+  ["P","2.1.3","HbA1c kan şekeri veya semptomlarla uyumsuzsa CGM’den hesaplanan glukoz yönetim göstergesi (GMI) kullanılabilir."],
+  ["P","2.1.4","Hipoglisemiye yatkınlaştıran ilaç kullananlarda günlük CGM veya parmak ucu ölçümü (SMBG) hipoglisemiyi önlemeye yardımcı olabilir."],
+  ["R","2.2.1","1C","Diyalize girmeyen diyabet ve KBH hastalarında bireyselleştirilmiş HbA1c hedefi: <%6,5 ile <%8,0 arası."],
+  ["T",["Daha sıkı hedef (<%6,5–7,0)","Daha gevşek hedef (<%7,5–8,0)"],[["Erken KBH (G1)","İleri KBH (G5)"],["Makrovasküler hastalık yok/hafif","Makrovasküler hastalık var"],["Az komorbidite, uzun yaşam beklentisi","Çok komorbidite, kısa yaşam beklentisi"],["Hipoglisemi farkındalığı korunmuş, kaynaklar yeterli","Hipoglisemi farkındalığı bozuk, kaynaklar kısıtlı"],["Hipoglisemi riski düşük ilaçlar","Hipoglisemi riski yüksek ilaçlar"]],"KDIGO 2022 Şekil 14: hedefi belirleyen etkenler."],
+  ["P","2.2.2","Bazı hastalarda HbA1c yerine CGM metrikleri (hedef aralıkta geçen süre) kullanılabilir."]
+ ]},
+ {h:"Metformin",src:"dm22",items:[
+  ["R","4.1.1","1B","T2D, KBH ve eGFR ≥30 olan hastalarda metformin."],
+  ["P","4.1.1","eGFR ≥30 olan T2D’li böbrek nakli alıcıları da aynı şekilde metforminle tedavi edilir."],
+  ["T",["eGFR","Başlangıç","İdame","Böbrek fonksiyonu izlemi"],[["≥60","IR: 500 veya 850 mg/gün, 7 günde bir 500–850 mg artış; XR: 500 mg/gün, 7 günde bir 500 mg artış","Aynı doz","En az yılda bir"],["45–59","Aynı","Aynı doz; hipoperfüzyon/hipoksemiye yatkınlıkta azaltmayı düşünün","En az 3–6 ayda bir"],["30–44","Yarım dozla başlayın, maksimum dozun yarısına kadar titre edin","Dozu yarıya indirin","En az 3–6 ayda bir"],["<30 veya diyaliz","Başlanmaz","Kesin","—"]],"KDIGO 2022 Şekil 27."],
+  ["P","4.1.4","4 yıldan uzun metformin kullanımı veya risk varlığında B12 eksikliğini yıllık izleyin."]
+ ]},
+ {h:"GLP-1 RA, diğer ajanlar ve hipoglisemi",src:"dm22",items:[
+  ["P","4.2.2","GİS yan etkileri azaltmak için düşük dozla başlayıp yavaş titre edin."],
+  ["P","4.2.3","GLP-1 RA ile DPP-4 inhibitörü birlikte kullanılmaz."],
+  ["P","4.2.4","GLP-1 RA tek başına hipoglisemi yapmaz; sülfonilüre veya insülinle birlikte risk artar, bu ilaçların dozu azaltılabilir veya kesilebilir. SGLT2i başlarken de insülin/sülfonilüre azaltımı düşünülmelidir."],
+  ["P","4.2.5","Obezitesi olan T2D ve KBH’de kilo kaybı için GLP-1 RA tercih edilebilir."],
+  ["T",["GLP-1 RA","Doz","KBH’de doz ayarı"],[["Dulaglutid","0,75 ve 1,5 mg haftada bir","Ayar gerekmez; eGFR >15’te kullanılır"],["Eksenatid","10 µg günde iki kez","CrCl >30 ml/dk’da kullanılır"],["Eksenatid uzun etkili","2 mg haftada bir","eGFR >45’te kullanılır"],["Liraglutid","1,2 ve 1,8 mg günde bir","Ayar gerekmez; ağır KBH’de veri sınırlı"],["Liksisenatid","10 ve 20 µg günde bir","Ayar gerekmez; eGFR <15’te önerilmez"],["Semaglutid (enjeksiyon)","0,5 ve 1 mg haftada bir","Ayar gerekmez; ağır KBH’de veri sınırlı"],["Semaglutid (oral)","3, 7 veya 14 mg günde bir","Ayar gerekmez; ağır KBH’de veri sınırlı"]],"KDIGO 2022 Şekil 29. MACE azalması gösterilenler: liraglutid, enjeksiyon semaglutid, dulaglutid (ayrıca albiglutid, efpeglenatid)."],
+  ["P","4.3","Ek glisemik ilaç seçimini hasta tercihi, komorbidite, eGFR ve maliyet belirler; GLP-1 RA genellikle tercih edilir. Tüm glukoz düşürücüler eGFR’ye göre seçilip dozlanmalı; uzun etkili veya böbrekle atılan sülfonilürelerden düşük eGFR’de kaçınılmalıdır. DPP-4 inhibitörlerinin böbrek veya KV yararı gösterilmemiştir."],
+  ["T",["Hipoglisemi riski","İlaç sınıfları"],[["Yüksek (CGM/SMBG gerekçesi güçlü)","İnsülin, sülfonilüreler, meglitinidler"],["Düşük","Metformin, SGLT2i, GLP-1 RA, DPP-4 inhibitörleri"]],"KDIGO 2022 Şekil 13."]
+ ]},
+ {h:"Diyaliz ve eGFR <15",src:"dm22",items:[
+  ["X","Metformin ve SGLT2i diyaliz başlangıcında kesilir (SGLT2i’nin glukozürik etkisi bu düzeyde önemsizdir; eGFR <20’de de başlanmışsa RRT’ye kadar sürdürülebilir)."],
+  ["T",["eGFR <15 veya diyaliz","İlaçlar"],[["Daha uygun","DPP-4 inhibitörü, insülin, TZD"],["Daha az uygun","Sülfonilüre, alfa-glukozidaz inhibitörü"]],"KDIGO 2022 Şekil 25. Diyaliz hastasında ilaç klirensi azaldığı için hipoglisemi riski yüksektir; T1D’de insülin tedavisi diyabet derneklerinin kılavuzlarına bırakılmıştır."]
+ ]},
+ {h:"Organ koruyucu ve glukoz düşürücü ilaçlar",src:"ckd24",items:[
+  ["R","3.7.1","1A","Tip 2 diyabet, KBH ve eGFR ≥20 olan hastalarda SGLT2i. SGLT2i hipoglisemi riskini artırmaz; KB, ürik asit, sıvı yükü ve ciddi hiperkalemi riskini azaltır."],
+  ["R","3.9.1","1B","Metformin ve SGLT2i’ye rağmen glisemik hedefe ulaşamayan veya bunları kullanamayan T2D ve KBH’li erişkinlerde uzun etkili GLP-1 RA; KV yararı kanıtlanmış ajan seçilmeli."],
+  ["R","3.8.1","2A","T2D, eGFR >25, normal potasyum ve maksimum RASi’ye rağmen albüminüride nonsteroid MRA."],
+  ["R","3.6.3","1B","Diyabeti olan, A2–A3 albüminürili G1–G4 KBH’de RASi."],
+  ["DR","1.3.1","1A","T2D ve KBH’de yüksek majör KV/böbrek olay riski veya glisemik hedefe ulaşamama durumunda KV/böbrek yararı kanıtlanmış GLP-1 temelli tedavi."],
+  ["DR","1.2.1","1A","T2D, eGFR ≥25, normal K⁺ ve maksimum RASi altında albüminüride nsMRA."],
+  ["DR","1.2.2","2C","Tip 1 diyabet, eGFR ≥25, normal K⁺ ve albüminüride nsMRA."],
+  ["DP","1.2.1","T2D’de SGLT2i ve nsMRA eşzamanlı başlanabilir."],
+  ["DP","1.3.4","GLP-1 tedavisi sırasında kilo ve kas değişimi nedeniyle kreatinin ve sistatin C temelli eGFR’nin sınırlılıklarını göz önünde bulundurun."],
+  ["R","2.2","2A","KDIGO 2013: 18–49 yaş diyabetli KBH’de statin."]
+ ]},
+ {h:"Hasta günü, cerrahi ve kontrast",src:"ckd24",items:[
+  ["P","4.3.3","Elektif cerrahiden 48–72 saat önce metformin ve SGLT2i’ye (ayrıca ACEi/ARB) planlı ara vermeyi düşünün; olay sonrası yeniden başlamamak zarar doğurur."],
+  ["P","3.7.2","Uzamış açlık, cerrahi veya kritik hastalıkta ketoz riski nedeniyle SGLT2i’ye ara verin; klinik durum stabil ve oral alım yeterli olunca yeniden başlayın (2027 taslak UN 1.1.2)."],
+  ["N","Dehidratasyona yol açan hastalıkta SADMANS ilaçları (sülfonilüre, ACEi, diüretik, metformin, ARB, NSAİİ, SGLT2i) geçici kesilir; iyileşince yeniden başlanır."],
+  ["X","İyotlu kontrast: AKİ yoksa ve eGFR >30 ise metforminin kesilmesi gerekmez."]
+ ]},
+ {h:"Diyabet ve böbrek nakli adayı",src:"tx20",items:[
+  ["R","8.1","1B","Tip 1 ve tip 2 diyabetli adaylar böbrek nakli için değerlendirilir."],
+  ["R","8.1.1","2A","Böbrek yetmezliği ve tip 1 diyabeti olan adaylar olanak varsa eşzamanlı pankreas-böbrek nakli için değerlendirilir."],
+  ["R","8.2","2A","Bilinen diyabeti olmayan adaylarda nakil sonrası diyabet riskini öngörmek için OGTT."],
+  ["R","13.3","2C","Diyabetli asemptomatik adaylar yüksek KAH riskli kabul edilerek noninvaziv KAH taramasına alınır."]
+ ]},
+ {h:"ADPKD’de diyabet",src:"pkd25",items:[
+  ["X","KDIGO 2022 Diyabet kılavuzu ADPKD’de de uygulanır; istisna SGLT2i’dir. ADPKD hastaları çalışmalardan dışlandığı ve osmotik diürezle vazopresin artabileceği için SGLT2i önerilmez (UN 4.7.1); tek gerekçe kalp yetmezliğidir."]
+ ]}
+ ]},
+/* ---------------- PREOPERATİF ---------------- */
+{id:"preop",nav:"Preoperatif Değerlendirme",yr:"2020 · 2024",title:"KBH’de Preoperatif ve Girişim Öncesi Değerlendirme",
+ lede:"Elektif cerrahi ve girişim öncesi ilaç ara verme, antikoagülasyon, kontrast, anemi ve koroner değerlendirme; böbrek nakli öncesi cerrahi hazırlık.",
+ secs:[
+ {h:"İlaçlar",src:"ckd24",items:[
+  ["P","4.3.3","Elektif cerrahiden 48–72 saat önce metformin, ACEi, ARB ve SGLT2i’ye planlı ara vermeyi düşünün."],
+  ["P","4.3.2","Kesilen ilaçların ne zaman yeniden başlanacağını hastaya ve ekiplere açıkça bildirin, kayda geçirin; yeniden başlamamak istemeden zarara yol açar."],
+  ["P","4.3.1","Bakım geçişlerinde kapsamlı ilaç incelemesi yapın; NSAİİ ve gereksiz nefrotoksikleri kesin."],
+  ["R","13.11","2A","KDIGO 2020: Aspirin, β-bloker ve statin bekleme listesinde ve perioperatif dönemde sürdürülür."],
+  ["P","3.4.3.4","KDIGO 2026: Akut inme, vasküler erişim trombozu veya tromboembolik olayla yatışta ESA’ya ara verilebilir; HIF-PHI KV/tromboembolik olayda tutulur."]
+ ]},
+ {h:"Antikoagülan ve antiplatelet",src:"ckd24",items:[
+  ["P","3.16.3","NOAC kesme süresi girişimin kanama riskine, kullanılan NOAC’a ve GFR’ye göre belirlenir."],
+  ["T",["CrCl (ml/dk)","Apiksaban / edoksaban / rivaroksaban","Dabigatran"],[["≥80","Düşük risk ≥24 sa · yüksek ≥48 sa","≥24 sa · ≥48 sa"],["50–80","≥24 sa · ≥48 sa","≥36 sa · ≥72 sa"],["30–50","≥24 sa · ≥48 sa","≥48 sa · ≥96 sa"],["15–30","≥36 sa · ≥48 sa","Resmi endikasyon yok"]],"Önemli kanama riski yok ve lokal hemostaz sağlanabiliyorsa girişim çukur düzeyde (son dozdan ≥12 veya 24 sa) yapılabilir."],
+  ["NG","7.4.1","KDIGO 2020: Tek antiplatelet (aspirin, klopidogrel, tikagrelor) bekleme listesinde sürdürülebilir."],
+  ["NG","7.4.2.1","Aspirin dışı antiplateletler canlı donörlü nakilden 5 gün önce kesilir (kontrendike değilse)."],
+  ["NG","7.4.2","DAPT zorunlu süresinde nakil, kesmenin veya devam ederek ameliyatın riski yarardan büyükse ertelenir."],
+  ["NG","7.4.3","DOAC alan hastaya, perioperatif deneyim ve antidot yoksa nakil yapılmaz; varfarine geçilir. HIT öyküsünde heparin dışı antikoagülan (7.4.4)."],
+  ["C","preop"]
+ ]},
+ {h:"Kontrast ve görüntüleme",src:"ckd24",items:[
+  ["P","4.4.1.1","Kardiyak girişimde intraarteriyel kontrast alacak KBH hastasında AKİ riskini geçerli araçlarla değerlendirin."],
+  ["P","4.4.1.2","AKİ veya GFR <60’ta elektif IV kontrast radyoloji derneklerinin uzlaşı raporlarına göre yönetilir."],
+  ["L",["Düşük/izo-ozmolar kontrast, tanı için en düşük doz.","AKİ veya eGFR <30’da NSAİİ, diüretik, aminoglikozid, amfoterisin, platin, zoledronat, metotreksat gibi nefrotoksikleri 24–48 saat önce ve 48 saat sonra kesin.","AKİ yoksa ve eGFR >30 ise metformin sürdürülebilir."]],
+  ["P","4.4.2.1","GFR <30’da gadolinyum gerekiyorsa ACR grup II–III ajanları tercih edin."]
+ ]},
+ {h:"Koroner hastalık",src:"ckd24",items:[
+  ["R","3.15.3.1","2D","Stres testiyle doğrulanmış stabil iskemik kalp hastalığında yoğun medikal tedaviyle başlangıçta konservatif yaklaşım invaziv stratejiye uygun bir alternatiftir."],
+  ["P","3.15.3.1","Akut/instabil koroner hastalık, kabul edilemez angina, iskemiye bağlı sol ventrikül disfonksiyonu (EF <%35) veya sol ana koroner hastalığında invaziv strateji tercih edilebilir."],
+  ["R","13.3.1","1B","KDIGO 2020: Asemptomatik bilinen KAH’de yalnızca perioperatif kardiyak olayları azaltmak amacıyla revaskülarizasyon yapılmaz."]
+ ]},
+ {h:"Anemi ve transfüzyon",src:"an26",items:[
+  ["P","4.5","Hızlı preoperatif Hb düzeltmesi gerektiğinde veya akut kanama/instabil koroner hastalıkta eritrosit transfüzyonu düşünün."],
+  ["P","4.2","Nakle uygun hastalarda allosensitizasyonu önlemek için mümkünse transfüzyondan kaçının."],
+  ["P","4.6","Transfüzyonu azaltın: daha az invaziv girişim, flebotomiyi sınırlama, yatışta ESA/HIF-PHI/demir tedavisini sürdürme, tek değer yerine Hb eğilimine bakma."]
+ ]},
+ {h:"Böbrek nakli öncesi cerrahi hazırlık",src:"tx20",items:[
+  ["R","7.1","1B","Beden yapısı değerlendirmede ve bekleme listesinde transplant cerrahı tarafından incelenmelidir; obezite tek başına dışlama nedeni değildir (7.1.1, 2B)."],
+  ["R","7.2","2C","Kırılganlık değerlendirilmeli; preoperatif rehabilitasyon gibi optimizasyon stratejileri planlanmalıdır."],
+  ["R","7.3","2B","Yara iyileşmesini bozan durumlar (obezite, malnütrisyon, tütün, önceki karın ameliyatları) yara ve fıtık riski açısından değerlendirilmelidir."],
+  ["NG","7.5","Belirgin PAH, önceki nakil, venöz diyaliz kateteri, pelvik cerrahi veya DVT öyküsünde vasküler anatomi ve açıklık değerlendirilir; klinik PAH’de kontrastsız abdomen/pelvis BT (14.4, 2D)."],
+  ["R","6.4","1B","Bekleme listesine alınma veya canlı donörlü nakilden en az 1 ay önce tütün bırakılmalıdır."],
+  ["R","12.3","1C","Fonksiyonel kapasitesi düşük, solunum semptomlu veya akciğer hastalığı olanlarda SFT."],
+  ["R","13.4","2D","≥2 yıl diyaliz veya pulmoner hipertansiyon risk etkeni olan asemptomatik adaylarda ekokardiyografi."],
+  ["R","15.1","2D","İnmeden en az 6 ay, TİA’dan en az 3 ay sonra."],
+  ["R","10.7.2.1","1B","Canlı aşı uygulandıysa nakil 4 hafta ertelenir."],
+  ["R","7.6.1","2D","Semptomatik ADPKD, malignite şüphesi veya greft için yer yetersizliğinde aşamalı veya eşzamanlı nativ nefrektomi."]
+ ]}
+ ]},
+/* ---------------- AŞILAMA ---------------- */
+{id:"asi",nav:"Aşılama",yr:"2020",title:"KBH ve Nakil Adayında Aşılama",
+ lede:"İnaktive ve canlı aşıların zamanlaması, splenektomi ve kompleman inhibitörü durumları, seyahat ve maruziyete göre ek aşılar, hepatit B taraması.",
+ secs:[
+ {h:"Zamanlama ilkeleri",src:"tx20",items:[
+  ["R","10.7.1","1B","İnaktive aşı serilerine nakilden önce, gerekirse hızlandırılmış şemayla başlanmalıdır."],
+  ["R","10.7.1.1","2D","İnaktive aşı serisini nakil öncesi tamamlayamayan adaylar nakilden dışlanmaz."],
+  ["R","10.7.2","1B","Canlı atenüe aşı serileri nakilden önce tamamlanmalıdır."],
+  ["R","10.7.2.1","1B","Canlı aşı (KKK, suçiçeği-zona, sarı humma, oral tifo, oral polio) uygulandıysa nakil 4 hafta ertelenir."],
+  ["N","Pratik sonuç: aşı değerlendirmesi KBH G4–G5’te, nakil sevkiyle (diyalizden 6–12 ay önce) başlatılmalıdır. Nakil sonrası immünsüpresyon altında canlı aşılar uygulanamaz ve inaktive aşılara yanıt azalır."]
+ ]},
+ {h:"Özel durumlar",src:"tx20",items:[
+  ["R","10.7.3","1B","Splenektomili veya nakil sonrası splenektomi riski olan adaylara nakil öncesi pnömokok, Haemophilus influenzae tip b ve meningokok aşısı."],
+  ["R","10.7.4","1B","Perioperatif veya nakil sonrası kompleman inhibitörü (örn. ekulizumab; aHUS, C3G) gerekecek adaylara meningokok aşısı."],
+  ["R","10.7.5","2D","Yaş, doğrudan maruziyet, endemik bölgede yaşama veya seyahat gibi risk etkenlerine göre: kuduz, kene kaynaklı meningoensefalit, Japon ensefaliti (inaktive), meningokok, Salmonella typhi (inaktive), sarı humma."]
+ ]},
+ {h:"Aşıyla ilişkili tarama",src:"tx20",items:[
+  ["R","10.5.3.2","1A","HBsAg veya anti-HBc pozitif hastalarda HBV DNA ile tarama; HDV endemik bölgelerden gelenlerde HDV serolojisi (10.5.3.3, 1A)."],
+  ["R","10.5.3.5","1C","Anti-HBc pozitif, HBsAg negatif hastalar nakilden dışlanmaz ve antiviral profilaksi almaz (1D); en az 1 yıl HBsAg ve HBV DNA izlemi planlanır (2C)."],
+  ["R","10.5.1.1","1A","Tüm adaylar HIV serolojisi ile, HCV için immünoassay ve pozitifse NAT ile taranır."]
+ ]},
+ {h:"Rutin aşı şeması",src:"tx20",items:[
+  ["T",["Aşı","Tür","Şema","Not"],[
+   ["Difteri, boğmaca, polio, tetanoz, Hib","İnaktive","Genellikle çocuklukta yapılır","Güncel olduğundan emin olun"],
+   ["Pnömokok (PCV13 → PPV23)","İnaktive","1 doz PCV13, en az 8 hafta sonra 1 doz PPV23","PPV23 rapeli 5 yıl sonra"],
+   ["İnfluenza","İnaktive","Yılda 1 doz","Bekleme listesinde her yıl; ≥65 yaşta adjuvanlı veya yüksek doz aşı kullanılabilir"],
+   ["Hepatit B","İnaktive","3 doz: 0, 1, 6. ay; 40 µg “diyaliz dozu”","Seri sonrası 4–6 haftada anti-HBs; yıllık izlem, <10 IU/ml’de rapel/tekrar seri"],
+   ["Hepatit A","İnaktive","2 doz: 0 ve 2. ay","Titre kontrolü; yanıt yoksa seri tekrarı. Endemik bölgelerde tüm adaylara"],
+   ["HPV","İnaktive","3 doz, kadın ve erkek, 9–45 yaş","Rapel gerekmez"],
+   ["Meningokok ACWY konjuge","İnaktive","2 doz, 8 hafta arayla","Endemik bölge seyahati, splenektomi, ekulizumab planı; riskte 5 yılda bir 1 doz"],
+   ["Meningokok B","İnaktive","1 doz","Ekulizumab planlanıyorsa"],
+   ["Zona (rekombinant alt birim)","İnaktive","2 doz: 0 ve 2–6. ay","≥50 yaş ve VZV IgG pozitif; canlı aşıya tercih edilir"],
+   ["KKK (MMR)","Canlı","2 doz, 4 hafta arayla","Seronegatifse; 2 dozdan sonra serokonversiyondan bağımsız bağışık sayılır"],
+   ["Suçiçeği","Canlı","2 doz, 4 hafta arayla","Seronegatifse; aynı kural"],
+   ["Zona (canlı)","Canlı","1 doz","≥50 yaş, VZV IgG pozitif; uygulandıysa ≥1 yıl sonra alt birim aşıyla yeniden aşılanabilir"]],"KDIGO 2020 Tablo 12. Doz ve süreler bölgesel olarak değişebilir; yerel rehberi kontrol edin. Canlı aşıdan sonra nakil en az 4 hafta ertelenir."],
+  ["R","10.5.7.1.1","1C","VZV IgG ile tarayın; seronegatif adaylarda nakilden en az 4 hafta önce suçiçeği aşısı."],
+  ["R","10.5.8.1.1","2C","KKK IgG ile tarayın (2C); seronegatif adaylarda nakilden en az 4 hafta önce KKK aşısı."]
+ ]},
+ {h:"Nakil adayı olmayan KBH ve diyaliz",src:"tx20",items:[
+  ["X","KDIGO 2020 gerekçe metni hepatit B aşısını tüm KBH hastaları için önerir: 40 µg (diyaliz dozu), 3 doz; seri bitiminden 4–6 hafta sonra anti-HBs ölçülür, titreler zamanla düştüğü için düzenli izlenir, <10 IU/ml’de seri tekrarlanabilir. KBH’de ve nakil sonrasında aşı immünojenitesi azaldığından aşılama KBH’nin erken evrelerinde yapılmalıdır."],
+  ["W","İnfluenza, pnömokok ve diğer aşıların nakil adayı olmayan KBH ve diyaliz hastalarındaki şemaları defterdeki KDIGO kılavuzlarında ayrıca verilmez; yukarıdaki tablo bu hastalarda da yol gösterici olabilir. Ulusal erişkin bağışıklama rehberiyle birlikte değerlendirin."]
+ ]}
+ ]},
+/* ---------------- 10. ADPKD ---------------- */
+{id:"adpkd",nav:"Polikistik Böbrek (ADPKD)",yr:"2025",title:"Otozomal Dominant Polikistik Böbrek Hastalığı",
+ lede:"Tanı ölçütleri, genetik test, Mayo görüntüleme sınıflaması, PROPKD, kan basıncı, tolvaptan ve böbrek dışı tutulum.",
+ secs:[
+ {h:"Tanı",src:"pkd25",items:[
+  ["R","1.3.1","1B","Risk altındaki erişkinlerin taramasında önce abdominal ultrason; aile öyküsü, böbrek fonksiyonu ve eşlik eden hastalıklar bağlamında."],
+  ["T",["Yaş","Tanı (aile öyküsü +)","Dışlama (aile öyküsü +)"],[["15–29","Toplam ≥3 kist","Kist yok"],["30–39","Toplam ≥3 kist","Kist yok"],["40–59","Her böbrekte ≥2 kist","Toplam ≤1 kist"],["≥60","Her böbrekte ≥4 kist","—"]],"Birleşik ultrason ölçütleri (Pei). MR (16–40 yaş): toplam >10 kist tanı, <5 kist dışlama."],
+  ["P","1.3.8","Tipik tablo ve pozitif aile öyküsünde genetik test zorunlu değildir; prognostik bilgi sağlar."],
+  ["L",["Genetik test özellikle yararlı: şüpheli görüntüleme, negatif/bilinmeyen aile öyküsü, atipik veya asimetrik tutulum, böbrek boyutu–eGFR uyumsuzluğu, çok erken başlangıç (VEO-ADPKD), de novo şüphesi, aile içi belirgin değişkenlik, canlı akraba donör değerlendirmesi (özellikle <30 yaş), üreme planlaması.","Bilinen ailesel varyantta hedefe yönelik Sanger dizileme yeterlidir; diğer durumlarda tNGS paneli veya WES, ACMG sınıflamasıyla."]]
+ ]},
+ {h:"Prognoz",src:"pkd25",items:[
+  ["P","1.4.2.1","htTKV en doğru MR/BT ile (otomatik/yarı otomatik) ölçülür; elipsoid denklem (π/6 × U × G × D) de kullanılabilir."],
+  ["R","1.4.2.1","1B","Böbrek fonksiyon kaybını ve böbrek yetmezliği zamanını öngörmek için Mayo Görüntüleme Sınıflaması kullanın."],
+  ["P","1.4.2.4","Atipik görüntüleme paterni (sınıf 2A, 2B) olanlar Mayo prognozundan dışlanır."],
+  ["T",["Mayo sınıfı","Yıllık htTKV artışı","10 yılda böbrek yetmezliği"],[["1A","<%1,5","%2,4"],["1B","%1,5–3,0","%11,0"],["1C","%3,0–4,5","%37,8"],["1D","%4,5–6,0","%47,1"],["1E",">%6,0","%66,9"]],"Doğumda 150 ml/m varsayılan htTKV’den itibaren hesaplanır; 15–80 yaş için geçerlidir."],
+  ["C","mayo"],
+  ["C","propkd"]
+ ]},
+ {h:"Kan basıncı, diyet ve sıvı",src:"pkd25",items:[
+  ["P","2.1.4","18–49 yaş, G1–G2: ev ölçümüyle <110/75 mmHg (HALT-PKD A); KB 110/75–130/85 arasındaysa ortak karar verme."],
+  ["R","2.1.4","2C","≥50 yaş, herhangi bir evrede: standart ofis ölçümüyle sistolik KB <120 mmHg (tolere edilirse)."],
+  ["R","2.1.5","1C","Yüksek KB’de ilk basamak RASi (ACEi veya ARB)."],
+  ["L",["Sodyum <2 g/gün; htTKV artışını ve tolvaptan poliürisini azaltır.","Yüksek su alımı (≥2–3 l/gün) vazopresini baskılar; G4–G5’te zorlanmış yüksek su alımından kaçının (hiponatremi, hipervolemi)."]],
+  ["P","4.7.1","SGLT2i ADPKD’de eGFR düşüşünü yavaşlatmak için kullanılmamalıdır; tek gerekçe eşlik eden kalp yetmezliğidir."]
+ ]},
+ {h:"Tolvaptan",src:"pkd25",items:[
+  ["R","4.1.1.1","1B","eGFR ≥25 olan ve hızlı ilerleme riski taşıyan erişkinlerde tolvaptan başlayın."],
+  ["X","Hızlı ilerleme riski: Mayo 1C–1E veya 3–5 yılda ≥3 ml/dk/1,73 m²/yıl eGFR düşüşü. Belirsizlikte PROPKD >6 ve 60 yaş öncesi RRT başlayan ≥2 birinci derece akraba ek kanıt sağlar. eGFR düşüşünün başka nedenleri dışlanmalıdır."],
+  ["P","4.1.3.2","Başlangıç 45 mg uyanınca + 15 mg 8 saat sonra; haftalık 60/30, hedef 90/30 mg."],
+  ["P","4.1.3.4","Gebelik öncesi, emzirmede ve RRT başlangıcı öncesi kesin; >55 yaş veya eGFR <25’e düşüşte devam edilebilir (4.1.3.5)."],
+  ["P","4.1.5.1","Karaciğer testleri (AST, ALT, total bilirubin) başlangıçta, ilk 18 ay aylık, sonra 3 ayda bir. ALT/AST ≥3×ULN’de ilacı tutun, 48–72 saatte tekrarlayın; ≥3×ULN + bilirubin ≥2×ULN’de kalıcı olarak kesin."],
+  ["L",["Mutlak kontrendikasyonlar: gebelik/emzirme veya planlama, hipovolemi riski, susamayı algılayamama, düzeltilmemiş hipernatremi, üriner obstrüksiyon, güçlü CYP3A inhibitörü, PLD dışı belirgin karaciğer hastalığı."]],
+  ["C","tolv"]
+ ]},
+ {h:"Komplikasyonlar ve böbrek dışı tutulum",src:"pkd25",items:[
+  ["P","2.2.1","Kronik ağrıda ADPKD dışı nedenleri ve komplikasyonları (enfeksiyon, taş, malignite) dışlayın; kronik NSAİİ’den kaçının."],
+  ["L",["Kist enfeksiyonu: klinik, CRP, kan kültürü, PET-BT/MR; kist sıvısına geçen lipofilik antibiyotik (florokinolon, TMP-SMX) 4–6 hafta.","Kist kanaması: istirahat, hidrasyon, analjezi; ağır kanamada embolizasyon.","Nefrolitiyazis: yüksek sıvı alımı, potasyum sitrat ile alkalinizasyon."]],
+  ["R","6.1.2","1D","Kişisel SAK öyküsü veya ailede intrakraniyal anevrizma, SAK ya da açıklanamayan ani ölüm varsa, tedaviye uygun ve makul yaşam beklentisi olanlarda kontrastsız MRA ile tarama."],
+  ["R","4.6.1","2B","Somatostatin analogları yalnızca eGFR düşüşünü yavaşlatmak için kullanılmaz; masif hepatomegali semptomlarında kullanılabilir. PLD’de ekzojen östrojenden kaçınılır."],
+  ["R","3.2.1","2C","Nativ nefrektomi yalnızca belirli endikasyonlarda (tekrarlayan enfeksiyon, inatçı ağrı, ağır kanama, greft için yer darlığı, RCC şüphesi); tek taraflı (3.2.2, 2D), nakil sırasında veya sonrasında (3.2.3, 2C), el yardımlı laparoskopik (3.2.4, 2D)."],
+  ["R","3.3.1","2C","Diyaliz modalitesi hasta tercihi ve olanaklara göre; PD, fiziksel yer sorunu yoksa uygun seçenektir."]
+ ]}
+ ]},
+/* ---------------- 11. NAKİL ADAYI ---------------- */
+{id:"nakil",nav:"Nakil Alıcı Adayı",yr:"2020",title:"Böbrek Nakli Alıcı Adayının Değerlendirilmesi",
+ lede:"Sevk zamanlaması, kontrendikasyonlar, psikososyal ve tıbbi değerlendirme, kanser sonrası bekleme süreleri ve hastalık nüksü.",
+ secs:[
+ {h:"Nakle erişim ve zamanlama",src:"tx20",items:[
+  ["R","1.1","1D","Böbrek yetmezliğine ilerlemesi beklenen G4–G5 (GFR <30) tüm hastalar sosyoekonomik durum, cinsiyet veya etnik kökenden bağımsız bilgilendirilmeli ve nakil için değerlendirilmelidir."],
+  ["NG","1.1.1","Diyaliz başlangıcından en az 6–12 ay önce sevk edin (canlı donör hazırlığı, preemptif nakil)."],
+  ["NG","1.1.2","Diyalizdeki hastaları tıbben stabil olduklarında ve böbrek yetmezliği geri dönüşsüz kabul edildiğinde sevk edin."],
+  ["R","1.4","1A","Nakle uygun KBH hastasında canlı donörden preemptif nakil tercih edilen tedavidir."],
+  ["R","1.4.1","1D","Erişkinde preemptif nakil eGFR <10 olduğunda veya semptom varsa daha erken."],
+  ["P","5.4.3","KBH 2024: GFR <15–20 veya 2 yıllık RRT riski >%40 olduğunda preemptif nakil ve/veya diyaliz erişimi planlamasını düşünün."]
+ ]},
+ {h:"Sevk edilmemesi ve erteleme gereken durumlar",src:"tx20",items:[
+  ["R","1.1.3","1D","Yalnız böbrek nakli için sevk edilmemesi önerilenler: küratif tedavi sonrası stabil remisyonda olmayan multipl miyelom, hafif/ağır zincir birikim hastalığı; belirgin böbrek dışı tutulumlu AL amiloidoz; dekompanse siroz (kombine karaciğer-böbrek düşünülür); ağır geri dönüşsüz obstrüktif/restriktif akciğer hastalığı; kardiyoloğun nakli engelleyici gördüğü ağır, düzeltilemeyen semptomatik kalp hastalığı; ilerleyici santral nörodejeneratif hastalık."],
+  ["R","1.1.4","1D","Uygun yönetilene kadar değerlendirme ertelenir: instabil psikiyatrik bozukluk, süren madde kullanım bozukluğu, süren sağlığı tehdit eden uyumsuzluk, tedavi edilmemiş aktif enfeksiyon (HCV hariç), aktif malignite (Gleason ≤6 prostat ve ≤1 cm rastlantısal böbrek tümörü hariç), değerlendirilmemiş semptomatik kalp hastalığı, semptomatik PAH, yakın inme/TİA, aktif peptik ülser, divertikülit, pankreatit, safra kesesi hastalığı, inflamatuvar barsak hastalığı, akut hepatit, ağır hiperparatiroidi."]
+ ]},
+ {h:"Genel değerlendirme",src:"tx20",items:[
+  ["R","2.1.1","1A","Yalnızca yaşa dayanarak nakilden dışlamayın; yaşı eşlik eden hastalıklar ve kırılganlıkla birlikte değerlendirin."],
+  ["R","7.2","2C","Değerlendirmede ve bekleme listesinde kırılganlığı değerlendirin (preoperatif rehabilitasyon fırsatı)."],
+  ["R","4.1","2D","Tüm adaylarda psikososyal değerlendirme."],
+  ["R","5.4","1D","Uyumsuzluk öyküsü olanlar, süren sağlığı tehdit eden uyumsuzluk yoksa nakle değerlendirilir."],
+  ["R","6.4","1B","Bekleme listesine alınma veya canlı donör naklinden en az 1 ay önce tütün bırakılmalı; ≥30 paket-yıl içicilerde akciğer BT (6.5, 2C)."],
+  ["R","7.1.1","2B","Obezite (BKİ veya bel-kalça oranı) tek başına dışlama nedeni değildir; kilo verme müdahaleleri önerilir (7.1.2, 2D)."],
+  ["R","8.1","1B","Tip 1 ve tip 2 diyabetliler nakil için değerlendirilir; T1D’de pankreas-böbrek nakli (8.1.1, 2A); bilinen diyabeti olmayanlarda OGTT (8.2, 2A)."],
+  ["NG","7.4.3","DOAC alan hastalara, perioperatif deneyim ve antidot yoksa nakil yapılmaz; varfarine geçilir. Tek antiplatelet bekleme listesinde sürdürülebilir; DAPT süresince nakil ertelenir."]
+ ]},
+ {h:"Kardiyak, vasküler ve nörolojik değerlendirme",src:"tx20",items:[
+  ["NG","13.1","Tüm adaylarda öykü, muayene ve EKG."],
+  ["R","13.3","2C","Asemptomatik ancak yüksek KAH riskli (diyabet, önceki KAH) veya düşük fonksiyonel kapasiteli adaylarda noninvaziv KAH taraması."],
+  ["R","13.3.1","1B","Asemptomatik bilinen KAH’de yalnızca perioperatif olayları azaltmak için revaskülarizasyon yapılmaz."],
+  ["R","13.4","2D","≥2 yıl diyalizde olan veya pulmoner hipertansiyon risk faktörü olan asemptomatik adaylarda ekokardiyografi; PASP >45 mmHg ise kardiyoloji."],
+  ["R","13.7","2D","Düzeltilemeyen semptomatik NYHA III–IV kalp hastalığı (EF <%30, ağır KAH veya kapak) kabul edilebilir sağkalım yoksa dışlanır; kombine kalp-böbrek değerlendirilir."],
+  ["R","14.2","2D","PAH için yüksek riskli adaylarda noninvaziv vasküler test; klinik PAH’de kontrastsız abdomen/pelvis BT (14.4)."],
+  ["R","12.5","1C","Ağır geri dönüşsüz obstrüktif/restriktif akciğer hastalığında dışlanır; semptomlu veya bilinen akciğer hastalığında SFT (12.3, 1C)."],
+  ["R","15.1","2D","İnmeden en az 6 ay, TİA’dan en az 3 ay sonra nakil."],
+  ["R","15.2","1D","Asemptomatik adaylarda karotis taraması yapılmaz."],
+  ["R","15.3","2D","ADPKD’de intrakraniyal anevrizma taraması yalnızca kişisel/ailesel SAK öyküsünde."]
+ ]},
+ {h:"Enfeksiyon ve aşılama",src:"tx20",items:[
+  ["R","10.1.1","1C","Aktif enfeksiyonlar (HCV hariç) tedavi edilene kadar nakil ertelenir; asemptomatik kolonizasyon dışlama nedeni değildir (10.2.2)."],
+  ["R","10.5.1.2","1C","Kontrollü HIV (saptanamayan viral yük, CD4 ≥200/µl stabil) dışlama nedeni değildir."],
+  ["R","10.5.2.3","1A","HCV’den bağımsız olarak G5’te en iyi seçenek nakildir; kompanse siroz yalnız böbrek nakli (1B), dekompanse siroz kombine karaciğer-böbrek (1B); tüm adaylar DAA için değerlendirilir (1A)."],
+  ["R","10.5.3.4.1","1B","HBsAg/HBV DNA pozitif, dekompanse sirozu olmayan ve antiviralle stabil adaylarda yalnız böbrek nakli; anti-HBc pozitif (HBsAg negatif) dışlanmaz (1C)."],
+  ["R","10.3.2.2","1C","Düşük TB prevalanslı bölgelerde latent TB taraması (akciğer grafisi + PPD veya IGRA); aktif TB nakil öncesi tamamlanır (2C)."],
+  ["R","10.7.1","1B","İnaktive aşılar gerekirse hızlandırılmış şemayla nakil öncesi başlanır; canlı aşılar nakil öncesi tamamlanır ve sonrasında 4 hafta beklenir (10.7.2.1, 1B)."]
+ ]},
+ {h:"Malignite",src:"tx20",items:[
+  ["R","11.1.1","1D","Genel popülasyon kılavuzlarına göre rutin kanser taraması; ≥3 yıl diyaliz gibi riskli adaylarda RCC için ultrason."],
+  ["R","11.2.3","1C","Bekleme süresi gerekmeyen küratif tedavi edilmiş kanserler: metastatik olmayan bazal/skuamöz hücreli cilt kanseri, in situ melanom, <3 cm RCC, Gleason ≤6 prostat, in situ karsinom, <2 cm düşük dereceli tiroid kanseri, yüzeyel mesane kanseri."],
+  ["R","11.2.3.1","2D","Diğer kanserlerde Tablo 14’teki bekleme süreleri; süre küratif tedavinin tamamlanmasından başlar."],
+  ["C","cancer"]
+ ]},
+ {h:"Primer hastalık nüksü ve immünoloji",src:"tx20",items:[
+  ["R","9.1.1","1A","Mümkünse böbrek yetmezliği nedeni belirlenmeli; hastalığa özgü nüks ve greft kaybı riski anlatılmalı."],
+  ["R","9.2.1","1B","Primer FSGS dışlama nedeni değildir; önceki greftin nüks FSGS ile kaybı yüksek risk göstergesidir. Çocuk ve genç erişkinde genetik test (2C); rutin preoperatif plazmaferez/rituksimab yapılmaz (2D)."],
+  ["R","9.x","1B","IgA nefropatisi, IgA vasküliti, IK-MPGN, C3G, lupus nefriti ve ANCA vasküliti dışlanmaz; lupus ve ANCA vasküliti klinik olarak sessiz olmalıdır."],
+  ["R","aHUS","1B","aHUS’ta kompleman regülasyon defekti araştırılır; yüksek riskte kompleman inhibitörü olmadan nakil yapılmaz; meningokok aşısı (10.7.4, 1B)."],
+  ["R","İmmünoloji","1B","HLA antikorları katı faz yöntemiyle; tüm sensitizasyon olayları (transfüzyon, gebelik, önceki nakil) HLA laboratuvarına bildirilir. Yüksek sensitize adaylarda antikordan kaçınma (eşleştirilmiş değişim, kabul edilebilir uyumsuzluk) desensitizasyona tercih edilir (2C)."],
+  ["R","17.1","1C","Rutin trombofili taraması yapılmaz; VTE, tekrarlayan AV erişim trombozu veya aile öyküsünde yapılır (2C)."]
+ ]}
+ ]},
+/* ---------------- 12. RRT & KONSERVATİF ---------------- */
+{id:"rrt",nav:"RRT ve Konservatif Bakım",yr:"2024",title:"Renal Replasman Tedavisi Hazırlığı ve Konservatif Bakım",
+ lede:"Multidisipliner bakım, diyaliz başlama zamanlaması, preemptif nakil planlaması ve kapsamlı konservatif yönetim.",
+ secs:[
+ {h:"Ekip temelli entegre bakım",src:"ckd24",items:[
+  ["P","5.3.1","Diyet danışmanlığı, ilaç yönetimi, eğitim, RRT modaliteleri ve nakil seçenekleri, diyaliz erişim cerrahisi ile etik, psikolojik ve sosyal bakımı içeren hasta merkezli multidisipliner ekibe erişim sağlayın."],
+  ["P","5.3.2","Gerektiğinde bakım verenleri de içeren eğitim programları önemlidir."],
+  ["P","5.2.2.1","İlerleyici KBH’de her vizitte üremik semptomları (iştahsızlık, bulantı, yorgunluk) standart ve geçerli bir araçla sorgulayın."],
+  ["N","Risk temelli geçiş: KFRE 2 yıllık risk ≥%10 → multidisipliner bakım; ≥%40 → modalite eğitimi, erişim planlaması, nakil sevki (Şekil 15)."]
+ ]},
+ {h:"Diyaliz başlama zamanlaması",src:"ckd24",items:[
+  ["P","5.4.1","Diyalizi semptomlar, bulgular, yaşam kalitesi, tercihler, GFR düzeyi ve laboratuvar anormalliklerinin bileşik değerlendirmesine göre başlatın."],
+  ["P","5.4.2","Aşağıdakilerden biri varsa diyaliz başlatın; bu çoğu zaman (her zaman değil) GFR 5–10 aralığında olur."],
+  ["P","5.4.3","GFR <15–20 veya 2 yıllık RRT riski >%40 olduğunda erişkinlerde preemptif nakil ve/veya diyaliz erişimi planlamasını düşünün."],
+  ["N","IDEAL çalışması erken (yüksek GFR’de) diyaliz başlamanın sağkalım avantajı göstermemiştir; başlangıç keyfi bir sayıya değil semptom ve bulgulara dayanmalıdır."],
+  ["C","dstart"]
+ ]},
+ {h:"Destekleyici bakım ve kapsamlı konservatif yönetim",src:"ckd24",items:[
+  ["P","5.5.1","KBH hastalarını RRT seçenekleri ve kapsamlı konservatif bakım hakkında bilgilendirin."],
+  ["P","5.5.2","RRT’yi seçmeyenler için kapsamlı konservatif yönetimi bir seçenek olarak destekleyin."],
+  ["P","5.5.3","Yaşam sonu bakım gereksinimi olanlara ileri bakım planlaması kaynaklarına erişim sağlayın."],
+  ["P","3.6.5","RRT yerine konservatif izlenen eGFR <15 hastalarda üremik semptomları azaltmak için RASi azaltılabilir veya kesilebilir."]
+ ]}
+ ]}
+];
+
+/* ============================================================
+   HESAPLAYICILAR
+   ============================================================ */
+const $=s=>document.querySelector(s);
+const num=v=>{const x=parseFloat(String(v).replace(",","."));return isFinite(x)?x:NaN};
+const fmt=(x,d=0)=>isFinite(x)?x.toLocaleString("tr-TR",{minimumFractionDigits:d,maximumFractionDigits:d}):"—";
+const pill=(cls,t)=>`<span class="pill ${cls}">${t}</span>`;
+function fld(id,label,attrs){return `<div class="f"><label for="${id}">${label}</label>${attrs}</div>`}
+function inp(id,label,val,ph){return fld(id,label,`<input id="${id}" type="text" inputmode="decimal" value="${val??""}" placeholder="${ph??""}">`)}
+function sel(id,label,opts,val){return fld(id,label,`<select id="${id}">${opts.map(o=>{const [v,t]=Array.isArray(o)?o:[o,o];return `<option value="${v}"${v==val?" selected":""}>${t}</option>`}).join("")}</select>`)}
+function chk(id,label,c){return `<label class="chk"><input type="checkbox" id="${id}"${c?" checked":""}><span>${label}</span></label>`}
+const V=id=>{const e=document.getElementById(id);if(!e)return "";return e.type==="checkbox"?e.checked:e.value};
+
+function gcat(e){return e>=90?"G1":e>=60?"G2":e>=45?"G3a":e>=30?"G3b":e>=15?"G4":"G5"}
+function acat(a){return a<30?"A1":a<=300?"A2":"A3"}
+const HEATC={G1:["hg","hy","ho"],G2:["hg","hy","ho"],G3a:["hy","ho","hr"],G3b:["ho","hr","hr"],G4:["hr","hr","hd"],G5:["hd","hd","hd"]};
+const HEATN={G1:["1*","1","2"],G2:["1*","1","2"],G3a:["1","2","3"],G3b:["2","3","4+"],G4:["3","4+","4+"],G5:["4+","4+","4+"]};
+const RISKTXT={hg:"Düşük risk",hy:"Orta artmış risk",ho:"Yüksek risk",hr:"Çok yüksek risk",hd:"Çok yüksek risk"};
+function heatHTML(g,a){
+ const rows=["G1","G2","G3a","G3b","G4","G5"],lbl={G1:"G1 ≥90",G2:"G2 60–89",G3a:"G3a 45–59",G3b:"G3b 30–44",G4:"G4 15–29",G5:"G5 <15"};
+ let h=`<div class="tbl" style="padding:8px"><div class="heat"><div class="hh">GFR \\ ACR</div><div class="hh">A1 &lt;30</div><div class="hh">A2 30–300</div><div class="hh">A3 &gt;300</div>`;
+ rows.forEach(r=>{h+=`<div class="hh">${lbl[r]}</div>`;[0,1,2].forEach(i=>{const s=(r===g&&("A"+(i+1))===a)?" sel":"";h+=`<div class="c ${HEATC[r][i]}${HEATC[r][i]==="hd"?" deep":""}${s}" title="${RISKTXT[HEATC[r][i]]}">${HEATN[r][i]}</div>`})});
+ h+=`</div></div><div class="legend"><span><i class="hg"></i>Düşük</span><span><i class="hy"></i>Orta artmış</span><span><i class="ho"></i>Yüksek</span><span><i class="hr"></i>Çok yüksek</span><span><i class="hd"></i>En yüksek</span><span>* KBH varsa</span></div>`;
+ return h;
+}
+function egfrCr(scr,age,fem){const k=fem?0.7:0.9,a=fem?-0.241:-0.302,r=scr/k;return 142*Math.pow(Math.min(r,1),a)*Math.pow(Math.max(r,1),-1.2)*Math.pow(0.9938,age)*(fem?1.012:1)}
+function egfrCys(cys,age,fem){const r=cys/0.8;return 133*Math.pow(Math.min(r,1),-0.499)*Math.pow(Math.max(r,1),-1.328)*Math.pow(0.996,age)*(fem?0.932:1)}
+function egfrCrCys(scr,cys,age,fem){const k=fem?0.7:0.9,a=fem?-0.219:-0.144,r=scr/k,c=cys/0.8;return 135*Math.pow(Math.min(r,1),a)*Math.pow(Math.max(r,1),-0.544)*Math.pow(Math.min(c,1),-0.323)*Math.pow(Math.max(c,1),-0.778)*Math.pow(0.9961,age)*(fem?0.963:1)}
+function kfre(age,male,egfr,acr,region){const s=-0.2201*(age/10-7.036)+0.2467*(male-0.5642)-0.5567*(egfr/5-7.222)+0.4510*(Math.log(acr)-5.137);const b=region==="na"?[0.9750,0.9240]:[0.9832,0.9365];const e=Math.exp(s);return [1-Math.pow(b[0],e),1-Math.pow(b[1],e)]}
+
+const CALCS={
+ egfr:{t:"eGFR ve evreleme",s:"CKD-EPI 2021 (ırksız) · 2012 sistatin C",
+  f:()=>`<div class="fields">${sel("e_sex","Cinsiyet",[["f","Kadın"],["m","Erkek"]],"f")}${inp("e_age","Yaş (yıl)",62)}${inp("e_cr","Kreatinin (mg/dl)",1.4)}${inp("e_cys","Sistatin C (mg/l, ops.)","")}${inp("e_acr","UACR (mg/g, ops.)",120)}</div><div class="out" id="e_out"></div>`,
+  run:()=>{const fem=V("e_sex")==="f",age=num(V("e_age")),cr=num(V("e_cr")),cy=num(V("e_cys")),acr=num(V("e_acr"));const o=$("#e_out");
+   if(!(age>=18&&cr>0)){o.innerHTML=`<p class="msg dim">Yaş (≥18) ve kreatinin girin.</p>`;return}
+   const a=egfrCr(cr,age,fem),b=cy>0?egfrCys(cy,age,fem):NaN,c=cy>0?egfrCrCys(cr,cy,age,fem):NaN;const use=isFinite(c)?c:a;const g=gcat(use),ac=acr>=0?acat(acr):null;
+   let h=`<div class="big"><div><div class="v">${fmt(use)}</div><div class="u">ml/dk/1,73 m² · ${isFinite(c)?"eGFRcr-cys":"eGFRcr"}</div></div><div><div class="v">${g}${ac?" "+ac:""}</div><div class="u">GA kategorisi</div></div></div>`;
+   h+=`<div class="kv"><div><small>eGFRcr</small><strong>${fmt(a)}</strong></div><div><small>eGFRcys</small><strong>${fmt(b)}</strong></div><div><small>eGFRcr-cys</small><strong>${fmt(c)}</strong></div>${isFinite(a)&&isFinite(b)?`<div><small>cys − cr farkı</small><strong>${fmt(b-a)}</strong></div>`:""}</div>`;
+   if(ac){const i={A1:0,A2:1,A3:2}[ac];h+=`<p class="msg">${pill(HEATC[g][i]==="hg"?"ok":HEATC[g][i]==="hy"?"warn":"bad",RISKTXT[HEATC[g][i]])} GFR ve albüminüri izlemi yılda <b>${HEATN[g][i].replace("*","")}</b> kez önerilir.</p>`+heatHTML(g,ac)}
+   if(isFinite(a)&&isFinite(b)&&Math.abs(b-a)/a>0.3)h+=`<p class="msg">${pill("warn","Uyumsuzluk")} eGFRcr ile eGFRcys arasında >%30 fark; kas kütlesi, diyet ve non-GFR belirleyicilerini gözden geçirin (UN 1.2.2.7).</p>`;
+   h+=`<p class="msg dim">Kesin tanı için ≥3 ay süren anormallik gerekir. eGFR 18 yaş altında kullanılmaz.</p>`;o.innerHTML=h}},
+ acr:{t:"Albüminüri birim çevirici",s:"UACR / UPCR",
+  f:()=>`<div class="fields">${inp("a_v","Değer",35)}${sel("a_u","Birim",[["mgmmol","UACR mg/mmol"],["mgg","UACR mg/g"],["pcrmgg","UPCR mg/g"],["pcrmgmmol","UPCR mg/mmol"],["aer","AER mg/24 sa"]],"mgmmol")}</div><div class="out" id="a_out"></div>`,
+  run:()=>{const v=num(V("a_v")),u=V("a_u"),o=$("#a_out");if(!(v>=0)){o.innerHTML=`<p class="msg dim">Değer girin.</p>`;return}
+   let mgg,label;if(u==="mgmmol"){mgg=v*8.84;label="UACR"}else if(u==="mgg"){mgg=v;label="UACR"}else if(u==="aer"){mgg=v;label="AER"}else{const pg=u==="pcrmgg"?v:v*8.84;const cat=pg<150?"A1":pg<500?"A2":"A3";o.innerHTML=`<div class="big"><div><div class="v">${fmt(pg)}</div><div class="u">UPCR mg/g</div></div><div><div class="v">${fmt(pg/8.84,1)}</div><div class="u">UPCR mg/mmol</div></div><div><div class="v">${cat}</div><div class="u">yaklaşık kategori</div></div></div><p class="msg dim">UPCR eşdeğerleri yaklaşık: &lt;150, 150–500, ≥500 mg/g.</p>`;return}
+   const cat=acat(mgg);o.innerHTML=`<div class="big"><div><div class="v">${fmt(mgg,mgg<10?1:0)}</div><div class="u">${label} mg/g ${u==="aer"?"(mg/24 sa)":""}</div></div><div><div class="v">${fmt(mgg/8.84,1)}</div><div class="u">mg/mmol</div></div><div><div class="v">${cat}</div><div class="u">albüminüri kategorisi</div></div></div><p class="msg dim">1 mg/mmol ≈ 8,84 mg/g. ACR ≥30 mg/g rastgele idrarda saptanırsa sabah ilk idrarla doğrulanır.</p>`}},
+ kfre:{t:"Böbrek yetmezliği risk denklemi (KFRE)",s:"4 değişkenli · Tangri 2016 katsayıları",
+  f:()=>`<div class="fields">${inp("k_age","Yaş",68)}${sel("k_sex","Cinsiyet",[["1","Erkek"],["0","Kadın"]],"1")}${inp("k_egfr","eGFR (CKD-EPI)",28)}${inp("k_acr","UACR (mg/g)",450)}${sel("k_reg","Kalibrasyon",[["nna","Kuzey Amerika dışı"],["na","Kuzey Amerika"]],"nna")}</div><div class="out" id="k_out"></div>`,
+  run:()=>{const age=num(V("k_age")),m=+V("k_sex"),e=num(V("k_egfr")),acr=num(V("k_acr")),o=$("#k_out");if(!(age>=18&&e>0&&acr>0)){o.innerHTML=`<p class="msg dim">Tüm alanları girin (ACR &gt;0).</p>`;return}
+   const [r2,r5]=kfre(age,m,e,acr,V("k_reg"));let acts=[];
+   if(r5>=0.03)acts.push(`${pill(r5>=0.05?"bad":"warn","5 yıl ≥%"+(r5>=0.05?"5":"3"))} Nefroloji sevki için risk eşiği (UN 2.2.1, %3–5).`);
+   if(r2>0.10)acts.push(`${pill("bad","2 yıl >%10")} Multidisipliner bakıma geçiş zamanı (UN 2.2.2).`);
+   if(r2>0.40)acts.push(`${pill("bad","2 yıl >%40")} Modalite eğitimi, vasküler erişim ve nakil sevki (UN 2.2.3, 5.4.3).`);
+   if(!acts.length)acts.push(`${pill("ok","Düşük risk")} Risk temelli sevk eşiklerinin altında; eGFR/ACR kriterlerini ayrıca değerlendirin.`);
+   o.innerHTML=`<div class="big"><div><div class="v">%${fmt(r2*100,1)}</div><div class="u">2 yıllık böbrek yetmezliği riski</div></div><div><div class="v">%${fmt(r5*100,1)}</div><div class="u">5 yıllık risk</div></div></div>${acts.map(a=>`<p class="msg">${a}</p>`).join("")}${e>=60?`<p class="msg">${pill("warn","Geçerlilik")} KFRE G3–G5 için geliştirilmiştir; G1–G2’de geçerli olmayabilir (UN 2.2.4).</p>`:""}<p class="msg dim">Katsayılar Tangri ve ark. (JAMA 2016) kaynaklıdır; NotebookLM defterindeki KDIGO metni katsayıları vermez, kidneyfailurerisk.com hesaplayıcısına yönlendirir. ADPKD ve IgAN’da hastalığa özgü denklem kullanın.</p>`}},
+ sevk:{t:"Nefroloji sevk kontrol listesi",s:"UN 5.1.1",
+  f:()=>`<div class="chks">${[["s1","KBH nedeni belirsiz"],["s2","Kalıtsal böbrek hastalığı"],["s3","Tekrarlayan yaygın nefrolitiyazis"],["s4","5 yıllık RRT riski >%3–5"],["s5","eGFR <30"],["s6","Sürekli >%20 GFR düşüşü (hemodinamik etkili ilaç sonrası >%30)"],["s7","ACR ≥300 mg/g + hematüri"],["s8","İzlemde ACR’de ≥2 kat artış (anlamlı albüminüride)"],["s9","Sürekli ACR >700 mg/g"],["s10","Eritrosit silendiri veya açıklanamayan sürekli >20 eritrosit/BBA"],["s11","≥4 ilaca dirençli hipertansiyon"],["s12","Sürekli potasyum bozukluğu"],["s13","Asidoz, anemi, kemik hastalığı veya malnütrisyon"]].map(([i,t])=>chk(i,t)).join("")}</div><div class="out" id="s_out"></div>`,
+  run:()=>{let n=0;for(let i=1;i<=13;i++)if(V("s"+i))n++;$("#s_out").innerHTML=n?`<p class="msg">${pill("bad","Sevk önerilir")} ${n} ölçüt karşılanıyor. Zamanında sevk tüm nedenlerde sonuçları iyileştirir.</p>`:`<p class="msg">${pill("ok","Ölçüt yok")} İşaretlenen sevk ölçütü bulunmuyor.</p>`}},
+ rasi:{t:"RASi sonrası kreatinin değişimi",s:"UN 3.6.2 · 3.6.4",
+  f:()=>`<div class="fields">${inp("r_b","Başlangıç kreatinin",1.5)}${inp("r_f","Kontrol kreatinin",1.8)}${inp("r_k","Kontrol potasyum (mmol/l)",5.1)}${inp("r_w","Başlangıçtan hafta",3)}</div><div class="out" id="r_out"></div>`,
+  run:()=>{const b=num(V("r_b")),f=num(V("r_f")),k=num(V("r_k")),w=num(V("r_w")),o=$("#r_out");if(!(b>0&&f>0)){o.innerHTML=`<p class="msg dim">Kreatinin değerlerini girin.</p>`;return}
+   const p=(f-b)/b*100;let h=`<div class="big"><div><div class="v">${p>=0?"+":""}${fmt(p,0)}%</div><div class="u">kreatinin değişimi</div></div></div>`;
+   h+=p>30?`<p class="msg">${pill("bad",">%30 artış")} Hipovolemi, NSAİİ, renal arter stenozu gibi nedenleri değerlendirin; RASi dozunu azaltmayı veya kesmeyi düşünün.</p>`:`<p class="msg">${pill("ok","≤%30")} Beklenen hemodinamik değişim; RASi’ye devam edin (UN 3.6.4).</p>`;
+   if(k>5.5)h+=`<p class="msg">${pill("bad","K⁺ >5,5")} Önce potasyum düşürücü önlemler (diyet, diüretik, bikarbonat, bağlayıcı); RASi kesmek son çaredir (UN 3.6.3).</p>`;
+   if(w>4)h+=`<p class="msg dim">%30 eşiği başlangıç/doz artışı sonrası ilk 4 hafta için tanımlanmıştır.</p>`;o.innerHTML=h}},
+ sglt2:{t:"SGLT2i endikasyonu",s:"KBH 2024 ve 2027 taslağı",
+  f:()=>`<div class="fields">${inp("g_e","eGFR",38)}${inp("g_a","UACR (mg/g)",150)}</div><div class="chks">${chk("g_dm","Tip 2 diyabet")}${chk("g_hf","Kalp yetmezliği")}${chk("g_pkd","ADPKD")}${chk("g_on","Halen SGLT2i kullanıyor")}${chk("g_rrt","Diyaliz veya nakil")}</div><div class="out" id="g_out"></div>`,
+  run:()=>{const e=num(V("g_e")),a=num(V("g_a")),dm=V("g_dm"),hf=V("g_hf"),o=$("#g_out");if(!(e>0&&a>=0)){o.innerHTML=`<p class="msg dim">eGFR ve UACR girin.</p>`;return}
+   if(V("g_rrt")){o.innerHTML=`<p class="msg">${pill("info","Kapsam dışı")} Öneriler diyaliz ve nakil hastalarını kapsamaz.</p>`;return}
+   let r24="",r27="";
+   if(V("g_on")&&e<20){r24=r27=`${pill("ok","Devam")} eGFR &lt;20’de de tolere edilirse RRT başlanana kadar sürdürün.`}
+   else if(e<20){r24=r27=`${pill("warn","Başlama")} eGFR &lt;20’de yeni başlama önerilmez.`}
+   else{
+    if(dm)r24=`${pill("ok","1A")} T2D + KBH + eGFR ≥20 (Öneri 3.7.1).`;else if(hf)r24=`${pill("ok","1A")} Kalp yetmezliği (3.7.2).`;else if(a>=200)r24=`${pill("ok","1A")} ACR ≥200 mg/g (3.7.2).`;else if(e<=45)r24=`${pill("ok","2B")} eGFR 20–45, ACR &lt;200 (3.7.3).`;else r24=`${pill("warn","Öneri yok")} eGFR &gt;45 ve ACR &lt;200, diyabet/KY yok.`;
+    if(dm||hf)r27=`${pill("ok","1A")} T2D veya KY, albüminüriden bağımsız (1.1.1).`;else if(a>200)r27=`${pill("ok","1A")} ACR &gt;200 mg/g (1.1.1).`;else if(a>=30&&e<=45)r27=`${pill("ok","1B")} ACR 30–200, eGFR 20–45 (1.1.1).`;else if(a<30&&e<=45)r27=`${pill("ok","2B")} ACR &lt;30, eGFR 20–45 (1.1.2).`;else r27=`${pill("warn","Öneri yok")} eGFR &gt;45 ve ACR ≤200, diyabet/KY yok.`;}
+   let h=`<p class="msg"><b>KDIGO 2024:</b> ${r24}</p><p class="msg"><b>2027 taslak:</b> ${r27}</p>`;
+   if(V("g_pkd"))h+=`<p class="msg">${pill("bad","ADPKD")} KDIGO 2025: SGLT2i ADPKD’de eGFR düşüşünü yavaşlatmak için kullanılmaz; tek gerekçe kalp yetmezliğidir.</p>`;
+   h+=`<p class="msg dim">Uzamış açlık, majör cerrahi ve kritik hastalıkta ara verin; ilk eGFR düşüşü kesme nedeni değildir.</p>`;o.innerHTML=h}},
+ fin:{t:"Finerenon başlama ve potasyum izlemi",s:"KBH 2024 Şekil 26",
+  f:()=>`<div class="fields">${inp("n_e","eGFR",42)}${inp("n_k","Serum K⁺ (mmol/l)",4.6)}${sel("n_st","Mevcut durum",[["none","Kullanmıyor"],["10","10 mg/gün"],["20","20 mg/gün"],["held","Hiperkalemi nedeniyle ara verildi"]],"none")}</div><div class="out" id="n_out"></div>`,
+  run:()=>{const e=num(V("n_e")),k=num(V("n_k")),st=V("n_st"),o=$("#n_out");if(!(e>0&&k>0)){o.innerHTML=`<p class="msg dim">eGFR ve potasyum girin.</p>`;return}let h="";
+   if(k>5.5)h=`${pill("bad","Tutun")} Finerenona ara verin; diyet ve eşlik eden ilaçları düzenleyin, potasyumu tekrarlayın. K⁺ ≤5,0 olunca 10 mg ile yeniden başlamayı düşünün.`;
+   else if(st==="none"){if(e<25)h=`${pill("warn","Başlamayın")} eGFR &lt;25.`;else if(k>4.8)h=`${pill("warn","Başlamayın")} Başlangıç için K⁺ ≤4,8 (FDA: &lt;5,0) gerekir.`;else h=`${pill("ok","Başlayın")} ${e>=60?"20":"10"} mg/gün (eGFR ${e>=60?"≥60":"25–59"}). K⁺’u 1. ayda, sonra 4 ayda bir kontrol edin.`}
+   else if(st==="held"){h=k<=5.0?`${pill("ok","Yeniden başlayın")} 10 mg/gün; 1. ayda K⁺ kontrolü.`:`${pill("warn","Bekleyin")} K⁺ ≤5,0 olana kadar.`}
+   else if(st==="10"){h=k<=4.8?`${pill("ok","Artırın")} 20 mg/gün’e çıkın; 1 ay sonra K⁺.`:`${pill("info","Devam")} 10 mg; K⁺’u 4 ayda bir izleyin.`}
+   else h=`${pill("info","Devam")} 20 mg; K⁺’u 4 ayda bir izleyin.`;
+   o.innerHTML=`<p class="msg">${h}</p><p class="msg dim">Çalışma grubu bu eşikleri temkinli bulur; K⁺ 5,5–6,0’da MRA’ya devam uygun görülebilir. Kreatinin/eGFR potasyumla birlikte izlenir. Steroid ve nonsteroid MRA birlikte kullanılmaz.</p>`}},
+ bp:{t:"Kan basıncı hedefi",s:"KDIGO 2021 · 2025 ADPKD",
+  f:()=>`<div class="fields">${sel("b_p","Hasta grubu",[["ckd","Diyaliz dışı KBH"],["tx","Böbrek nakli alıcısı"],["pkdy","ADPKD 18–49 yaş, G1–G2"],["pkdo","ADPKD ≥50 yaş"]],"ckd")}</div><div class="chks">${chk("b_fr","Kırılganlık, düşme/kırık riski, semptomatik postüral hipotansiyon veya çok sınırlı yaşam beklentisi")}${chk("b_std","Değer standart ofis ölçümüyle alındı",true)}</div><div class="out" id="b_out"></div>`,
+  run:()=>{const p=V("b_p");let t,n;if(p==="ckd"){t="SKB &lt;120 mmHg";n="Öneri 3.1.1 (2B); tolere edilirse. İlk basamak albüminüride RASi."}else if(p==="tx"){t="&lt;130/80 mmHg";n="UN 4.1; ilk basamak dihidropiridin KKB veya ARB (1C)."}else if(p==="pkdy"){t="&lt;110/75 mmHg (ev ölçümü)";n="UN 2.1.4 (HALT-PKD A); RASi ilk basamak (1C)."}else{t="SKB &lt;120 mmHg";n="Öneri 2.1.4 (2C); RASi ilk basamak."}
+   let h=`<div class="big"><div><div class="v" style="font-size:1.5rem">${t}</div><div class="u">${n}</div></div></div>`;
+   if(V("b_fr"))h+=`<p class="msg">${pill("warn","Bireyselleştirin")} Daha az yoğun KB düşürme makuldür.</p>`;
+   if(!V("b_std")&&p!=="pkdy")h+=`<p class="msg">${pill("bad","Uyarı")} &lt;120 hedefini standart olmayan ölçüme uygulamak tehlikelidir (UN 3.1.1).</p>`;$("#b_out").innerHTML=h}},
+ statin:{t:"Statin endikasyonu",s:"KDIGO 2013 · 2024",
+  f:()=>`<div class="fields">${inp("t_age","Yaş",56)}${inp("t_e","eGFR",48)}${sel("t_st","Tedavi durumu",[["no","Diyaliz/nakil yok"],["hd","Diyaliz"],["tx","Böbrek nakli"]],"no")}</div><div class="chks">${chk("t_on","Halen statin kullanıyor")}${chk("t_cad","Koroner hastalık (MI/revaskülarizasyon)")}${chk("t_dm","Diyabet")}${chk("t_str","İskemik inme öyküsü")}${chk("t_r","10 yıllık koroner ölüm/MI riski >%10")}</div><div class="out" id="t_out"></div>`,
+  run:()=>{const a=num(V("t_age")),e=num(V("t_e")),s=V("t_st"),o=$("#t_out");if(!(a>=18)){o.innerHTML=`<p class="msg dim">Yaş girin.</p>`;return}let h;
+   if(s==="hd")h=V("t_on")?`${pill("ok","Devam")} Diyaliz başlangıcında statin alanlarda sürdürün (2.3.2, 2C).`:`${pill("warn","Başlamayın")} Diyalize bağımlı KBH’de yeni statin başlanmaz (2.3.1, 2A).`;
+   else if(s==="tx")h=`${pill("ok","Statin")} Böbrek nakli alıcısı (2.4, 2B). Siklosporin etkileşimine dikkat.`;
+   else if(a>=50)h=e<60?`${pill("ok","Statin veya statin/ezetimib")} ≥50 yaş, eGFR &lt;60 (2.1.1, 1A).`:`${pill("ok","Statin")} ≥50 yaş, eGFR ≥60 (2.1.2, 1B).`;
+   else h=(V("t_cad")||V("t_dm")||V("t_str")||V("t_r"))?`${pill("ok","Statin")} 18–49 yaş, risk ölçütü var (2.2, 2A).`:`${pill("info","Bireysel")} 18–49 yaş, ölçüt yok; KBH 2024 daha düşük risk eşiklerini de uygun görür (UN 3.15.1.3).`;
+   o.innerHTML=`<p class="msg">${h}</p>${(s!=="no"||e<60)&&s!=="hd"?`<p class="msg dim">G3a–G5/nakil önerilen günlük dozlar: atorvastatin 20, rosuvastatin 10, simvastatin/ezetimib 20/10, pravastatin 40, simvastatin 40, fluvastatin 80, pitavastatin 2 mg.</p>`:""}`}},
+ iron:{t:"Demir tedavisi kararı",s:"KDIGO 2026 Öneri 2.1–2.4",
+  f:()=>`<div class="fields">${sel("i_m","Modalite",[["nd","Diyaliz dışı / nakil"],["pd","Periton diyalizi"],["hd","Hemodiyaliz"]],"nd")}${sel("i_s","Cinsiyet",[["f","Kadın"],["m","Erkek"]],"f")}${inp("i_hb","Hb (g/dl)",10.6)}${inp("i_fer","Ferritin (ng/ml)",140)}${inp("i_ts","TSAT (%)",18)}</div><div class="chks">${chk("i_inf","Aktif sistemik enfeksiyon")}</div><div class="out" id="i_out"></div>`,
+  run:()=>{const m=V("i_m"),hb=num(V("i_hb")),f=num(V("i_fer")),t=num(V("i_ts")),o=$("#i_out");if(!(f>=0&&t>=0)){o.innerHTML=`<p class="msg dim">Ferritin ve TSAT girin.</p>`;return}
+   const an=hb>0?(hb<(V("i_s")==="m"?13:12)):null;let h="";
+   if(f>700||t>=40)h=`${pill("warn","Demiri tutun")} Ferritin &gt;700 veya TSAT ≥%40 (UN 2.2).`;
+   else if(m==="hd"){h=(f<=500&&t<=30)?`${pill("ok","Demir başlayın")} Ferritin ≤500 ve TSAT ≤%30 (2.1, 2D). IV demir, proaktif şema (2.2, UN 2.1).`:`${pill("info","Eşik dışı")} HD başlama eşiği karşılanmıyor.`}
+   else{const start=(f<100&&t<40)||(f>=100&&f<300&&t<25);h=start?`${pill("ok","Demir başlayın")} ${f<100?"Ferritin &lt;100 ve TSAT &lt;%40":"Ferritin 100–299 ve TSAT &lt;%25"} (2.3, 2D). Oral veya IV, tercih ve toleransa göre (2.4); 1–3 ayda yanıt yoksa IV’e geçin.`:`${pill("info","Eşik dışı")} Başlama eşiği karşılanmıyor.`}
+   if(an===false&&f<30&&t<20)h+=`<br>${pill("info","Derin eksiklik")} Anemi olmadan ferritin &lt;30 ve TSAT &lt;%20: oral/IV demir düşünülebilir (UN 2.11).`;
+   if(an===false&&!(f<30&&t<20))h+=`<br><span class="msg dim">Hb anemi eşiğinin üzerinde; öneriler anemisi olan hastalar içindir.</span>`;
+   if(f<45)h+=`<br>${pill("warn","Kan kaybı?")} Ferritin &lt;45: GİS/jinekolojik/ürolojik kan kaybını araştırın (UN 1.2.3).`;
+   if(V("i_inf"))h+=`<br>${pill("warn","Enfeksiyon")} Demire geçici ara vermeyi düşünün (UN 2.8).`;
+   o.innerHTML=`<p class="msg">${h}</p><p class="msg dim">İzlem: Hb, ferritin, TSAT diyaliz dışı/PD 3 ayda bir, HD 1–3 ayda bir.</p>`}},
+ esa:{t:"ESA başlangıç dozu ve ESA direnç indeksi",s:"KDIGO 2026 Tablo 7",
+  f:()=>`<div class="fields">${inp("s_w","Kuru ağırlık (kg)",68)}${inp("s_hb","Hb (g/dl)",9.4)}${sel("s_m","Modalite",[["nd","Diyaliz dışı / PD / nakil"],["hd","Hemodiyaliz (G5D)"]],"hd")}${inp("s_wk","Haftalık epoetin dozu (U, ERI için)",6000)}</div><div class="out" id="s2_out"></div>`,
+  run:()=>{const w=num(V("s_w")),hb=num(V("s_hb")),m=V("s_m"),wk=num(V("s_wk")),o=$("#s2_out");if(!(w>0)){o.innerHTML=`<p class="msg dim">Ağırlık girin.</p>`;return}
+   const r=x=>Math.round(x/100)*100;let rows;
+   if(m==="hd")rows=[["Epoetin alfa/beta",`${r(50*w)}–${r(100*w)} U, haftada 3`],["Darbepoetin alfa",`${fmt(0.45*w,0)} µg haftalık veya ${fmt(0.75*w,0)} µg 2 haftada bir`],["Metoksi PEG-epoetin beta",`${fmt(0.6*w,0)} µg 2 haftada bir`]];
+   else rows=[["Epoetin alfa/beta",`~${r(50*w)} U haftada 1–2 (veya ${r(100*w)} U 2 haftada bir)`],["Darbepoetin alfa",`${fmt(0.45*w,0)} µg haftalık veya 40–100 µg 2–4 haftada bir`],["Metoksi PEG-epoetin beta",`${fmt(0.6*w,0)} µg 2 haftada bir veya ${fmt(1.5*w,0)} µg ayda bir`]];
+   let h="";if(hb>0){if(m==="hd")h+=hb<=10?`<p class="msg">${pill("ok","Başlama eşiği")} G5D’de Hb ≤9,0–10,0 g/dl (3.2.1, 2D).</p>`:`<p class="msg">${pill("info","Eşik üstü")} Hb &gt;10 g/dl; G5D başlama eşiği karşılanmıyor.</p>`;else h+=`<p class="msg">${pill("info","Bireysel")} Diyaliz dışı/nakilde başlama eşiği semptoma göre seçilir; çoğunlukla 8,5–10,0 g/dl.</p>`;
+    if(hb>=11.5)h+=`<p class="msg">${pill("bad","Üst sınır")} ESA alan erişkinde Hb hedefi &lt;11,5 g/dl (3.3.1, 1D).</p>`}
+   h+=`<div class="tbl"><table><thead><tr><th>ESA</th><th>Hesaplanan başlangıç</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td></tr>`).join("")}</tbody></table></div>`;
+   if(wk>0&&hb>0){const eri=wk/(w*hb);h+=`<div class="kv"><div><small>ERI (U/kg/hafta/g/dl)</small><strong>${fmt(eri,1)}</strong></div><div><small>U/kg/hafta</small><strong>${fmt(wk/w,0)}</strong></div></div><p class="msg dim">ERI = haftalık ESA dozu / (ağırlık × Hb). RISCAVID’de &gt;15,4 en üst çeyrek; KDIGO 2026’da tek tanım değildir.</p>`}
+   h+=`<p class="msg dim">Dozu 4 haftada bir defadan sık değiştirmeyin; 2–4 haftada Hb &gt;1 g/dl artarsa %25–50 azaltın.</p>`;o.innerHTML=h}},
+ mkbmon:{t:"KBH-MKB izlem planı",s:"KDIGO 2017 3.1.2",
+  f:()=>`<div class="fields">${sel("m_g","GFR kategorisi",[["3","G3a–G3b"],["4","G4"],["5","G5 / G5D"]],"4")}</div><div class="chks">${chk("m_tx","Böbrek nakli alıcısı (T)")}${chk("m_early","Nakil sonrası erken dönem")}${chk("m_trt","MKB tedavisi alıyor veya anormallik var")}</div><div class="out" id="m_out"></div>`,
+  run:()=>{const g=V("m_g");if(V("m_tx")&&V("m_early")){$("#m_out").innerHTML=`<p class="msg">${pill("info","Erken nakil")} Ca ve P stabil olana kadar en az haftalık (5.1, 1B).</p>`;return}
+   const T={3:["6–12 ayda bir","Başlangıç düzeyi ve progresyona göre"+(V("m_tx")?" (en az bir kez)":""),V("m_tx")?"Yılda bir (G3aT’den itibaren)":"—"],4:["3–6 ayda bir","6–12 ayda bir","12 ayda bir"],5:["1–3 ayda bir","3–6 ayda bir","12 ayda bir"]}[g];
+   $("#m_out").innerHTML=`<div class="kv"><div><small>Kalsiyum ve fosfat</small><strong>${T[0]}</strong></div><div><small>PTH</small><strong>${T[1]}</strong></div><div><small>ALP</small><strong>${T[2]}</strong></div><div><small>25(OH)D</small><strong>Başlangıç ve müdahaleye göre</strong></div></div>${V("m_trt")?`<p class="msg">${pill("warn","Sıklığı artırın")} Tedavi alan veya anormallik saptananlarda eğilim, etkinlik ve yan etki izlemi için.</p>`:""}<p class="msg dim">Kararlar tek değere değil eğilime dayanır (3.1.4, 1C).</p>`}},
+ pth:{t:"G5D’de PTH hedef aralığı",s:"KDIGO 2017 4.2.3",
+  f:()=>`<div class="fields">${inp("p_uln","PTH assay üst sınırı (pg/ml)",65)}${inp("p_v","Hasta iPTH (pg/ml)",480)}</div><div class="out" id="p_out"></div>`,
+  run:()=>{const u=num(V("p_uln")),v=num(V("p_v")),o=$("#p_out");if(!(u>0)){o.innerHTML=`<p class="msg dim">Assay üst sınırını girin.</p>`;return}
+   const lo=2*u,hi=9*u;let h=`<div class="big"><div><div class="v">${fmt(lo)}–${fmt(hi)}</div><div class="u">pg/ml (2–9 × ULN)</div></div>${v>0?`<div><div class="v">${fmt(v/u,1)}×</div><div class="u">ULN</div></div>`:""}</div>`;
+   if(v>0)h+=v<lo?`<p class="msg">${pill("warn","Hedef altı")} Düşük döngülü kemik hastalığı riski; kalsitriol/analog/kalsimimetik azaltmayı veya kesmeyi değerlendirin.</p>`:v>hi?`<p class="msg">${pill("bad","Hedef üstü")} Fosfat, kalsiyum ve 25(OH)D’yi düzeltin; kalsimimetik, kalsitriol/analog veya kombinasyon (4.2.4, 2B); yanıtsız ağır HPT’de paratiroidektomi (4.2.5).</p>`:`<p class="msg">${pill("ok","Aralıkta")} Aralık içinde belirgin yön değişimi tedavi değişikliği gerektirebilir.</p>`;
+   h+=`<p class="msg dim">Diyaliz dışı G3a–G5’te optimal PTH bilinmez; ilerleyici yükselişte değiştirilebilir etkenler araştırılır.</p>`;o.innerHTML=h}},
+ protein:{t:"Protein ve sodyum hedefi",s:"KBH 2024 3.3",
+  f:()=>`<div class="fields">${inp("q_w","Vücut ağırlığı (kg)",72)}${sel("q_g","Evre",[["g12","G1–G2"],["g35","G3–G5 (diyaliz dışı)"]],"g35")}</div><div class="chks">${chk("q_vlp","Çok düşük proteinli diyet + ketoanalog düşünülüyor (istekli, yakın izlem)")}${chk("q_uns","Metabolik olarak stabil değil")}${chk("q_old","Yaşlı, kırılganlık veya sarkopeni")}</div><div class="out" id="q_out"></div>`,
+  run:()=>{const w=num(V("q_w")),o=$("#q_out");if(!(w>0)){o.innerHTML=`<p class="msg dim">Ağırlık girin.</p>`;return}let h="";
+   if(V("q_uns"))h=`<p class="msg">${pill("bad","Kısıtlamayın")} Metabolik olarak stabil olmayanlarda düşük/çok düşük proteinli diyet uygulanmaz (UN 3.3.1.3).</p>`;
+   else if(V("q_g")==="g35"&&V("q_vlp"))h=`<div class="big"><div><div class="v">${fmt(0.3*w)}–${fmt(0.4*w)} g</div><div class="u">protein/gün (0,3–0,4 g/kg)</div></div><div><div class="v">≤${fmt(0.6*w)} g</div><div class="u">+ EAA/ketoanalog dahil toplam</div></div></div>`;
+   else if(V("q_g")==="g35")h=`<div class="big"><div><div class="v">${fmt(0.8*w)} g</div><div class="u">protein/gün (0,8 g/kg; Öneri 3.3.1.1, 2C)</div></div><div><div class="v">&lt;${fmt(1.3*w)} g</div><div class="u">üst sınır (1,3 g/kg)</div></div></div>`;
+   else h=`<div class="big"><div><div class="v">&lt;${fmt(1.3*w)} g</div><div class="u">progresyon riski varsa üst sınır</div></div></div>`;
+   if(V("q_old"))h+=`<p class="msg">${pill("info","Yaşlı/kırılgan")} Daha yüksek protein ve enerji hedefleri düşünün (UN 3.3.1.5).</p>`;
+   h+=`<p class="msg">Sodyum &lt;2 g/gün (&lt;90 mmol; &lt;5 g tuz). Tuz kaybettiren nefropatide kısıtlama uygun değildir.</p><p class="msg dim">Bireysel plan böbrek diyetisyeniyle yapılmalıdır.</p>`;o.innerHTML=h}},
+ kalgo:{t:"Hiperkalemi yönetim yardımcısı",s:"KBH 2024 Şekil 25 · Tablo 28",
+  f:()=>`<div class="fields">${inp("h_k","Serum K⁺ (mmol/l)",5.8)}</div><div class="chks">${chk("h_un","Klinik olarak kötü veya AKİ var")}${chk("h_ras","RASi veya MRA kullanıyor",true)}</div><div class="out" id="h_out"></div>`,
+  run:()=>{const k=num(V("h_k")),o=$("#h_out");if(!(k>0)){o.innerHTML=`<p class="msg dim">Potasyum girin.</p>`;return}let h;
+   if(k>=6.5)h=`${pill("bad","Ağır")} Acil değerlendirme ve tedavi; tekrar kan testi ve sürekli EKG monitörü.`;
+   else if(k>=6.0)h=V("h_un")?`${pill("bad","Orta")} Hastanede değerlendirip tedavi edin.`:`${pill("warn","Orta")} Beklenmeyen sonuçsa 24 saat içinde tekrarlayın.`;
+   else if(k>5.5)h=`${pill("warn","&gt;5,5")} 1) NSAİİ, trimetoprim gibi ilaçları ve diyet potasyumunu gözden geçirin. 2) Diüretik, bikarbonat düzeltmesi, patiromer veya SZC. 3) Son çare olarak RASi/MRA dozunu azaltın veya kesin.`;
+   else h=`${pill("ok","≤5,5")} Hiperkalemi eşiğinin altında; finerenon için K⁺ 4,9–5,5’te devam, 4 ayda bir izlem.`;
+   o.innerHTML=`<p class="msg">${h}</p>${V("h_ras")&&k>5.5&&k<6.5?`<p class="msg dim">RASi/MRA kesmek KV olayları artırır; durum düzelince yeniden başlayın.</p>`:""}`}},
+ mayo:{t:"Mayo görüntüleme sınıfı (htTKV)",s:"KDIGO 2025 Öneri 1.4.2.1",
+  f:()=>`<div class="fields">${inp("y_age","Yaş",38)}${inp("y_h","Boy (cm)",172)}${inp("y_rl","Sağ böbrek uzunluk (cm)",17)}${inp("y_rw","Sağ genişlik (cm)",9)}${inp("y_rd","Sağ derinlik (cm)",8.5)}${inp("y_ll","Sol uzunluk (cm)",18)}${inp("y_lw","Sol genişlik (cm)",9.5)}${inp("y_ld","Sol derinlik (cm)",9)}${inp("y_tkv","veya ölçülmüş TKV (ml)","")}</div><div class="out" id="y_out"></div>`,
+  run:()=>{const age=num(V("y_age")),hm=num(V("y_h"))/100,o=$("#y_out");let tkv=num(V("y_tkv"));
+   if(!(tkv>0)){const r=Math.PI/6*num(V("y_rl"))*num(V("y_rw"))*num(V("y_rd")),l=Math.PI/6*num(V("y_ll"))*num(V("y_lw"))*num(V("y_ld"));tkv=r+l}
+   if(!(age>0&&hm>0&&tkv>0)){o.innerHTML=`<p class="msg dim">Yaş, boy ve böbrek boyutlarını (veya TKV) girin.</p>`;return}
+   const ht=tkv/hm,g=Math.pow(ht/150,1/age)-1,gp=g*100;const cls=gp<1.5?"1A":gp<3?"1B":gp<4.5?"1C":gp<6?"1D":"1E";const fast=["1C","1D","1E"].includes(cls);
+   o.innerHTML=`<div class="big"><div><div class="v">${fmt(tkv)}</div><div class="u">TKV (ml)</div></div><div><div class="v">${fmt(ht)}</div><div class="u">htTKV (ml/m)</div></div><div><div class="v">${cls}</div><div class="u">Mayo sınıfı · tahmini artış %${fmt(gp,1)}/yıl</div></div></div>
+   <p class="msg">${fast?pill("bad","Hızlı ilerleme riski"):pill("ok","Yavaş ilerleme")} ${fast?"Mayo 1C–1E: eGFR ≥25 ise tolvaptan endikasyonu açısından değerlendirin (Öneri 4.1.1.1). 1B sınırındaki 1C olgularında bireysel değerlendirme gerekir.":"Tolvaptan için Mayo ölçütü karşılanmıyor; eGFR düşüş hızını ayrıca değerlendirin."}</p>
+   ${age<15||age>80?`<p class="msg">${pill("warn","Geçerlilik")} Sınıflama 15–80 yaş için tanımlanmıştır.</p>`:""}<p class="msg dim">Elipsoid TKV = π/6 × uzunluk × genişlik × derinlik (her böbrek). Atipik tutulumda (sınıf 2A/2B) ve minör genlerde kullanılmaz. Büyüme oranı doğumda 150 ml/m varsayımıyla hesaplanır.</p>`}},
+ propkd:{t:"PROPKD skoru",s:"KDIGO 2025 Şekil 12",
+  f:()=>`<div class="fields">${sel("pk_s","Cinsiyet",[["0","Kadın (0)"],["1","Erkek (1)"]],"1")}${sel("pk_g","Genetik varyant",[["0","PKD2 (0)"],["2","PKD1 kesmeyen (2)"],["4","PKD1 kesen (4)"],["x","Bilinmiyor"]],"4")}</div><div class="chks">${chk("pk_h","35 yaş öncesi hipertansiyon (2)")}${chk("pk_u","35 yaş öncesi ürolojik olay: makroskopik hematüri, kist enfeksiyonu, kist ağrısı (2)")}</div><div class="out" id="pk_out"></div>`,
+  run:()=>{const g=V("pk_g");const s=+V("pk_s")+(g==="x"?0:+g)+(V("pk_h")?2:0)+(V("pk_u")?2:0);const c=s<=3?["ok","Düşük risk","60 yaş öncesi böbrek yetmezliği dışlanabilir (NPV %81,4)."]:s<=6?["warn","Orta risk",""]:["bad","Yüksek risk","60 yaş öncesi böbrek yetmezliği öngörülür (PPV %90,9); hızlı ilerleme için ek kanıt."];
+   $("#pk_out").innerHTML=`<div class="big"><div><div class="v">${s}</div><div class="u">puan (0–9)</div></div></div><p class="msg">${pill(c[0],c[1])} ${c[2]}</p>${g==="x"?`<p class="msg dim">Varyant bilinmeden skor eksik hesaplanır.</p>`:""}`}},
+ tolv:{t:"Tolvaptan uygunluğu",s:"KDIGO 2025 Şekil 25",
+  f:()=>`<div class="fields">${inp("v_age","Yaş",40)}${inp("v_e","eGFR",58)}${sel("v_mayo","Mayo sınıfı",[["","Bilinmiyor"],["1A","1A"],["1B","1B"],["1C","1C"],["1D","1D"],["1E","1E"],["2","2A/2B (atipik)"]],"1D")}${inp("v_sl","eGFR düşüşü (ml/dk/1,73 m²/yıl)",2)}</div><div class="chks">${chk("v_pp","PROPKD >6")}${chk("v_ci","Mutlak kontrendikasyon var (gebelik/emzirme, hipovolemi riski, susama algısı yok, hipernatremi, obstrüksiyon, güçlü CYP3A inhibitörü, belirgin karaciğer hastalığı)")}${chk("v_alt","eGFR düşüşünü açıklayan başka neden var (vasküler, kontrolsüz KB, diyabetik nefropati, proteinüri ≥1 g/gün, AKİ)")}</div><div class="out" id="v_out"></div>`,
+  run:()=>{const e=num(V("v_e")),m=V("v_mayo"),sl=num(V("v_sl")),o=$("#v_out");if(!(e>0)){o.innerHTML=`<p class="msg dim">eGFR girin.</p>`;return}
+   const fastM=["1C","1D","1E"].includes(m),fastS=sl>=3;let h;
+   if(V("v_ci"))h=`${pill("bad","Uygun değil")} Mutlak kontrendikasyon.`;
+   else if(e<25)h=`${pill("warn","Başlanmaz")} eGFR &lt;25’te yeni başlama önerilmez; önceden başlananlarda devam edilebilir.`;
+   else if(fastM||fastS)h=`${pill("ok","Tolvaptan önerilir")} eGFR ≥25 ve ${fastM?"Mayo "+m:"eGFR düşüşü ≥3/yıl"} (Öneri 4.1.1.1, 1B).`;
+   else if(V("v_pp"))h=`${pill("warn","Değerlendirin")} Mayo/eGFR eğimi belirsiz; PROPKD &gt;6 hızlı ilerleme için ek kanıttır (UN 4.1.1.3).`;
+   else h=`${pill("info","Ölçüt yok")} Hızlı ilerleme ölçütü karşılanmıyor.`;
+   if(m==="2")h+=`<br>${pill("warn","Atipik")} Sınıf 2’de Mayo prognozu uygulanmaz.`;
+   if(V("v_alt"))h+=`<br>${pill("warn","Alternatif neden")} Başlamadan önce yeniden değerlendirin; gerekirse MR/BT ve aile öyküsü ile ADPKD’yi ana neden olarak doğrulayın.`;
+   o.innerHTML=`<p class="msg">${h}</p><p class="msg dim">Doz: 45/15 mg → 60/30 → hedef 90/30 mg (haftalık titrasyon). KC testleri ilk 18 ay aylık, sonra 3 ayda bir.</p>`}},
+ cancer:{t:"Kanser sonrası nakil bekleme süresi",s:"KDIGO 2020 Tablo 14",
+  f:()=>`<div class="fields">${sel("c_t","Kanser ve evre",CANCER.map((x,i)=>[i,x[0]]),0)}</div><div class="out" id="c_out"></div>`,
+  run:()=>{const x=CANCER[+V("c_t")];$("#c_out").innerHTML=`<div class="big"><div><div class="v" style="font-size:1.5rem">${x[1]}</div><div class="u">küratif tedavinin tamamlanmasından itibaren</div></div></div><p class="msg dim">Karar onkoloji, nakil nefrolojisi, hasta ve bakım vereniyle birlikte verilir.</p>`}},
+ dstart:{t:"Diyaliz başlama göstergeleri",s:"UN 5.4.2 · Tablo 41",
+  f:()=>`<div class="fields">${inp("d_e","eGFR",8)}</div><div class="chks">${[["d1","Üremiye bağlı nörolojik bulgu/semptom"],["d2","Perikardit veya serozit"],["d3","Anoreksi, bulantı-kusma"],["d4","Tıbbi tedaviye dirençli asit-baz veya elektrolit bozukluğu"],["d5","İnatçı kaşıntı"],["d6","Volüm durumu veya KB kontrol edilemiyor"],["d7","Diyete dirençli ilerleyici beslenme bozulması"],["d8","Bilişsel bozulma"]].map(([i,t])=>chk(i,t)).join("")}</div><div class="out" id="d_out"></div>`,
+  run:()=>{let n=0;for(let i=1;i<=8;i++)if(V("d"+i))n++;const e=num(V("d_e"));$("#d_out").innerHTML=`<p class="msg">${n?pill("bad","Diyaliz başlatın"):pill("info","Gösterge yok")} ${n?n+" gösterge mevcut; bileşik değerlendirme ve hasta tercihiyle başlatın (UN 5.4.1–5.4.2).":"Semptom ve bulgu olmadan yalnızca GFR değerine göre başlanmaz."}</p>${e>0&&e<=20?`<p class="msg">${pill("warn","Planlama")} GFR &lt;15–20: preemptif nakil ve/veya diyaliz erişimi planlaması (UN 5.4.3).</p>`:""}<p class="msg dim">Kapsamlı konservatif bakım RRT’yi seçmeyenler için bir seçenektir.</p>`}}
+};
+Object.assign(CALCS,{
+ bsa:{t:"İndekslenmemiş eGFR (ilaç dozlama)",s:"UN 4.2.4 · DuBois BSA",
+  f:()=>`<div class="fields">${inp("z_e","eGFR (ml/dk/1,73 m²)",42)}${inp("z_h","Boy (cm)",168)}${inp("z_w","Ağırlık (kg)",112)}</div><div class="out" id="z_out"></div>`,
+  run:()=>{const e=num(V("z_e")),h=num(V("z_h")),w=num(V("z_w")),o=$("#z_out");if(!(e>0&&h>0&&w>0)){o.innerHTML=`<p class="msg dim">eGFR, boy ve ağırlık girin.</p>`;return}
+   const bsa=0.007184*Math.pow(w,0.425)*Math.pow(h,0.725),abs=e*bsa/1.73,bmi=w/Math.pow(h/100,2);
+   o.innerHTML=`<div class="big"><div><div class="v">${fmt(abs)}</div><div class="u">ml/dk (indekslenmemiş)</div></div><div><div class="v">${fmt(bsa,2)}</div><div class="u">BSA (m²)</div></div><div><div class="v">${fmt(bmi,1)}</div><div class="u">BKİ (kg/m²)</div></div></div>${Math.abs(abs-e)/e>0.15?`<p class="msg">${pill("warn","Belirgin fark")} Vücut boyutu uçta; dar terapötik aralıklı ilaçlarda indekslenmemiş değeri kullanmayı düşünün.</p>`:""}<p class="msg dim">eGFR(ml/dk) = eGFR × BSA / 1,73. BSA DuBois formülüyle hesaplanır (KDIGO metninde formül verilmez). Ürün bilgisindeki Cockcroft-Gault tabanlı eşikler ayrıca kontrol edilmelidir.</p>`}},
+ preop:{t:"Girişim öncesi ilaç planı",s:"UN 4.3.3 · 3.16.3 · Şekil 44",
+  f:()=>`<div class="fields">${inp("o_cr","CrCl veya eGFR (ml/dk)",42)}${sel("o_bl","Girişimin kanama riski",[["low","Düşük"],["high","Yüksek"]],"high")}${sel("o_noac","NOAC",[["none","Kullanmıyor"],["xa","Apiksaban / edoksaban / rivaroksaban"],["dab","Dabigatran"]],"xa")}</div><div class="chks">${chk("o_met","Metformin")}${chk("o_sglt","SGLT2 inhibitörü",true)}${chk("o_ras","ACEi veya ARB",true)}${chk("o_diu","Diüretik")}${chk("o_nsaid","NSAİİ")}${chk("o_su","Sülfonilüre")}${chk("o_con","İyotlu kontrast uygulanacak")}${chk("o_aki","AKİ mevcut")}</div><div class="out" id="o_out"></div>`,
+  run:()=>{const c=num(V("o_cr")),bl=V("o_bl"),n=V("o_noac"),o=$("#o_out");let L=[];
+   if(n!=="none"&&c>0){let t;if(n==="xa")t=c>=30?(bl==="low"?"≥24 saat":"≥48 saat"):c>=15?(bl==="low"?"≥36 saat":"≥48 saat"):"Resmi endikasyon yok";else t=c>=80?(bl==="low"?"≥24 saat":"≥48 saat"):c>=50?(bl==="low"?"≥36 saat":"≥72 saat"):c>=30?(bl==="low"?"≥48 saat":"≥96 saat"):"Resmi endikasyon yok";L.push(`${pill(t.startsWith("Resmi")?"bad":"warn","NOAC")} Son doz girişimden <b>${t}</b> önce.`)}
+   const hold=[];if(V("o_met"))hold.push("metformin");if(V("o_sglt"))hold.push("SGLT2i");if(V("o_ras"))hold.push("ACEi/ARB");
+   if(hold.length)L.push(`${pill("warn","48–72 saat")} Elektif cerrahi öncesi ${hold.join(", ")} için planlı ara vermeyi düşünün (UN 4.3.3); yeniden başlama tarihini yazılı bildirin (UN 4.3.2).`);
+   if(V("o_sglt"))L.push(`${pill("info","SGLT2i")} Klinik durum stabil ve oral alım yeterli olunca yeniden başlayın.`);
+   if(V("o_nsaid"))L.push(`${pill("bad","NSAİİ")} KBH’de perioperatif dönemde kesin.`);
+   if(V("o_con")){if(V("o_aki")||c<30){const d=[];if(V("o_nsaid"))d.push("NSAİİ");if(V("o_diu"))d.push("diüretik");L.push(`${pill("bad","Kontrast")} AKİ veya eGFR &lt;30: ${d.length?d.join(", ")+" dahil ":""}gerekli olmayan nefrotoksikleri 24–48 saat önce ve 48 saat sonra kesin.`)}
+    if(V("o_met"))L.push(V("o_aki")||c<=30?`${pill("warn","Metformin")} AKİ veya eGFR ≤30: kontrast öncesi metformini radyoloji uzlaşısına göre değerlendirin.`:`${pill("ok","Metformin")} AKİ yok ve eGFR &gt;30: kontrast için kesmek gerekmez.`)}
+   if(V("o_su")||V("o_diu"))L.push(`${pill("info","SADMANS")} Dehidratasyon/açlık döneminde sülfonilüre ve diüretik de geçici tutulabilir.`);
+   o.innerHTML=L.length?L.map(x=>`<p class="msg">${x}</p>`).join(""):`<p class="msg dim">İlaç veya durum seçin.</p>`;o.innerHTML+=`<p class="msg dim">Aspirin, β-bloker ve statin perioperatif dönemde genellikle sürdürülür. Kesin plan anestezi ve cerrahi ekiple yapılır.</p>`}},
+ dm:{t:"Diyabetli KBH’de tedavi basamakları",s:"KBH 2024 · 2027 taslak",
+  f:()=>`<div class="fields">${sel("w_t","Diyabet tipi",[["2","Tip 2"],["1","Tip 1"]],"2")}${inp("w_e","eGFR",44)}${inp("w_a","UACR (mg/g)",380)}${inp("w_k","K⁺ (mmol/l)",4.6)}</div><div class="chks">${chk("w_ras","Maksimum tolere RASi kullanıyor",true)}${chk("w_g","Glisemik hedefe ulaşılamıyor")}${chk("w_cv","Yüksek KV/böbrek olay riski veya ASKVH")}${chk("w_pkd","ADPKD")}</div><div class="out" id="w_out"></div>`,
+  run:()=>{const t=V("w_t"),e=num(V("w_e")),a=num(V("w_a")),k=num(V("w_k")),o=$("#w_out");if(!(e>0&&a>=0)){o.innerHTML=`<p class="msg dim">eGFR ve UACR girin.</p>`;return}const L=[];
+   if(a>=30&&e>=15)L.push(`${pill(V("w_ras")?"ok":"bad","RASi")} ${V("w_ras")?"Sürdürün; eGFR &lt;30’da da devam (UN 3.6.7).":"A2–A3 albüminüride başlayın, tolere edilen en yüksek doza titre edin (3.6.3, 1B)."}`);
+   if(t==="2"){if(V("w_pkd"))L.push(`${pill("warn","SGLT2i")} ADPKD’de önerilmez; yalnız kalp yetmezliği varsa.`);else if(e>=20)L.push(`${pill("ok","SGLT2i")} T2D + KBH + eGFR ≥20 (3.7.1, 1A).`);else L.push(`${pill("info","SGLT2i")} eGFR &lt;20’de yeni başlanmaz; kullanıyorsa sürdürülür.`);
+    if(V("w_g")||V("w_cv"))L.push(`${pill("ok","GLP-1")} Kanıtlanmış KV/böbrek yararlı GLP-1 temelli tedavi (2024: 3.9.1, 1B; 2027 taslak 1.3.1, 1A).`)}
+   if(a>30&&e>=25&&V("w_ras")){L.push(k<=4.8?`${pill("ok","nsMRA")} ${t==="2"?"Finerenon (3.8.1, 2A; 2027 taslak 1A)":"2027 taslak: nsMRA (1.2.2, 2C)"}; ${e>=60?"20":"10"} mg/gün, 1. ayda K⁺.`:`${pill("warn","nsMRA")} K⁺ &gt;4,8: başlangıç için uygun değil.`)}
+   else if(a>30&&e<25)L.push(`${pill("info","nsMRA")} eGFR &lt;25: başlanmaz.`);
+   if(t==="2")L.splice(0,0,e>=60?`${pill("ok","Metformin")} eGFR ≥60: tam doz; böbrek fonksiyonu yılda bir (2022: 4.1.1, 1B).`:e>=45?`${pill("ok","Metformin")} eGFR 45–59: aynı doz, hipoperfüzyon riskinde azaltmayı düşünün; 3–6 ayda bir izlem.`:e>=30?`${pill("warn","Metformin")} eGFR 30–44: dozu yarıya indirin (yeni başlanıyorsa yarım dozla, maksimumun yarısına kadar).`:`${pill("bad","Metformin")} eGFR &lt;30: kesin, başlamayın.`);
+   if(t==="2"&&e<15)L.push(`${pill("info","Ek ajan")} eGFR &lt;15/diyaliz: DPP-4i, insülin, TZD daha uygun; sülfonilüre daha az uygun.`);
+   L.push(`${pill("info","HbA1c")} Bireysel hedef &lt;%6,5–&lt;%8,0 (2022: 2.2.1, 1C); G4–G5’te HbA1c’nin güvenilirliği azalır.`);
+   L.push(`${pill("info","Statin")} ≥50 yaş veya 18–49 yaş diyabetli KBH’de statin (2013: 2.1–2.2).`);
+   o.innerHTML=L.map(x=>`<p class="msg">${x}</p>`).join("")+`<p class="msg dim">GLP-1 RA ile DPP-4 inhibitörü birlikte kullanılmaz; GLP-1 RA veya SGLT2i başlarken insülin/sülfonilüre dozunu gözden geçirin.</p>`}}
+});
+const CANCER=[["Meme, erken","En az 2 yıl"],["Meme, ileri","En az 5 yıl"],["Kolorektal, Dukes A/B","En az 2 yıl"],["Kolorektal, Dukes C","2–5 yıl"],["Kolorektal, Dukes D","En az 5 yıl"],["Mesane, invaziv","En az 2 yıl"],["Mesane, yüzeyel","Bekleme yok"],["Böbrek, insidentaloma (<3 cm)","Bekleme yok"],["Böbrek, erken","En az 2 yıl"],["Böbrek, büyük ve invaziv","En az 5 yıl"],["Uterus, lokalize","En az 2 yıl"],["Uterus, invaziv","En az 5 yıl"],["Serviks, lokalize","En az 2 yıl"],["Serviks, invaziv","En az 5 yıl"],["Akciğer, lokalize","2–5 yıl"],["Testis, lokalize","En az 2 yıl"],["Testis, invaziv","2–5 yıl"],["Melanom, in situ","Bekleme yok"],["Melanom, lokalize","En az 5 yıl"],["Melanom, invaziv","Kontrendike"],["Prostat, Gleason ≤6","Bekleme yok"],["Prostat, Gleason 7","En az 2 yıl"],["Prostat, Gleason 8–10","En az 5 yıl"],["Tiroid, evre 1","Bekleme yok"],["Tiroid, evre 2","En az 2 yıl"],["Tiroid, evre 3","En az 5 yıl"],["Tiroid, evre 4 veya anaplastik","Kontrendike"],["Hodgkin/Non-Hodgkin lenfoma, lokalize","En az 2 yıl"],["Lenfoma, bölgesel","3–5 yıl"],["Lenfoma, uzak","En az 5 yıl"],["PTLD, nodal","En az 2 yıl"],["PTLD, ekstranodal veya serebral","En az 5 yıl"],["Bazal/skuamöz hücreli cilt (metastazsız)","Bekleme yok"]];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const gcls=g=>g==="NG"?"gng":g==="PP"?"gpp":g[0]==="1"?"g1":"g2";
+function recHTML(kind,no,g,t,draft){
+ const kname=draft?(g==="PP"?"2027 taslak · uygulama noktası":"2027 taslak · öneri"):(g==="PP"?"Uygulama noktası":g==="NG"?"Derecelendirilmemiş":"Öneri");
+ return `<div class="rec${draft?" draft":""}"><div class="tag"><span class="grade ${gcls(g)}">${g==="PP"?"UN":g==="NG"?"NG":g}</span><span class="num">${esc(no)}</span></div><div class="body"><span class="kind">${kname}</span>${esc(t)}</div></div>`;
+}
+function itemHTML(it){
+ switch(it[0]){
+  case "R":return recHTML("R",it[1],it[2],it[3]);
+  case "P":return recHTML("P",it[1],"PP",it[2]);
+  case "NG":return recHTML("NG",it[1],"NG",it[2]);
+  case "DR":return recHTML("R",it[1],it[2],it[3],true);
+  case "DP":return recHTML("P",it[1],"PP",it[2],true);
+  case "X":return `<p class="txt">${esc(it[1])}</p>`;
+  case "N":return `<div class="note">${esc(it[1])}</div>`;
+  case "W":return `<div class="note warn">${esc(it[1])}</div>`;
+  case "H":return `<h3>${esc(it[1])}</h3>`;
+  case "L":return `<ul class="lst">${it[1].map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  case "T":return `<div class="tbl"><table><thead><tr>${it[1].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${it[2].map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${it[3]?`<p class="cap">${esc(it[3])}</p>`:""}`;
+  case "HEAT":return heatHTML(null,null);
+  case "C":return calcHTML(it[1]);
+ }
+ return "";
+}
+function calcHTML(id){const c=CALCS[id];return `<div class="calc" data-calc="${id}"><header><b>${c.t}</b><span>${c.s}</span></header><div class="cbody">${c.f()}</div></div>`}
+function bindCalcs(root){root.querySelectorAll(".calc").forEach(el=>{const id=el.dataset.calc,run=CALCS[id].run;const go=()=>{try{run()}catch(e){console.error(e)}};el.addEventListener("input",go);el.addEventListener("change",go);go()})}
+
+function navHTML(cur){
+ let h=`<div class="navlabel">Genel</div><button class="navbtn" data-go="home"${cur==="home"?' aria-current="page"':""}>Ana sayfa</button><button class="navbtn" data-go="hesap"${cur==="hesap"?' aria-current="page"':""}>Tüm hesaplayıcılar<span class="yr">${Object.keys(CALCS).length}</span></button><div class="navlabel">Konular</div>`;
+ MODS.forEach(m=>{h+=`<button class="navbtn" data-go="${m.id}"${cur===m.id?' aria-current="page"':""}><span class="dot"></span>${m.nav}<span class="yr">${m.yr}</span></button>`});
+ h+=`<div class="navlabel">Bilgi</div><button class="navbtn" data-go="kaynak"${cur==="kaynak"?' aria-current="page"':""}>Kaynaklar ve kanıt düzeyi</button>`;
+ return h;
+}
+const LEGEND=`<div class="legendrow"><span><span class="grade g1">1A–1D</span> Öneri (güçlü)</span><span><span class="grade g2">2A–2D</span> Öneri (zayıf)</span><span><span class="grade gpp">UN</span> Uygulama noktası</span><span><span class="grade gng">NG</span> Derecelendirilmemiş</span><span class="rec draft" style="padding:2px 8px;display:inline-block;border-radius:5px"><b style="color:var(--draft);font-size:.78rem">2027 TASLAK</b></span></div>`;
+
+function viewHome(){
+ return `<div><div class="eyebrow">KDIGO kılavuzları · erişkin KBH</div><h1>Kronik Böbrek Hastalığı Yönetim Rehberi</h1><p class="lede">KDIGO 2013–2026 kılavuzları ve 2027 odaklı güncelleme taslağından derlenmiş öneriler, kanıt düzeyleri ve ${Object.keys(CALCS).length} klinik hesaplayıcı. İnternet bağlantısı olmadan çalışır.</p></div>
+ ${LEGEND}
+ <div class="grid">${MODS.map(m=>`<button class="mod" data-go="${m.id}"><span class="yr">KDIGO ${m.yr}</span><b>${m.nav}</b><span>${m.lede}</span></button>`).join("")}<button class="mod" data-go="hesap"><span class="yr">${Object.keys(CALCS).length} araç</span><b>Hesaplayıcılar</b><span>eGFR, KFRE, Mayo sınıfı, demir/ESA, finerenon, PTH hedefi ve diğerleri.</span></button></div>
+ ${calcHTML("egfr")}
+ <p class="disclaimer">Bu uygulama klinik karar desteği amaçlıdır; hasta özelinde klinik değerlendirmenin yerini tutmaz. 2027 odaklı güncelleme kamuya açık inceleme taslağıdır (Ekim 2026) ve kesinleşmeden önce değişebilir; taslak öneriler turuncu çerçeveyle ayrılmıştır.</p>`;
+}
+function viewMod(m){
+ return `<div><div class="eyebrow"><span>${m.nav}</span>${[...new Set(m.secs.map(s=>s.src))].map(s=>`<span class="src">${SRC[s]}</span>`).join("")}</div><h1>${m.title}</h1><p class="lede">${m.lede}</p></div>
+ <div class="toc">${m.secs.map((s,i)=>`<button data-sec="s${i}">${s.h}</button>`).join("")}</div>
+ ${m.secs.map((s,i)=>`<section class="sec" id="s${i}"><div class="sechead"><h2>${s.h}</h2><span class="src">${SRC[s.src]}</span></div>${s.items.map(itemHTML).join("")}</section>`).join("")}
+ <p class="disclaimer">Numaralar ilgili KDIGO kılavuzundaki öneri/uygulama noktası numaralarıdır. ${m.id==="tedavi"?"Turuncu kutular 2027 odaklı güncellemenin kamuya açık inceleme taslağıdır; numaraları taslağa aittir.":""}</p>`;
+}
+function viewCalc(){
+ const groups=[["Tanı ve risk",["egfr","acr","kfre","sevk"]],["Tedavi",["rasi","sglt2","fin","dm","bp","statin","kalgo"]],["Diyet ve ilaç dozu",["protein","bsa","preop"]],["Anemi ve MKB",["iron","esa","mkbmon","pth"]],["ADPKD",["mayo","propkd","tolv"]],["Nakil ve RRT",["cancer","dstart"]]];
+ return `<div><div class="eyebrow">Araçlar</div><h1>Hesaplayıcılar</h1><p class="lede">Örnek değerlerle açılır; kendi değerlerinizi girdikçe sonuç güncellenir.</p></div><div class="toc">${groups.map((g,i)=>`<button data-sec="g${i}">${g[0]}</button>`).join("")}</div>${groups.map((g,i)=>`<section class="sec" id="g${i}"><div class="sechead"><h2>${g[0]}</h2></div>${g[1].map(calcHTML).join("")}</section>`).join("")}`;
+}
+function viewSrc(){
+ const rows=[["KDIGO 2024 KBH Değerlendirme ve Yönetim","Kidney Int 2024;105(4S):S117–S314","Tanı, risk, tedavi, ilaç, bakım modelleri"],["KDIGO 2027 Odaklı Güncelleme: İlaç Yönetimi","Kamuya açık inceleme taslağı, Ekim 2026","SGLT2i, MRA, GLP-1 temelli tedavi"],["KDIGO 2026 KBH’de Anemi","Kidney Int 2026;109(1S):S1–S99","Demir, ESA, HIF-PHI, transfüzyon"],["KDIGO 2017 KBH-MKB Güncellemesi","Kidney Int Suppl 2017;7:1–59","Ca, P, PTH, kemik, nakil"],["KDIGO 2021 KBH’de Kan Basıncı","Kidney Int 2021;99(3S):S1–S87","Ölçüm, hedef, ajanlar"],["KDIGO 2013 KBH’de Lipid","Kidney Int Suppl 2013;3:259–305","Statin endikasyon ve dozları"],["KDIGO 2020 Nakil Adayı Değerlendirmesi","Transplantation 2020;104(4S):S1–S103","Uygunluk, tarama, nüks"],["KDIGO 2025 ADPKD","Kidney Int 2025;107(2S):S1–S239","Tanı, prognoz, tolvaptan"],["KDIGO 2022 Diyabet ve KBH","Kidney Int 2022;102(5S):S1–S127","Glisemik hedef, metformin, GLP-1 RA, diyabette diyet"]];
+ return `<div><div class="eyebrow">Bilgi</div><h1>Kaynaklar ve Kanıt Düzeyi</h1><p class="lede">Akademik içerik NotebookLM’deki “KDIGO KBH KILAVUZLARI” defterindeki on kaynaktan çıkarılmıştır (2017 KBH-MKB tam metni ve yönetici özeti ayrı kaynaklardır; KDIGO 2022 Diyabet ve KBH kılavuzu Ekim 2026’da eklendi).</p></div>
+ <div class="tbl"><table><thead><tr><th>Kılavuz</th><th>Yayın</th><th>Kapsam</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>
+ <section class="sec"><div class="sechead"><h2>Derecelendirme</h2></div>
+ <div class="tbl"><table><thead><tr><th>Düzey</th><th>Anlamı</th></tr></thead><tbody><tr><td>1 (öneririz)</td><td>Güçlü öneri; çoğu hasta önerilen yolu izlemeli.</td></tr><tr><td>2 (önermekteyiz)</td><td>Zayıf öneri; hasta değerleri ve tercihleri farklı seçimlere yol açabilir.</td></tr><tr><td>A / B / C / D</td><td>Kanıt kalitesi: yüksek / orta / düşük / çok düşük.</td></tr><tr><td>UN</td><td>Uygulama noktası: sistematik kanıt incelemesi olmadan uzman görüşü.</td></tr><tr><td>NG</td><td>Derecelendirilmemiş (2013, 2017, 2020 kılavuzları).</td></tr></tbody></table></div>
+ ${LEGEND}</section>
+ <section class="sec"><div class="sechead"><h2>Formüller</h2></div><ul class="lst">
+ <li>CKD-EPI 2021 kreatinin: 142 × min(Scr/κ,1)^α × max(Scr/κ,1)^−1,200 × 0,9938^yaş × 1,012 [kadın]; κ 0,7/0,9, α −0,241/−0,302 (K/E).</li>
+ <li>CKD-EPI 2012 sistatin C: 133 × min(Scys/0,8,1)^−0,499 × max(Scys/0,8,1)^−1,328 × 0,996^yaş × 0,932 [kadın].</li>
+ <li>CKD-EPI 2021 kreatinin-sistatin C: 135 × min(Scr/κ,1)^α × max(Scr/κ,1)^−0,544 × min(Scys/0,8,1)^−0,323 × max(Scys/0,8,1)^−0,778 × 0,9961^yaş × 0,963 [kadın]; α −0,219/−0,144.</li>
+ <li>KFRE (4 değişken): risk = 1 − S₀^exp(−0,2201(yaş/10 − 7,036) + 0,2467(erkek − 0,5642) − 0,5567(eGFR/5 − 7,222) + 0,4510(ln ACR − 5,137)); S₀ Kuzey Amerika dışı 2 yıl 0,9832, 5 yıl 0,9365; Kuzey Amerika 0,9750 / 0,9240 (Tangri, JAMA 2016).</li>
+ <li>Elipsoid TKV = π/6 × U × G × D; htTKV = TKV / boy (m); yıllık büyüme = (htTKV/150)^(1/yaş) − 1.</li>
+ <li>ERI = haftalık ESA dozu (U) / [ağırlık (kg) × Hb (g/dl)].</li></ul>
+ <p class="msg dim">KFRE katsayıları ve CKD-EPI denklem katsayıları KDIGO metninde yer almadığından orijinal yayınlardan alınmıştır.</p></section>
+ <p class="disclaimer">Klinik karar desteği amaçlıdır. Hasta özelinde klinik değerlendirmenin, ürün bilgilerinin ve güncel kılavuz metninin yerini tutmaz.</p>`;
+}
+/* Arama */
+function flatten(){const out=[];MODS.forEach(m=>m.secs.forEach((s,si)=>s.items.forEach(it=>{let t="",no="";if(["R","DR"].includes(it[0])){no=it[1];t=it[3]}else if(["P","NG","DP"].includes(it[0])){no=it[1];t=it[2]}else if(["X","N","W","H"].includes(it[0]))t=it[1];else if(it[0]==="L")t=it[1].join(" ");else if(it[0]==="T")t=it[2].map(r=>r.join(" ")).join(" · ");else if(it[0]==="C"){t=CALCS[it[1]].t+" hesaplayıcı"}if(t)out.push({m,si,s,no,t,k:it[0]})})));return out}
+let FLAT=null;
+const fold=s=>s.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i");
+function viewSearch(q){
+ FLAT=FLAT||flatten();const f=fold(q),terms=f.split(/\s+/).filter(Boolean);
+ const hits=FLAT.filter(x=>{const h=fold(x.t+" "+x.s.h+" "+x.m.nav+" "+x.no);return terms.every(t=>h.includes(t))}).slice(0,80);
+ const hl=t=>{let s=esc(t);terms.forEach(tm=>{if(tm.length<2)return;const re=new RegExp("("+tm.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");s=s.replace(re,"<mark>$1</mark>")});return s};
+ return `<div><div class="eyebrow">Arama</div><h1>“${esc(q)}”</h1><p class="lede">${hits.length} sonuç${hits.length===80?" (ilk 80)":""}</p></div>${hits.map(x=>`<button class="hit" data-go="${x.m.id}" data-sec="s${x.si}"><small>${x.m.nav} › ${esc(x.s.h)}${x.no?" · "+esc(x.no):""}</small><span>${hl(x.t.length>260?x.t.slice(0,260)+"…":x.t)}</span></button>`).join("")||`<p class="txt">Sonuç yok. Farklı bir terim deneyin (örn. “ferritin”, “Mayo”, “gadolinyum”).</p>`}`;
+}
+
+/* Router */
+let current="home";
+function go(id,sec,push=true){
+ const v=$("#view");current=id;let html;
+ const m=MODS.find(x=>x.id===id);
+ if(id==="hesap")html=viewCalc();else if(id==="kaynak")html=viewSrc();else if(m)html=viewMod(m);else{current="home";html=viewHome()}
+ v.innerHTML=html;bindCalcs(v);$("#navlist").innerHTML=navHTML(current);
+ if(push){try{history.replaceState(null,"",current==="home"?location.pathname+location.search:"#"+current)}catch(e){}}
+ $("#side").classList.remove("open");
+ if(sec){const t=document.getElementById(sec);if(t)setTimeout(()=>t.scrollIntoView({block:"start"}),0)}else window.scrollTo(0,0);
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-go],[data-sec]");if(!b)return;
+ if(b.dataset.go){$("#q").value="";go(b.dataset.go,b.dataset.sec)}
+ else if(b.dataset.sec){const t=document.getElementById(b.dataset.sec);if(t)t.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+});
+let qt;$("#q").addEventListener("input",e=>{clearTimeout(qt);const q=e.target.value.trim();qt=setTimeout(()=>{if(q.length<2){go(current==="search"?"home":current);return}const v=$("#view");v.innerHTML=viewSearch(q);window.scrollTo(0,0)},180)});
+$("#menuBtn").addEventListener("click",()=>$("#side").classList.toggle("open"));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#side").classList.remove("open")});
+/* Tema */
+const THEMES=["system","light","dark"],TN={system:"Sistem",light:"Açık",dark:"Koyu"};
+function applyTheme(t){if(t==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent="Tema: "+TN[t]}
+let theme="system";try{theme=localStorage.getItem("kbh-theme")||"system"}catch(e){}
+applyTheme(theme);
+$("#themeBtn").addEventListener("click",()=>{theme=THEMES[(THEMES.indexOf(theme)+1)%3];applyTheme(theme);try{localStorage.setItem("kbh-theme",theme)}catch(e){}});
+/* Başlat */
+const h0=(location.hash||"").replace("#","");go(h0||"home",null,false);
+/* Çevrimdışı: GitHub Pages gibi bir sunucuda service worker kaydı; artifact çerçevesinde sessizce atlanır */
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+</script>
+
+</body>
+</html>
