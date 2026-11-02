@@ -162,13 +162,43 @@ mark{background:var(--draft-soft);color:inherit;padding:0 2px;border-radius:2px}
 }
 @media (prefers-reduced-motion:reduce){.side{transition:none}}
 </style>
+<!--suite-head--><link rel="stylesheet" href="fonts-suite/fonts.css"><style id="suite">
+/* === RTEÜ Nefroloji uygulama ailesi (ortak) === */
+.suite{display:flex;align-items:center;gap:18px;background:#0E1F2E;color:#C9D6E2;
+  font:500 13px/1.2 "Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 max(14px,env(safe-area-inset-right,0px)) 0 max(14px,env(safe-area-inset-left,0px));
+  padding-top:env(safe-area-inset-top,0px);overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.08)}
+.suite::-webkit-scrollbar{display:none}
+.suite-org{font-weight:800;color:#fff;white-space:nowrap;letter-spacing:.01em}
+.suite-apps{display:flex;gap:16px;margin:0;padding:0;list-style:none}
+.suite a{color:#C9D6E2;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;
+  padding:10px 0 8px;border-bottom:2px solid transparent;min-height:40px;box-sizing:border-box}
+.suite a::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--suite-c)}
+.suite a:hover{color:#fff}
+.suite a[aria-current="page"]{color:#fff;font-weight:700;border-bottom-color:var(--suite-c)}
+.suite a:focus-visible{outline:2px solid #fff;outline-offset:2px;border-radius:2px}
+.suite .ss{display:none}
+@media (max-width:520px){.suite-org{display:none}.suite .sl{display:none}.suite .ss{display:inline}.suite-apps{gap:14px}}
+@media print{.suite{display:none}}
+
+:root{--nav:#14293D;--nav-dim:#9FB3C8;--draft:#8A4E08;--h-red:#e0675a;
+  --font-body:"Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--font-head:"Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--font-mono:"Atkinson Hyperlegible Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3{letter-spacing:-.01em}
+.top .q2{flex:1;min-width:0;height:38px;padding:0 12px;border-radius:8px;border:1px solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.08);color:#fff;font:400 16px/1 var(--font-body)}
+.top .q2::placeholder{color:#B5C4D1}
+.top .q2:focus{outline:2px solid #7FB0E0;outline-offset:1px;background:rgba(255,255,255,.14)}
+.top>b{white-space:nowrap}
+@media (max-width:360px){.top>b{display:none}}
+</style><!--/suite-head-->
 </head>
 <body>
+<!--suite-nav--><nav class="suite" aria-label="RTEÜ Nefroloji uygulamaları"><span class="suite-org">RTEÜ Nefroloji</span><ul class="suite-apps"><li><a href="https://karadr79.github.io/nefro-kons/" style="--suite-c:#A9BCD3"><span class="sl">Konsültasyon</span><span class="ss">Konsültasyon</span></a></li><li><a href="https://karadr79.github.io/NefroHesapAraclar/" style="--suite-c:#46BDD0"><span class="sl">Hesap araçları</span><span class="ss">Hesap</span></a></li><li><a href="https://karadr79.github.io/KBHRehberi/" style="--suite-c:#7FB0E0" aria-current="page"><span class="sl">KBH Rehberi</span><span class="ss">KBH</span></a></li><li><a href="https://karadr79.github.io/KlinikBeslenme/" style="--suite-c:#5DBE8F"><span class="sl">Klinik beslenme</span><span class="ss">Beslenme</span></a></li></ul></nav><!--/suite-nav-->
 
 
 <div class="top">
   <button id="menuBtn" aria-label="Menüyü aç">Menü</button>
   <b>KBH Rehberi</b>
+  <input id="q2" class="q2" type="search" placeholder="Ara: ör. TSAT" aria-label="İçerikte ara" autocomplete="off">
 </div>
 <div class="app">
   <nav class="side" id="side" aria-label="Bölümler">
@@ -1003,7 +1033,7 @@ const HEATN={G1:["1*","1","2"],G2:["1*","1","2"],G3a:["1","2","3"],G3b:["2","3",
 const RISKTXT={hg:"Düşük risk",hy:"Orta artmış risk",ho:"Yüksek risk",hr:"Çok yüksek risk",hd:"Çok yüksek risk"};
 function heatHTML(g,a){
  const rows=["G1","G2","G3a","G3b","G4","G5"],lbl={G1:"G1 ≥90",G2:"G2 60–89",G3a:"G3a 45–59",G3b:"G3b 30–44",G4:"G4 15–29",G5:"G5 <15"};
- let h=`<div class="tbl" style="padding:8px"><div class="heat"><div class="hh">GFR \\ ACR</div><div class="hh">A1 &lt;30</div><div class="hh">A2 30–300</div><div class="hh">A3 &gt;300</div>`;
+ let h=`<div class="tbl" tabindex="0" role="region" aria-label="Tablo" style="padding:8px"><div class="heat"><div class="hh">GFR \\ ACR</div><div class="hh">A1 &lt;30</div><div class="hh">A2 30–300</div><div class="hh">A3 &gt;300</div>`;
  rows.forEach(r=>{h+=`<div class="hh">${lbl[r]}</div>`;[0,1,2].forEach(i=>{const s=(r===g&&("A"+(i+1))===a)?" sel":"";h+=`<div class="c ${HEATC[r][i]}${HEATC[r][i]==="hd"?" deep":""}${s}" title="${RISKTXT[HEATC[r][i]]}">${HEATN[r][i]}</div>`})});
  h+=`</div></div><div class="legend"><span><i class="hg"></i>Düşük</span><span><i class="hy"></i>Orta artmış</span><span><i class="ho"></i>Yüksek</span><span><i class="hr"></i>Çok yüksek</span><span><i class="hd"></i>En yüksek</span><span>* KBH varsa</span></div>`;
  return h;
@@ -1104,7 +1134,7 @@ const CALCS={
    else rows=[["Epoetin alfa/beta",`~${r(50*w)} U haftada 1–2 (veya ${r(100*w)} U 2 haftada bir)`],["Darbepoetin alfa",`${fmt(0.45*w,0)} µg haftalık veya 40–100 µg 2–4 haftada bir`],["Metoksi PEG-epoetin beta",`${fmt(0.6*w,0)} µg 2 haftada bir veya ${fmt(1.5*w,0)} µg ayda bir`]];
    let h="";if(hb>0){if(m==="hd")h+=hb<=10?`<p class="msg">${pill("ok","Başlama eşiği")} G5D’de Hb ≤9,0–10,0 g/dl (3.2.1, 2D).</p>`:`<p class="msg">${pill("info","Eşik üstü")} Hb &gt;10 g/dl; G5D başlama eşiği karşılanmıyor.</p>`;else h+=`<p class="msg">${pill("info","Bireysel")} Diyaliz dışı/nakilde başlama eşiği semptoma göre seçilir; çoğunlukla 8,5–10,0 g/dl.</p>`;
     if(hb>=11.5)h+=`<p class="msg">${pill("bad","Üst sınır")} ESA alan erişkinde Hb hedefi &lt;11,5 g/dl (3.3.1, 1D).</p>`}
-   h+=`<div class="tbl"><table><thead><tr><th>ESA</th><th>Hesaplanan başlangıç</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td></tr>`).join("")}</tbody></table></div>`;
+   h+=`<div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr><th>ESA</th><th>Hesaplanan başlangıç</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td></tr>`).join("")}</tbody></table></div>`;
    if(wk>0&&hb>0){const eri=wk/(w*hb);h+=`<div class="kv"><div><small>ERI (U/kg/hafta/g/dl)</small><strong>${fmt(eri,1)}</strong></div><div><small>U/kg/hafta</small><strong>${fmt(wk/w,0)}</strong></div></div><p class="msg dim">ERI = haftalık ESA dozu / (ağırlık × Hb). RISCAVID’de &gt;15,4 en üst çeyrek; KDIGO 2026’da tek tanım değildir.</p>`}
    h+=`<p class="msg dim">Dozu 4 haftada bir defadan sık değiştirmeyin; 2–4 haftada Hb &gt;1 g/dl artarsa %25–50 azaltın.</p>`;o.innerHTML=h}},
  mkbmon:{t:"KBH-MKB izlem planı",s:"KDIGO 2017 3.1.2",
@@ -1222,7 +1252,7 @@ function itemHTML(it){
   case "W":return `<div class="note warn">${esc(it[1])}</div>`;
   case "H":return `<h3>${esc(it[1])}</h3>`;
   case "L":return `<ul class="lst">${it[1].map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
-  case "T":return `<div class="tbl"><table><thead><tr>${it[1].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${it[2].map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${it[3]?`<p class="cap">${esc(it[3])}</p>`:""}`;
+  case "T":return `<div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr>${it[1].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${it[2].map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${it[3]?`<p class="cap">${esc(it[3])}</p>`:""}`;
   case "HEAT":return heatHTML(null,null);
   case "C":return calcHTML(it[1]);
  }
@@ -1259,9 +1289,9 @@ function viewCalc(){
 function viewSrc(){
  const rows=[["KDIGO 2024 KBH Değerlendirme ve Yönetim","Kidney Int 2024;105(4S):S117–S314","Tanı, risk, tedavi, ilaç, bakım modelleri"],["KDIGO 2027 Odaklı Güncelleme: İlaç Yönetimi","Kamuya açık inceleme taslağı, Ekim 2026","SGLT2i, MRA, GLP-1 temelli tedavi"],["KDIGO 2026 KBH’de Anemi","Kidney Int 2026;109(1S):S1–S99","Demir, ESA, HIF-PHI, transfüzyon"],["KDIGO 2017 KBH-MKB Güncellemesi","Kidney Int Suppl 2017;7:1–59","Ca, P, PTH, kemik, nakil"],["KDIGO 2021 KBH’de Kan Basıncı","Kidney Int 2021;99(3S):S1–S87","Ölçüm, hedef, ajanlar"],["KDIGO 2013 KBH’de Lipid","Kidney Int Suppl 2013;3:259–305","Statin endikasyon ve dozları"],["KDIGO 2020 Nakil Adayı Değerlendirmesi","Transplantation 2020;104(4S):S1–S103","Uygunluk, tarama, nüks"],["KDIGO 2025 ADPKD","Kidney Int 2025;107(2S):S1–S239","Tanı, prognoz, tolvaptan"],["KDIGO 2022 Diyabet ve KBH","Kidney Int 2022;102(5S):S1–S127","Glisemik hedef, metformin, GLP-1 RA, diyabette diyet"]];
  return `<div><div class="eyebrow">Bilgi</div><h1>Kaynaklar ve Kanıt Düzeyi</h1><p class="lede">Akademik içerik NotebookLM’deki “KDIGO KBH KILAVUZLARI” defterindeki on kaynaktan çıkarılmıştır (2017 KBH-MKB tam metni ve yönetici özeti ayrı kaynaklardır; KDIGO 2022 Diyabet ve KBH kılavuzu Ekim 2026’da eklendi).</p></div>
- <div class="tbl"><table><thead><tr><th>Kılavuz</th><th>Yayın</th><th>Kapsam</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>
+ <div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr><th>Kılavuz</th><th>Yayın</th><th>Kapsam</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>
  <section class="sec"><div class="sechead"><h2>Derecelendirme</h2></div>
- <div class="tbl"><table><thead><tr><th>Düzey</th><th>Anlamı</th></tr></thead><tbody><tr><td>1 (öneririz)</td><td>Güçlü öneri; çoğu hasta önerilen yolu izlemeli.</td></tr><tr><td>2 (önermekteyiz)</td><td>Zayıf öneri; hasta değerleri ve tercihleri farklı seçimlere yol açabilir.</td></tr><tr><td>A / B / C / D</td><td>Kanıt kalitesi: yüksek / orta / düşük / çok düşük.</td></tr><tr><td>UN</td><td>Uygulama noktası: sistematik kanıt incelemesi olmadan uzman görüşü.</td></tr><tr><td>NG</td><td>Derecelendirilmemiş (2013, 2017, 2020 kılavuzları).</td></tr></tbody></table></div>
+ <div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr><th>Düzey</th><th>Anlamı</th></tr></thead><tbody><tr><td>1 (öneririz)</td><td>Güçlü öneri; çoğu hasta önerilen yolu izlemeli.</td></tr><tr><td>2 (önermekteyiz)</td><td>Zayıf öneri; hasta değerleri ve tercihleri farklı seçimlere yol açabilir.</td></tr><tr><td>A / B / C / D</td><td>Kanıt kalitesi: yüksek / orta / düşük / çok düşük.</td></tr><tr><td>UN</td><td>Uygulama noktası: sistematik kanıt incelemesi olmadan uzman görüşü.</td></tr><tr><td>NG</td><td>Derecelendirilmemiş (2013, 2017, 2020 kılavuzları).</td></tr></tbody></table></div>
  ${LEGEND}</section>
  <section class="sec"><div class="sechead"><h2>Formüller</h2></div><ul class="lst">
  <li>CKD-EPI 2021 kreatinin: 142 × min(Scr/κ,1)^α × max(Scr/κ,1)^−1,200 × 0,9938^yaş × 1,012 [kadın]; κ 0,7/0,9, α −0,241/−0,302 (K/E).</li>
@@ -1315,5 +1345,6 @@ const h0=(location.hash||"").replace("#","");go(h0||"home",null,false);
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 </script>
 
+<script>(()=>{const a=document.getElementById('q2'),b=document.getElementById('q');if(!a||!b)return;a.addEventListener('input',()=>{b.value=a.value;b.dispatchEvent(new Event('input',{bubbles:true}))});b.addEventListener('input',()=>{if(document.activeElement!==a)a.value=b.value});document.addEventListener('click',e=>{if(e.target.closest('[data-go]'))a.value=''});})();</script>
 </body>
 </html>
