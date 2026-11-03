@@ -216,6 +216,7 @@ h1,h2,h3{letter-spacing:-.01em}
   <main id="main"><div class="wrap" id="view"></div></main>
 </div>
 
+<script src="disaktar.js"></script>
 <script>
 /* ============================================================
    VERİ: her modül -> bölümler -> öğeler
@@ -1258,7 +1259,7 @@ function itemHTML(it){
  }
  return "";
 }
-function calcHTML(id){const c=CALCS[id];return `<div class="calc" data-calc="${id}"><header><b>${c.t}</b><span>${c.s}</span></header><div class="cbody">${c.f()}</div></div>`}
+function calcHTML(id){const c=CALCS[id];return `<div class="calc" data-calc="${id}"><header><b>${c.t}</b><span>${c.s}</span></header><div class="cbody">${c.f()}${window.DA?DA.btnHTML().replace("<button ",`<button data-da-calc="${id}" `):""}</div></div>`}
 function bindCalcs(root){root.querySelectorAll(".calc").forEach(el=>{const id=el.dataset.calc,run=CALCS[id].run;const go=()=>{try{run()}catch(e){console.error(e)}};el.addEventListener("input",go);el.addEventListener("change",go);go()})}
 
 function navHTML(cur){
@@ -1346,5 +1347,18 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
 </script>
 
 <script>(()=>{const a=document.getElementById('q2'),b=document.getElementById('q');if(!a||!b)return;a.addEventListener('input',()=>{b.value=a.value;b.dispatchEvent(new Event('input',{bubbles:true}))});b.addEventListener('input',()=>{if(document.activeElement!==a)a.value=b.value});document.addEventListener('click',e=>{if(e.target.closest('[data-go]'))a.value=''});})();</script>
+<script>
+/* Dışa aktarma: PDF ve Excel (disaktar.js) */
+(()=>{if(!window.DA)return;
+ DA.config({app:"KBH Rehberi",file:"KBHRehberi",color:"#7FB0E0",fab:20,kind:"KBH hesaplama raporu"});
+ const PATS=[{sel:".big > div",l:".u",v:".v"},{sel:".kv > div",l:"small",v:"strong"}];
+ document.addEventListener("click",e=>{const b=e.target.closest("[data-da-calc]");if(!b)return;
+  const id=b.dataset.daCalc,c=CALCS[id],el=b.closest(".calc"),out=el.querySelector(".out"),o=DA.outputs(out,PATS);
+  if(!o.results.length&&!o.notes.filter(n=>!/girin|seçin/i.test(n)).length){DA.toast("Önce gerekli alanları doldurun");return}
+  const cl=document.createElement("div");cl.innerHTML=c.s;
+  DA.add({title:c.t,sub:DA.clean(cl.textContent),inputs:DA.inputs(el.querySelector(".cbody")),results:o.results,notes:o.notes});
+ });
+})();
+</script>
 </body>
 </html>
