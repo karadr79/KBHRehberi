@@ -190,6 +190,17 @@ h1,h2,h3{letter-spacing:-.01em}
 .top>b{white-space:nowrap}
 @media (max-width:360px){.top>b{display:none}}
 </style><!--/suite-head-->
+<!--hareket--><link rel="stylesheet" href="hareket.css"><style id="hareket-app">
+/* Apple-stili katman: mobil başlık yarı saydam, büyük başlıkta sıkı harf aralığı */
+@media (max-width:900px){ .top{--hk-base:var(--nav)} }
+h1{letter-spacing:-.02em}
+@media (max-width:900px){
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+.top{background:color-mix(in srgb,var(--hk-base) 88%,transparent)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+}
+@media (prefers-reduced-transparency:reduce),(prefers-contrast:more){ .top{background:var(--hk-base)!important;-webkit-backdrop-filter:none;backdrop-filter:none} }
+}
+</style>
 </head>
 <body>
 <!--suite-nav--><nav class="suite" aria-label="RTEÜ Nefroloji uygulamaları"><span class="suite-org">RTEÜ Nefroloji</span><ul class="suite-apps"><li><a href="https://karadr79.github.io/nefro-kons/" style="--suite-c:#A9BCD3"><span class="sl">Konsültasyon</span><span class="ss">Konsültasyon</span></a></li><li><a href="https://karadr79.github.io/NefroHesapAraclar/" style="--suite-c:#46BDD0"><span class="sl">Hesap araçları</span><span class="ss">Hesap</span></a></li><li><a href="https://karadr79.github.io/KBHRehberi/" style="--suite-c:#7FB0E0" aria-current="page"><span class="sl">KBH Rehberi</span><span class="ss">KBH</span></a></li><li><a href="https://karadr79.github.io/KlinikBeslenme/" style="--suite-c:#5DBE8F"><span class="sl">Klinik beslenme</span><span class="ss">Beslenme</span></a></li></ul></nav><!--/suite-nav-->
@@ -1360,5 +1371,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.service
  });
 })();
 </script>
+<!--hareket--><script src="hareket.js"></script>
+<script>Hareket.init({revealContainer:'#view',drawers:[{el:'#side',side:'left',media:'(max-width:900px)',edgeOpen:true}]});</script>
 </body>
 </html>
