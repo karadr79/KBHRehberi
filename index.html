@@ -7,6 +7,7 @@
 <title>KBH Rehberi</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="KDIGO kılavuzlarına dayalı erişkin kronik böbrek hastalığı yönetimi: öneriler, kanıt düzeyleri ve hesaplayıcılar.">
+<meta name="author" content="Prof. Dr. Ekrem KARA">
 <meta name="theme-color" content="#0E1F2E">
 <link rel="manifest" href="manifest.json">
 
@@ -162,6 +163,7 @@ mark{background:var(--draft-soft);color:inherit;padding:0 2px;border-radius:2px}
 }
 @media (prefers-reduced-motion:reduce){.side{transition:none}}
 </style>
+<link rel="stylesheet" href="ortak.css">
 <!--suite-head--><link rel="stylesheet" href="fonts.css"><style id="suite">
 /* === RTEÜ Nefroloji uygulama ailesi (ortak) === */
 .suite{display:flex;align-items:center;gap:18px;background:#0E1F2E;color:#C9D6E2;
@@ -203,7 +205,7 @@ h1{letter-spacing:-.02em}
 </style>
 </head>
 <body>
-<!--suite-nav--><nav class="suite" aria-label="RTEÜ Nefroloji uygulamaları"><span class="suite-org">RTEÜ Nefroloji</span><ul class="suite-apps"><li><a href="https://karadr79.github.io/nefro-kons/" style="--suite-c:#A9BCD3"><span class="sl">Konsültasyon</span><span class="ss">Konsültasyon</span></a></li><li><a href="https://karadr79.github.io/NefroHesapAraclar/" style="--suite-c:#46BDD0"><span class="sl">Hesap araçları</span><span class="ss">Hesap</span></a></li><li><a href="https://karadr79.github.io/KBHRehberi/" style="--suite-c:#7FB0E0" aria-current="page"><span class="sl">KBH Rehberi</span><span class="ss">KBH</span></a></li><li><a href="https://karadr79.github.io/NakilRehberi/" style="--suite-c:#C7A6E8"><span class="sl">Nakil Rehberi</span><span class="ss">Nakil</span></a></li><li><a href="https://karadr79.github.io/KlinikBeslenme/" style="--suite-c:#5DBE8F"><span class="sl">Klinik beslenme</span><span class="ss">Beslenme</span></a></li></ul></nav><!--/suite-nav-->
+<!--suite-nav--><nav class="suite" aria-label="RTEÜ Nefroloji uygulamaları"><span class="suite-org">RTEÜ Nefroloji</span><ul class="suite-apps"><li><a href="https://karadr79.github.io/nefro-kons/" style="--suite-c:#A9BCD3"><span class="sl">Konsültasyon</span><span class="ss">Konsültasyon</span></a></li><li><a href="https://karadr79.github.io/NefroHesapAraclar/" style="--suite-c:#46BDD0"><span class="sl">Hesap araçları</span><span class="ss">Hesap</span></a></li><li><a href="https://karadr79.github.io/KBHRehberi/" style="--suite-c:#7FB0E0" aria-current="page"><span class="sl">KBH Rehberi</span><span class="ss">KBH</span></a></li><li><a href="https://karadr79.github.io/NakilRehberi/" style="--suite-c:#C7A6E8"><span class="sl">Nakil Rehberi</span><span class="ss">Nakil</span></a></li><li><a href="https://karadr79.github.io/KlinikBeslenme/" style="--suite-c:#5DBE8F"><span class="sl">Klinik beslenme</span><span class="ss">Beslenme</span></a></li><li><a href="https://karadr79.github.io/SemiyolojiRehberi/" style="--suite-c:#F2A93B"><span class="sl">Semiyoloji</span><span class="ss">Semiyoloji</span></a></li></ul></nav><!--/suite-nav-->
 
 
 <div class="top">
@@ -227,6 +229,7 @@ h1{letter-spacing:-.02em}
   <main id="main"><div class="wrap" id="view"></div></main>
 </div>
 
+<script src="ortak.js"></script>
 <script src="disaktar.js"></script>
 <script>
 /* ============================================================
@@ -374,6 +377,11 @@ const MODS=[
   ["DP","1.2.1","Persistan albüminürisi ve normal potasyumu olan, RASi alan T2D hastalarında SGLT2i ve nsMRA eşzamanlı başlanabilir (CONFIDENCE)."],
   ["DP","1.2.2","Steroid ve nonsteroid MRA birlikte kullanılmamalıdır."],
   ["DP","1.2.3","nsMRA başlangıcından 2–4 hafta sonra potasyumu kontrol edin."],
+  ["F",[
+   {q:"Başlangıç: eGFR ≥25 ve K⁺ ≤4,8 mmol/l mi?",o:[["Evet","eGFR ≥60 ise 20 mg/gün, eGFR 25–59 ise 10 mg/gün başlanır.",""],["Hayır","Başlanmaz.","stop"]]},
+   ["1. ay","Serum K⁺ kontrolü; sonra 4 ayda bir."],
+   {q:"İzlemde K⁺?",o:[["≤4,8","10 mg alan hastada 20 mg/gün'e çıkılır; 20 mg alan devam eder.","end"],["4,9–5,5","Aynı dozla devam; 4 ayda bir izlem.",""],[">5,5","Ara verilir; diyet ve eşlik eden ilaçlar düzenlenir, K⁺ tekrarlanır. K⁺ ≤5,0 olunca 10 mg ile yeniden başlanması düşünülür.","stop"]]}
+  ],"KDIGO 2024 KBH, Şekil 26"],
   ["C","fin"]
  ]},
  {h:"GLP-1 temelli tedaviler",src:"ckd24",items:[
@@ -473,6 +481,11 @@ const MODS=[
   ["P","2.8","Sistemik enfeksiyonda demire geçici ara vermeyi düşünün."],
   ["P","2.9","IV demir yalnızca akut aşırı duyarlılığı yönetme olanağı olan yerde verilmeli; rutin test dozu veya steroid/antihistaminik premedikasyonu gerekmez."],
   ["P","2.11","Anemisi olmayan derin demir eksikliğinde (ferritin <30, TSAT <%20) oral veya IV demir düşünülebilir."],
+  ["F",[
+   {q:"Ferritin >700 ng/ml veya TSAT ≥%40 mı?",o:[["Evet","Demir tutulur (UN 2.2).","stop"],["Hayır","Modaliteye göre başlama eşiği değerlendirilir.",""]]},
+   {q:"Modalite?",o:[["Hemodiyaliz","Ferritin ≤500 ve TSAT ≤%30 ise demir başlanır (2.1, 2D); IV demir, proaktif şema.",""],["Diyaliz dışı, PD, nakil","Ferritin <100 ve TSAT <%40 veya ferritin 100–299 ve TSAT <%25 ise demir başlanır (2.3, 2D); oral veya IV. 1–3 ayda yanıt yoksa IV'e geçilir.",""]]},
+   ["İzlem","Hb, ferritin ve TSAT: diyaliz dışı/PD'de 3 ayda bir, HD'de 1–3 ayda bir. Ferritin <45 ise kan kaybı araştırılır; aktif sistemik enfeksiyonda demire geçici ara verilmesi düşünülür.","end"]
+  ],"KDIGO 2026 KBH'de Anemi, Öneri 2.1–2.4"],
   ["C","iron"]
  ]},
  {h:"ESA ve HIF-PHI",src:"an26",items:[
@@ -634,6 +647,12 @@ const MODS=[
   ["P","3.11.5.2","Hiperkalemi öyküsü olanlarda biyoyararlanımı yüksek potasyum içeren gıdaları (örn. işlenmiş gıdalar) sınırlayın."],
   ["T",["Basamak","K⁺ >5,5 mmol/l iken eylem"],[["1. Düzeltilebilir etkenler","RASi dışı ilaçları gözden geçirin (NSAİİ, trimetoprim) · Diyet potasyumunu değerlendirin, diyetisyene yönlendirin"],["2. İlaçlar","Uygun diüretik kullanımı · Serum bikarbonatını optimize edin · Lisanslı potasyum bağlayıcılar (patiromer, SZC)"],["3. Son çare","RASi/MRA dozunu azaltın veya kesin; kesme KV olayları artırır, durum izin verince yeniden başlayın"]]],
   ["T",["Şiddet","Klinik olarak kötü veya AKİ","Beklenmeyen sonuç"],[["Orta (K⁺ 6,0–6,4)","Hastanede değerlendirip tedavi edin","24 saat içinde tekrarlayın"],["Ağır (K⁺ ≥6,5)","Acil değerlendirme ve tedavi; kan testi ve EKG monitörü","Acil değerlendirme"]]],
+  ["F",[
+   {q:"Serum K⁺ düzeyi?",o:[["≤5,5 mmol/l","Hiperkalemi eşiğinin altında; mevcut tedaviye devam.","end"],["5,6–5,9 mmol/l","Basamaklı yaklaşım (aşağıda).",""],["6,0–6,4 mmol/l","Klinik olarak kötü veya AKİ varsa hastanede değerlendirme ve tedavi; beklenmeyen sonuçsa 24 saat içinde tekrar.","q"],["≥6,5 mmol/l","Acil değerlendirme ve tedavi; tekrar kan testi ve sürekli EKG monitörü.","stop"]]},
+   ["1. basamak","NSAİİ, trimetoprim gibi ilaçlar ve diyet potasyumu gözden geçirilir."],
+   ["2. basamak","Diüretik, bikarbonat düzeltmesi, patiromer veya SZC."],
+   ["3. basamak (son çare)","RASi/MRA dozu azaltılır veya kesilir. Kesmek KV olayları artırır; durum düzelince yeniden başlanır.","stop"]
+  ],"KDIGO 2024 KBH, Şekil 25 ve Tablo 28"],
   ["C","kalgo"]
  ]},
  {h:"Hiperürisemi ve gut",src:"ckd24",items:[
@@ -1266,6 +1285,7 @@ function itemHTML(it){
   case "L":return `<ul class="lst">${it[1].map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
   case "T":return `<div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr>${it[1].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${it[2].map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${it[3]?`<p class="cap">${esc(it[3])}</p>`:""}`;
   case "HEAT":return heatHTML(null,null);
+  case "F":return RTEU.flowHTML(it[1],it[2],esc);
   case "C":return calcHTML(it[1]);
  }
  return "";
@@ -1281,15 +1301,21 @@ function navHTML(cur){
 }
 const LEGEND=`<div class="legendrow"><span><span class="grade g1">1A–1D</span> Öneri (güçlü)</span><span><span class="grade g2">2A–2D</span> Öneri (zayıf)</span><span><span class="grade gpp">UN</span> Uygulama noktası</span><span><span class="grade gng">NG</span> Derecelendirilmemiş</span><span class="rec draft" style="padding:2px 8px;display:inline-block;border-radius:5px"><b style="color:var(--draft);font-size:.78rem">2027 TASLAK</b></span></div>`;
 
+function quickHTML(){
+ const nm=id=>{const m=MODS.find(x=>x.id===id);return m?m.nav:null};
+ const f=RTEU.favs().filter(nm),r=RTEU.recents().filter(id=>nm(id)&&!f.includes(id));
+ return `<section class="sec"><div class="sechead"><h2>Sık kullanılanlar</h2></div>${f.length?`<div class="rt-chips">${f.map(id=>`<button class="rt-chip fav" data-go="${id}">${nm(id)}</button>`).join("")}</div>`:`<p class="rt-empty">Bir konunun başlığındaki “☆ Sık kullanılanlara ekle” düğmesiyle konuları buraya sabitleyebilirsiniz.</p>`}${r.length?`<h3>Son açılanlar</h3><div class="rt-chips">${r.map(id=>`<button class="rt-chip" data-go="${id}">${nm(id)}</button>`).join("")}</div>`:""}</section>`;
+}
 function viewHome(){
- return `<div><div class="eyebrow">KDIGO kılavuzları · erişkin KBH</div><h1>Kronik Böbrek Hastalığı Yönetim Rehberi</h1><p class="lede">KDIGO 2013–2026 kılavuzları ve 2027 odaklı güncelleme taslağından derlenmiş öneriler, kanıt düzeyleri ve ${Object.keys(CALCS).length} klinik hesaplayıcı. İnternet bağlantısı olmadan çalışır.</p></div>
+ return `<div><div class="eyebrow">KDIGO kılavuzları · erişkin KBH</div><h1>Kronik Böbrek Hastalığı Yönetim Rehberi</h1><p class="lede">KDIGO 2013–2026 kılavuzları ve 2027 odaklı güncelleme taslağından derlenmiş öneriler, kanıt düzeyleri ve ${Object.keys(CALCS).length} klinik hesaplayıcı. İnternet bağlantısı olmadan çalışır.</p>${RTEU.bylineHTML()}</div>
+ ${quickHTML()}
  ${LEGEND}
  <div class="grid">${MODS.map(m=>`<button class="mod" data-go="${m.id}"><span class="yr">KDIGO ${m.yr}</span><b>${m.nav}</b><span>${m.lede}</span></button>`).join("")}<button class="mod" data-go="hesap"><span class="yr">${Object.keys(CALCS).length} araç</span><b>Hesaplayıcılar</b><span>eGFR, KFRE, Mayo sınıfı, demir/ESA, finerenon, PTH hedefi ve diğerleri.</span></button></div>
  ${calcHTML("egfr")}
  <p class="disclaimer">Bu uygulama klinik karar desteği amaçlıdır; hasta özelinde klinik değerlendirmenin yerini tutmaz. 2027 odaklı güncelleme kamuya açık inceleme taslağıdır (Ekim 2026) ve kesinleşmeden önce değişebilir; taslak öneriler turuncu çerçeveyle ayrılmıştır.</p>`;
 }
 function viewMod(m){
- return `<div><div class="eyebrow"><span>${m.nav}</span>${[...new Set(m.secs.map(s=>s.src))].map(s=>`<span class="src">${SRC[s]}</span>`).join("")}</div><h1>${m.title}</h1><p class="lede">${m.lede}</p></div>
+ return `<div><div class="eyebrow"><span>${m.nav}</span>${[...new Set(m.secs.map(s=>s.src))].map(s=>`<span class="src">${SRC[s]}</span>`).join("")}</div><h1>${m.title}</h1><p class="lede">${m.lede}</p>${RTEU.starHTML(m.id)}</div>
  <div class="toc">${m.secs.map((s,i)=>`<button data-sec="s${i}">${s.h}</button>`).join("")}</div>
  ${m.secs.map((s,i)=>`<section class="sec" id="s${i}"><div class="sechead"><h2>${s.h}</h2><span class="src">${SRC[s.src]}</span></div>${s.items.map(itemHTML).join("")}</section>`).join("")}
  <p class="disclaimer">Numaralar ilgili KDIGO kılavuzundaki öneri/uygulama noktası numaralarıdır. ${m.id==="tedavi"?"Turuncu kutular 2027 odaklı güncellemenin kamuya açık inceleme taslağıdır; numaraları taslağa aittir.":""}</p>`;
@@ -1300,7 +1326,7 @@ function viewCalc(){
 }
 function viewSrc(){
  const rows=[["KDIGO 2024 KBH Değerlendirme ve Yönetim","Kidney Int 2024;105(4S):S117–S314","Tanı, risk, tedavi, ilaç, bakım modelleri"],["KDIGO 2027 Odaklı Güncelleme: İlaç Yönetimi","Kamuya açık inceleme taslağı, Ekim 2026","SGLT2i, MRA, GLP-1 temelli tedavi"],["KDIGO 2026 KBH’de Anemi","Kidney Int 2026;109(1S):S1–S99","Demir, ESA, HIF-PHI, transfüzyon"],["KDIGO 2017 KBH-MKB Güncellemesi","Kidney Int Suppl 2017;7:1–59","Ca, P, PTH, kemik, nakil"],["KDIGO 2021 KBH’de Kan Basıncı","Kidney Int 2021;99(3S):S1–S87","Ölçüm, hedef, ajanlar"],["KDIGO 2013 KBH’de Lipid","Kidney Int Suppl 2013;3:259–305","Statin endikasyon ve dozları"],["KDIGO 2020 Nakil Adayı Değerlendirmesi","Transplantation 2020;104(4S):S1–S103","Uygunluk, tarama, nüks"],["KDIGO 2025 ADPKD","Kidney Int 2025;107(2S):S1–S239","Tanı, prognoz, tolvaptan"],["KDIGO 2022 Diyabet ve KBH","Kidney Int 2022;102(5S):S1–S127","Glisemik hedef, metformin, GLP-1 RA, diyabette diyet"]];
- return `<div><div class="eyebrow">Bilgi</div><h1>Kaynaklar ve Kanıt Düzeyi</h1><p class="lede">Akademik içerik NotebookLM’deki “KDIGO KBH KILAVUZLARI” defterindeki on kaynaktan çıkarılmıştır (2017 KBH-MKB tam metni ve yönetici özeti ayrı kaynaklardır; KDIGO 2022 Diyabet ve KBH kılavuzu Ekim 2026’da eklendi).</p></div>
+ return `<div><div class="eyebrow">Bilgi</div><h1>Kaynaklar ve Kanıt Düzeyi</h1><p class="lede"><b>Hazırlayan:</b> Prof. Dr. Ekrem KARA, Recep Tayyip Erdoğan Üniversitesi Tıp Fakültesi, Nefroloji Bilim Dalı, Rize. Akademik içerik NotebookLM’deki “KDIGO KBH KILAVUZLARI” defterindeki on kaynaktan çıkarılmıştır (2017 KBH-MKB tam metni ve yönetici özeti ayrı kaynaklardır; KDIGO 2022 Diyabet ve KBH kılavuzu Ekim 2026’da eklendi).</p></div>
  <div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr><th>Kılavuz</th><th>Yayın</th><th>Kapsam</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>
  <section class="sec"><div class="sechead"><h2>Derecelendirme</h2></div>
  <div class="tbl" tabindex="0" role="region" aria-label="Tablo"><table><thead><tr><th>Düzey</th><th>Anlamı</th></tr></thead><tbody><tr><td>1 (öneririz)</td><td>Güçlü öneri; çoğu hasta önerilen yolu izlemeli.</td></tr><tr><td>2 (önermekteyiz)</td><td>Zayıf öneri; hasta değerleri ve tercihleri farklı seçimlere yol açabilir.</td></tr><tr><td>A / B / C / D</td><td>Kanıt kalitesi: yüksek / orta / düşük / çok düşük.</td></tr><tr><td>UN</td><td>Uygulama noktası: sistematik kanıt incelemesi olmadan uzman görüşü.</td></tr><tr><td>NG</td><td>Derecelendirilmemiş (2013, 2017, 2020 kılavuzları).</td></tr></tbody></table></div>
@@ -1316,7 +1342,7 @@ function viewSrc(){
  <p class="disclaimer">Klinik karar desteği amaçlıdır. Hasta özelinde klinik değerlendirmenin, ürün bilgilerinin ve güncel kılavuz metninin yerini tutmaz.</p>`;
 }
 /* Arama */
-function flatten(){const out=[];MODS.forEach(m=>m.secs.forEach((s,si)=>s.items.forEach(it=>{let t="",no="";if(["R","DR"].includes(it[0])){no=it[1];t=it[3]}else if(["P","NG","DP"].includes(it[0])){no=it[1];t=it[2]}else if(["X","N","W","H"].includes(it[0]))t=it[1];else if(it[0]==="L")t=it[1].join(" ");else if(it[0]==="T")t=it[2].map(r=>r.join(" ")).join(" · ");else if(it[0]==="C"){t=CALCS[it[1]].t+" hesaplayıcı"}if(t)out.push({m,si,s,no,t,k:it[0]})})));return out}
+function flatten(){const out=[];MODS.forEach(m=>m.secs.forEach((s,si)=>s.items.forEach(it=>{let t="",no="";if(["R","DR"].includes(it[0])){no=it[1];t=it[3]}else if(["P","NG","DP"].includes(it[0])){no=it[1];t=it[2]}else if(["X","N","W","H"].includes(it[0]))t=it[1];else if(it[0]==="L")t=it[1].join(" ");else if(it[0]==="T")t=it[2].map(r=>r.join(" ")).join(" · ");else if(it[0]==="F"){t=it[1].map(x=>typeof x==="string"?x:x.q!==undefined?x.q+" "+x.o.map(o=>o.join(" ")).join(" "):x.join(" ")).join(" · ")}else if(it[0]==="C"){t=CALCS[it[1]].t+" hesaplayıcı"}if(t)out.push({m,si,s,no,t,k:it[0]})})));return out}
 let FLAT=null;
 const fold=s=>s.toLocaleLowerCase("tr-TR").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i");
 function viewSearch(q){
@@ -1332,12 +1358,14 @@ function go(id,sec,push=true){
  const v=$("#view");current=id;let html;
  const m=MODS.find(x=>x.id===id);
  if(id==="hesap")html=viewCalc();else if(id==="kaynak")html=viewSrc();else if(m)html=viewMod(m);else{current="home";html=viewHome()}
+ if(m)RTEU.visit(id);
  v.innerHTML=html;bindCalcs(v);$("#navlist").innerHTML=navHTML(current);
  if(push){try{history.replaceState(null,"",current==="home"?location.pathname+location.search:"#"+current)}catch(e){}}
  $("#side").classList.remove("open");
  if(sec){const t=document.getElementById(sec);if(t)setTimeout(()=>t.scrollIntoView({block:"start"}),0)}else window.scrollTo(0,0);
 }
 document.addEventListener("click",e=>{
+ const st=e.target.closest("[data-rt-star]");if(st){const on=RTEU.toggleFav(st.dataset.rtStar);st.setAttribute("aria-pressed",on);st.textContent=on?"★ Sık kullanılanlarda":"☆ Sık kullanılanlara ekle";return}
  const b=e.target.closest("[data-go],[data-sec]");if(!b)return;
  if(b.dataset.go){$("#q").value="";go(b.dataset.go,b.dataset.sec)}
  else if(b.dataset.sec){const t=document.getElementById(b.dataset.sec);if(t)t.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
@@ -1351,6 +1379,7 @@ function applyTheme(t){if(t==="system")document.documentElement.removeAttribute(
 let theme="system";try{theme=localStorage.getItem("kbh-theme")||"system"}catch(e){}
 applyTheme(theme);
 $("#themeBtn").addEventListener("click",()=>{theme=THEMES[(THEMES.indexOf(theme)+1)%3];applyTheme(theme);try{localStorage.setItem("kbh-theme",theme)}catch(e){}});
+RTEU.init({key:"kbh",version:"1.3",date:"11.11.2026",tools:".sidefoot",view:"#view"});
 /* Başlat */
 const h0=(location.hash||"").replace("#","");go(h0||"home",null,false);
 /* Çevrimdışı: GitHub Pages gibi bir sunucuda service worker kaydı; artifact çerçevesinde sessizce atlanır */
